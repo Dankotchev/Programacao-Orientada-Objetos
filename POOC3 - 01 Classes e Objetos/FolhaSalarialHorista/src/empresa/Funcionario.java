@@ -24,6 +24,7 @@
 package empresa;
 
 import java.util.Scanner;
+import encargos.DescontoSalarial;
 
 /**
  *
@@ -40,6 +41,8 @@ public class Funcionario {
     private double horaExtraTrabalhada;
     private double valorTotalHoraExtra;
     private double salarioBruto;
+    private double recolherIR;
+    private double contribuicaoINSS;
 
     public String getNome() {
         return nome;
@@ -68,6 +71,27 @@ public class Funcionario {
     public double getValorHoraExtra() {
         return valorTotalHoraExtra;
     }
+
+    public int getHoraNormalTrabalhada() {
+        return horaNormalTrabalhada;
+    }
+
+    public double getValorTotalHoraExtra() {
+        return valorTotalHoraExtra;
+    }
+
+    public double getSalarioBruto() {
+        return salarioBruto;
+    }
+
+    public double getRecolherIR() {
+        return recolherIR;
+    }
+
+    public double getContribuicaoINSS() {
+        return contribuicaoINSS;
+    }
+    
     
     /*
     public Funcionario(String nome, String departamento, int registro, int horaTrabalhada, double valorHora) {
@@ -98,7 +122,9 @@ public class Funcionario {
                 valorTotalHoraExtra;
     }
     
-    public void lerDados(){
+    public void obterInformacoes(){
+        DescontoSalarial encargos = new DescontoSalarial();
+        
         Scanner scan = new Scanner(System.in);
         System.out.print("Informe o nome do Funcionário: ");
         nome = scan.nextLine();
@@ -114,6 +140,12 @@ public class Funcionario {
         divisaoHorasTrabalhadas();
         valorHoraExtras();
         valorSalarioBruto();
+        recolherIR = encargos.calculoIR(salarioBruto);
+        contribuicaoINSS = encargos.calculoINSS(salarioBruto);
+    }
+    
+    public void apresentarInformacoes (){
+        
     }
 
 }

@@ -30,18 +30,90 @@ import utilidade.MenuOperacoes;
  * @author Danilo Quirino
  */
 public class Principal {
+
+    public static double totalFolhaPagamento(Funcionario[] folha) {
+        double totalFolha = 0;
+        for (int i = 0; i < 10; i++) {
+            totalFolha += folha[i].getSalarioBruto();
+        }
+        return totalFolha;
+    }
+
+    public static void apresentarFuncionariosHoraExtra(Funcionario[] func) {
+        for (int i = 0; i < 10; i++) {
+            if (func[i].getHoraExtraTrabalhada() != 0) {
+                System.out.println("Nome: " + func[i].getNome());
+                System.out.println("Registro: " + func[i].getRegistro());
+                System.out.println("Horas Extras Trabalhadas: "
+                        + func[i].getHoraExtraTrabalhada());
+                System.out.println("Valor recebido em Horas Extras: "
+                        + func[i].getValorTotalHoraExtra());
+            }
+        }
+    }
+
+    public static double contribuicaoTotalINSS(Funcionario[] inss) {
+        double valorTotal = 0;
+        for (int i = 0; i < 10; i++) {
+            valorTotal += inss[i].getContribuicaoINSS();
+        }
+        return valorTotal;
+    }
+
+    public static double totalRecolherIR(Funcionario[] inss) {
+        double valorTotal = 0;
+        for (int i = 0; i < 10; i++) {
+            valorTotal += inss[i].getRecolherIR();
+        }
+        return valorTotal;
+    }
+
     public static void main(String[] args) {
         Funcionario func[] = new Funcionario[10];
         MenuOperacoes menu = new MenuOperacoes();
         int opcao;
-        
+
         do {
             opcao = menu.gerirMenu();
             switch (opcao) {
                 case 1:
-                    
+                    System.out.println("\nCadastro de Funcionários");
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("Funcionário #" + (i + 1));
+                        func[i] = new Funcionario();
+                        func[i].obterInformacoes();
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("\nBusca de Holerite, por número ");
+                    break;
+
+                case 3:
+                    System.out.println("\tApresentar o Total da Folha de Pagamentos");
+                    System.out.println("O total da Folha de Pagamentos é de R$ "
+                            + totalFolhaPagamento(func));
+                    break;
+
+                case 4:
+                    System.out.println("\nFuncionários que realizaram Horas Extras");
+                    apresentarFuncionariosHoraExtra(func);
+                    break;
+
+                case 5:
+                    System.out.println("\nO valor total de pagamentos à contribuição previdenciária é de R$ "
+                            + contribuicaoTotalINSS(func));
+                    break;
+
+                case 6:
+                    System.out.println("\nO valor total à recolher de Imposto de Renda é de R$ "
+                            + totalRecolherIR(func));
+                    break;
+
+                case 7:
+                    System.out.println("\nRelatório por Departamento");
                     break;
             }
-        }while (opcao != 0);
+        } while (opcao != 0);
     }
 }
