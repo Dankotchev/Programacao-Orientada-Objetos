@@ -15,7 +15,7 @@ classDiagram
       Disciplina : +entrarFrequencia() void
       Disciplina : +apresentarDados() void
       Disciplina : +apresentarSituacao() void
-      Disciplina : +apresentarMedia() void
+      Disciplina : +retonarMedia() float
 ```
 Os métodos devem implementar:
 
@@ -24,7 +24,7 @@ Os métodos devem implementar:
 -   entrarFrequecia -> permite a inclusão da frequência na disciplina;
 -   apresentarDados -> apresentar todos os dados da disciplina, sem a situação;
 -   apresentarSituação - apresentar a média e a situação do aluno na disciplina que pode ser aprovado se a média for maior ou igual a 6 e a frequência for maior ou igual a 75, retido por falta quando a frequência é menor que 75 e retido por nota quando a média for menor que 6,0.
--   retornaMédia -> retorna a média da disciplina. Esse método tem como retorno um valor float.
+-   retornarMédia -> retorna a média da disciplina. Esse método tem como retorno um valor float.
 
 Faça uma classe principal capaz de:
 
