@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2022 Danilo.
+ * Copyright 2022 Danilo Domingues Quirino.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -78,35 +78,43 @@ public class Disciplina {
 
     public void digitarNotas() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("\nInforme a nota 01 :");
+        System.out.print("Informe a nota 01 : ");
         nota1 = scan.nextFloat();
-        System.out.print("\nInforme a nota 02 :");
+        System.out.println();
+        System.out.print("Informe a nota 02 : ");
         nota2 = scan.nextFloat();
     }
 
     public void entrarFrequencia() {
         Scanner scan = new Scanner(System.in);
-        System.out.print("\nInforme a Frequencia :");
+        System.out.print("Informe a Frequencia : ");
         frequencia = scan.nextFloat();
+        System.out.println();
     }
 
     public void apresentarDados() {
-        System.out.println("\nApresentado os dados na Disciplina " + nome + "(" + sigla + "):");
+        System.out.println("Informações da Disciplina - " 
+                + nome + "[" + sigla + "]:");
         System.out.println("Professor: " + professor);
         System.out.println("Nota 01: " + nota1 + "\tNota 02: " + nota2);
         System.out.println("Frequência: " + frequencia);
     }
 
-    public void apresentarSituacao() {
+    public String apresentarSituacao() {
         float media;
+        String sit = null;
         media = (nota1 + nota2) / 2;
         if (media >= 6 && frequencia >= 75) {
-            System.out.println("Aluno Aprovado.");
+            sit = "Aluno Aprovado.";
+            //System.out.println("Aluno Aprovado.");
         } else if (media >= 6 && frequencia < 75) {
-            System.out.println("Retido por frequencia.");
+            sit = "Retido por Frequência.";
+            //System.out.println("Retido por frequencia.");
         } else if (media < 6 && frequencia >= 75) {
-            System.out.println("Retido por Nota.");
+            sit = "Retido por Nota.";
+            //System.out.println("Retido por Nota.");
         }
+        return sit;
     }
 
     public float retonarMedia() {

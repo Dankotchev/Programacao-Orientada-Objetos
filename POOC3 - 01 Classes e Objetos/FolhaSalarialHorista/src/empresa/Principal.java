@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2022 Danilo Domingues Quirino.
+ * Copyright 2022 Danilo Quirino.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,33 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package utilidade;
+package empresa;
 
-import java.util.Scanner;
+import utilidade.MenuOperacoes;
 
 /**
  *
- * @author Danilo Domingues Quirino
+ * @author Danilo Quirino
  */
-public class MenuOperacoes {
-
-    public int gerirMenu() {
+public class Principal {
+    public static void main(String[] args) {
+        Funcionario func[] = new Funcionario[10];
+        MenuOperacoes menu = new MenuOperacoes();
         int opcao;
-        Scanner scanOpcao = new Scanner(System.in);
-        System.out.println("----------\n\tGESTOR DE DISCIPLINAS");
-        System.out.println("Escolha a operacao desejada, informando o codigo correpondente.");
-        System.out.println("1 -\tInserir dados das Disciplinas;");
-        System.out.println("2 -\tInserir nota nas Disciplinas;");
-        System.out.println("3 -\tInserir frequencia nas Disciplinas;");
-        System.out.println("4 -\tApresentar Dados das Disciplinas;");
-        System.out.println("5 -\tApresentar Situaçao em cada Disciplina;");
-        System.out.println("6 -\tApresentar Médias das Disciplinas;");
-        System.out.println("0 -\tEncerrar Sistema.");
-
+        
         do {
-            System.out.print("\tEscolha ==>   ");
-            opcao = scanOpcao.nextInt();
-        } while (opcao < 0 || opcao > 6);
-        return opcao;
+            opcao = menu.gerirMenu();
+            switch (opcao) {
+                case 1:
+                    
+                    break;
+            }
+        }while (opcao != 0);
     }
 }

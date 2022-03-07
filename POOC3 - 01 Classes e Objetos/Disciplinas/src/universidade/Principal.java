@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2022 Danilo.
+ * Copyright 2022 Danilo Domingues Quirino.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,32 +40,32 @@ public class Principal {
             opcao = menu.gerirMenu();
             switch (opcao) {
                 case 1:
-                    System.out.println("Inserir informações das Disciplinas");
+                    System.out.println("\nInserir informações das Disciplinas");
                     for (int i = 0; i < 7; i++) {
-                        System.out.println();
                         dis[i] = new Disciplina();
+                        System.out.println("Disciplina #" + (i + 1));
                         dis[i].lerDados();
                     }
                     break;
 
                 case 2:
-                    System.out.println("Inserir Nota nas Disciplinas");
+                    System.out.println("\nInserir Nota nas Disciplinas");
                     for (int i = 0; i < 7; i++) {
-                        System.out.println();
+                        System.out.println("Disciplina " + dis[i].getNome());
                         dis[i].digitarNotas();
                     }
                     break;
 
                 case 3:
-                    System.out.println("Inserir Frequência nas Disciplinas");
+                    System.out.println("\nInserir Frequência nas Disciplinas");
                     for (int i = 0; i < 7; i++) {
-                        System.out.println();
+                        System.out.println("Disciplina " + dis[i].getNome());
                         dis[i].entrarFrequencia();
                     }
                     break;
 
                 case 4:
-                    System.out.println("Apresentar Informações das Disciplinas");
+                    System.out.println("\nApresentar Informações das Disciplinas");
                     for (int i = 0; i < 7; i++) {
                         System.out.println();
                         dis[i].apresentarDados();
@@ -73,18 +73,21 @@ public class Principal {
                     break;
 
                 case 5:
-                    System.out.println("Apresentar Situação nas Disciplinas");
+                    System.out.println("\nApresentar Situação nas Disciplinas");
+                    System.out.println();
                     for (int i = 0; i < 7; i++) {
-                        System.out.println();
-                        dis[i].apresentarSituacao();
+                        System.out.println("Disciplina " + dis[i].getNome() 
+                        + ": " + dis[i].apresentarSituacao());
+                        
                     }
                     break;
 
                 case 6:
-                    System.out.println("Apresentar Médias nas Disciplinas");
+                    System.out.println("\nApresentar Médias nas Disciplinas");
                     for (int i = 0; i < 7; i++) {
-                        System.out.println();
-                        dis[i].retonarMedia();
+                        System.out.println("Disciplina " + dis[i].getNome() 
+                                + ": " + "Sua média foi de "
+                                + dis[i].retonarMedia());
                     }
                     break;
 
@@ -92,6 +95,6 @@ public class Principal {
                     System.out.println("ENCERRANDO O SISTEMA");
                     break;
             }
-        } while (opcao != 0);
+            } while (opcao != 0);
     }
 }
