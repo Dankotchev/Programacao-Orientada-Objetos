@@ -1,4 +1,4 @@
-package patrimonio;
+/*package patrimonio;
 
 import java.util.Scanner;
 
@@ -42,3 +42,4 @@ public class SistemaPatrimonioVetor {
         System.out.println("Valor Atual total: R$ " + totalBens);
     }
 }
+*/

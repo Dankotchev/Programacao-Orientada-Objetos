@@ -16,7 +16,7 @@ public class Bem {
 
     public void preencherDados() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Cadastro de Bem Patrimoniado");
+        System.out.println("\nCadastro de Bem Patrimoniado");
 
         System.out.print("Número ..........: ");
         numeroPatrimonio = scan.nextInt();
