@@ -38,11 +38,12 @@ public class Funcionario {
     private int horaTrabalhada;
     private double valorHora;
     private int horaNormalTrabalhada;
-    private double horaExtraTrabalhada;
+    private int horaExtraTrabalhada;
     private double valorTotalHoraExtra;
     private double salarioBruto;
     private double recolherIR;
     private double contribuicaoINSS;
+    private double salarioLiquido;
 
     public String getNome() {
         return nome;
@@ -91,8 +92,7 @@ public class Funcionario {
     public double getContribuicaoINSS() {
         return contribuicaoINSS;
     }
-    
-    
+
     /*
     public Funcionario(String nome, String departamento, int registro, int horaTrabalhada, double valorHora) {
         this.nome = nome;
@@ -101,9 +101,9 @@ public class Funcionario {
         this.horaTrabalhada = horaTrabalhada;
         this.valorHora = valorHora;
     }
-*/
+     */
 
-    private void divisaoHorasTrabalhadas(){
+    private void divisaoHorasTrabalhadas() {
         if (horaTrabalhada <= 220) {
             this.horaNormalTrabalhada = horaTrabalhada;
             this.horaExtraTrabalhada = 0;
@@ -112,19 +112,19 @@ public class Funcionario {
             this.horaExtraTrabalhada = horaTrabalhada - 220;
         }
     }
-    
-    private void valorHoraExtras(){
+
+    private void valorHoraExtras() {
         this.valorTotalHoraExtra = horaExtraTrabalhada * (valorHora * 1.5);
     }
-    
-    private void valorSalarioBruto(){
-        this.salarioBruto = (valorHora * horaNormalTrabalhada) + 
-                valorTotalHoraExtra;
+
+    private void valorSalarioBruto() {
+        this.salarioBruto = (valorHora * horaNormalTrabalhada)
+                + valorTotalHoraExtra;
     }
-    
-    public void obterInformacoes(){
+
+    public void obterInformacoes() {
         DescontoSalarial encargos = new DescontoSalarial();
-        
+
         Scanner scan = new Scanner(System.in);
         System.out.print("Informe o nome do Funcionário: ");
         nome = scan.nextLine();
@@ -142,10 +142,41 @@ public class Funcionario {
         valorSalarioBruto();
         recolherIR = encargos.calculoIR(salarioBruto);
         contribuicaoINSS = encargos.calculoINSS(salarioBruto);
-    }
-    
-    public void apresentarInformacoes (){
-        
+        salarioLiquido = salarioBruto - recolherIR - contribuicaoINSS;
     }
 
+    public void apresentarDados() {
+        String valSB = String.format("%.2f", salarioBruto);
+        String valINSS = String.format("%.2f", contribuicaoINSS);
+        String valIR = String.format("%.2f", recolherIR);
+        String valSL = String.format("%.2f", salarioLiquido);
+        
+        System.out.println("Número de Registro: " + registro
+                + "\tNome do Funcionário: " + nome);
+        System.out.println("Departamento: " + departamento);
+        System.out.println("Horas Trabalhadas: " + horaTrabalhada
+                + "(Horas Extras: " + horaExtraTrabalhada + ")");
+        System.out.println("Salário Bruto: \t\t\tR$ " + valSB);
+        System.out.println("Contribuiçao INSS: \t\tR$ - " + valINSS);
+        System.out.println("Imposto de Renda Recolhido: \tR$ - " + valIR);
+        System.out.println("Salário Líquido: \tR$ " + valSL);
+        System.out.println("");
+    }
+
+    public void apresentarHoraExtras() {
+        String valHRX = String.format("%.2f", valorTotalHoraExtra);
+        System.out.println("Número de Registro: " + registro
+                + "\tNome do Funcionário: " + nome);
+        System.out.println("Horas Extras Trabalhadas: " + horaExtraTrabalhada);
+        System.out.println("Valor recebido em Horas Extras: " + valHRX);
+        System.out.println("");
+    }
+
+    public void apresentarDepartamento() {
+        String valSL = String.format("%.2f", salarioLiquido);
+        System.out.println("Número de Registro: " + registro
+                + "\tNome do Funcionário: " + nome);
+        System.out.println("Horas Trabalhadas: " + horaTrabalhada
+                + "\t\tSalário Líquido: R$ " + valSL);
+    }
 }

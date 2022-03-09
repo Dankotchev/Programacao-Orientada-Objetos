@@ -32,7 +32,7 @@ import utilidade.MenuOperacoes;
 public class Principal {
 
     public static void main(String[] args) {
-        Disciplina dis[] = new Disciplina[7];
+        Gerenciador geren = new Gerenciador();
         MenuOperacoes menu = new MenuOperacoes();
         int opcao;
 
@@ -40,61 +40,33 @@ public class Principal {
             opcao = menu.gerirMenu();
             switch (opcao) {
                 case 1:
-                    System.out.println("\nInserir informações das Disciplinas");
-                    for (int i = 0; i < 7; i++) {
-                        dis[i] = new Disciplina();
-                        System.out.println("Disciplina #" + (i + 1));
-                        dis[i].lerDados();
-                    }
+                    geren.inserirInformacoes();
                     break;
 
                 case 2:
-                    System.out.println("\nInserir Nota nas Disciplinas");
-                    for (int i = 0; i < 7; i++) {
-                        System.out.println("Disciplina " + dis[i].getNome());
-                        dis[i].digitarNotas();
-                    }
+                    geren.inserirNotas();
                     break;
 
                 case 3:
-                    System.out.println("\nInserir Frequência nas Disciplinas");
-                    for (int i = 0; i < 7; i++) {
-                        System.out.println("Disciplina " + dis[i].getNome());
-                        dis[i].entrarFrequencia();
-                    }
+                    geren.inserirFrequencia();
                     break;
 
                 case 4:
-                    System.out.println("\nApresentar Informações das Disciplinas");
-                    for (int i = 0; i < 7; i++) {
-                        System.out.println();
-                        dis[i].apresentarDados();
-                    }
+                    geren.apresentarDados();
                     break;
 
                 case 5:
-                    System.out.println("\nApresentar Situação nas Disciplinas");
-                    System.out.println();
-                    for (int i = 0; i < 7; i++) {
-                        System.out.println("Disciplina " + dis[i].getNome() 
-                        + ": " + dis[i].apresentarSituacao());
-                        
-                    }
+                    geren.apresentarSituacao();
                     break;
 
                 case 6:
-                    System.out.println("\nApresentar Médias nas Disciplinas");
-                    for (int i = 0; i < 7; i++) {
-                        System.out.println("Disciplina " + dis[i].getNome() 
-                                + ": " + "Sua média foi de "
-                                + dis[i].retonarMedia());
-                    }
+                    geren.apresentarMedias();
                     break;
 
                 case 0:
                     System.out.println("ENCERRANDO O SISTEMA");
                     break;
             }
-            } while (opcao != 0);
+        } while (opcao != 0);
     }
 }

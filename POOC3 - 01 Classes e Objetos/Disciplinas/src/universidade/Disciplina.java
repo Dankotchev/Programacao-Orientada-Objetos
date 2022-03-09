@@ -39,31 +39,10 @@ public class Disciplina {
     private float nota2;
     private float frequencia;
 
-    // Gets
     public String getNome() {
         return nome;
     }
-
-    public String getSigla() {
-        return nome;
-    }
-
-    public String getProfessor() {
-        return professor;
-    }
-
-    public float getNota1() {
-        return nota1;
-    }
-
-    public float getNota2() {
-        return nota2;
-    }
-
-    public float getFrequencia() {
-        return frequencia;
-    }
-
+    
     // Metodos da Classe
     public void lerDados() {
         Scanner scan = new Scanner(System.in);
