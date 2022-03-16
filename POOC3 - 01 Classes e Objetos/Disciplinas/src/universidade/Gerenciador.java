@@ -30,14 +30,17 @@ package universidade;
 public class Gerenciador {
 
     private Disciplina[] dis;
+    private int tamanho;
 
-    public void inicializar() {
-        dis = new Disciplina[7];
+    public Gerenciador() {
+        this.tamanho = 7;
+        dis = new Disciplina[tamanho];
+
     }
 
     public void inserirInformacoes() {
         System.out.println("\nInserir informações das Disciplinas");
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < tamanho; i++) {
             dis[i] = new Disciplina();
             System.out.println("Disciplina #" + (i + 1));
             dis[i].lerDados();
@@ -46,7 +49,7 @@ public class Gerenciador {
 
     public void inserirNotas() {
         System.out.println("\nInserir Nota nas Disciplinas");
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < tamanho; i++) {
             System.out.println("Disciplina " + dis[i].getNome());
             dis[i].digitarNotas();
         }
@@ -62,7 +65,7 @@ public class Gerenciador {
 
     public void apresentarDados() {
         System.out.println("\nApresentar Informações das Disciplinas");
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < tamanho; i++) {
             System.out.println();
             dis[i].apresentarDados();
         }
@@ -71,16 +74,15 @@ public class Gerenciador {
     public void apresentarSituacao() {
         System.out.println("\nApresentar Situação nas Disciplinas");
         System.out.println();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < tamanho; i++) {
             System.out.println("Disciplina " + dis[i].getNome()
                     + ": " + dis[i].apresentarSituacao());
-
         }
     }
 
     public void apresentarMedias() {
         System.out.println("\nApresentar Médias nas Disciplinas");
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < tamanho; i++) {
             System.out.println("Disciplina " + dis[i].getNome()
                     + ": " + "Sua média foi de "
                     + dis[i].retonarMedia());
