@@ -1,35 +1,7 @@
-/*
- * The MIT License
- *
- * Copyright 2022 Danilo Quirino.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package empresa;
 
 import java.util.Scanner;
-import encargos.DescontoSalarial;
 
-/**
- *
- * @author Danilo Quirino
- */
 public class Funcionario {
 
     private String nome;
@@ -93,23 +65,15 @@ public class Funcionario {
         return contribuicaoINSS;
     }
 
-    /*
-    public Funcionario(String nome, String departamento, int registro, int horaTrabalhada, double valorHora) {
-        this.nome = nome;
-        this.departamento = departamento;
-        this.registro = registro;
-        this.horaTrabalhada = horaTrabalhada;
-        this.valorHora = valorHora;
-    }
-     */
-
     private void divisaoHorasTrabalhadas() {
-        if (horaTrabalhada <= 220) {
+        int ch = 220;
+        if (horaTrabalhada <= ch) {
             this.horaNormalTrabalhada = horaTrabalhada;
             this.horaExtraTrabalhada = 0;
-        } else {
-            this.horaNormalTrabalhada = 220;
-            this.horaExtraTrabalhada = horaTrabalhada - 220;
+        }
+        else {
+            this.horaNormalTrabalhada = ch;
+            this.horaExtraTrabalhada = horaTrabalhada - ch;
         }
     }
 
@@ -123,9 +87,8 @@ public class Funcionario {
     }
 
     public void obterInformacoes() {
-        DescontoSalarial encargos = new DescontoSalarial();
-
         Scanner scan = new Scanner(System.in);
+        
         System.out.print("Informe o nome do Funcionário: ");
         nome = scan.nextLine();
         System.out.print("Informe o Departamento do Funcionário: ");
@@ -137,11 +100,12 @@ public class Funcionario {
         System.out.print("Informe o Valor da Hora trabalhada: ");
         valorHora = scan.nextDouble();
         System.out.println();
+        
         divisaoHorasTrabalhadas();
         valorHoraExtras();
         valorSalarioBruto();
-        recolherIR = encargos.calculoIR(salarioBruto);
-        contribuicaoINSS = encargos.calculoINSS(salarioBruto);
+        recolherIR = calculoIR();
+        contribuicaoINSS = calculoINSS();
         salarioLiquido = salarioBruto - recolherIR - contribuicaoINSS;
     }
 
@@ -150,12 +114,10 @@ public class Funcionario {
         String valINSS = String.format("%.2f", contribuicaoINSS);
         String valIR = String.format("%.2f", recolherIR);
         String valSL = String.format("%.2f", salarioLiquido);
-        
-        System.out.println("Número de Registro: " + registro
-                + "\tNome do Funcionário: " + nome);
+
+        System.out.println("Número de Registro: " + registro + "\tNome do Funcionário: " + nome);
         System.out.println("Departamento: " + departamento);
-        System.out.println("Horas Trabalhadas: " + horaTrabalhada
-                + "(Horas Extras: " + horaExtraTrabalhada + ")");
+        System.out.println("Horas Trabalhadas: " + horaTrabalhada + "(Horas Extras: " + horaExtraTrabalhada + ")");
         System.out.println("Salário Bruto: \t\t\tR$ " + valSB);
         System.out.println("Contribuiçao INSS: \t\tR$ - " + valINSS);
         System.out.println("Imposto de Renda Recolhido: \tR$ - " + valIR);
@@ -165,8 +127,8 @@ public class Funcionario {
 
     public void apresentarHoraExtras() {
         String valHRX = String.format("%.2f", valorTotalHoraExtra);
-        System.out.println("Número de Registro: " + registro
-                + "\tNome do Funcionário: " + nome);
+        
+        System.out.println("Número de Registro: " + registro + "\tNome do Funcionário: " + nome);
         System.out.println("Horas Extras Trabalhadas: " + horaExtraTrabalhada);
         System.out.println("Valor recebido em Horas Extras: " + valHRX);
         System.out.println("");
@@ -174,9 +136,42 @@ public class Funcionario {
 
     public void apresentarDepartamento() {
         String valSL = String.format("%.2f", salarioLiquido);
-        System.out.println("Número de Registro: " + registro
-                + "\tNome do Funcionário: " + nome);
-        System.out.println("Horas Trabalhadas: " + horaTrabalhada
-                + "\t\tSalário Líquido: R$ " + valSL);
+        
+        System.out.println("Número de Registro: " + registro + "\tNome do Funcionário: " + nome);
+        System.out.println("Horas Trabalhadas: " + horaTrabalhada + "\t\tSalário Líquido: R$ " + valSL);
+    }
+
+    private double calculoIR() {
+        double valorRecolher;
+        if (this.salarioBruto > 4664.68) {
+            valorRecolher = this.salarioBruto * 0.275;
+        }
+        else if (this.salarioBruto > 3751.05 && this.salarioBruto <= 4664.68) {
+            valorRecolher = this.salarioBruto * 0.225;
+        }
+        else if (this.salarioBruto > 2826.65 && this.salarioBruto <= 3751.05) {
+            valorRecolher = this.salarioBruto * 0.150;
+        }
+        else if (this.salarioBruto > 1903.98 && this.salarioBruto <= 2826.65) {
+            valorRecolher = this.salarioBruto * 0.075;
+        }
+        else {
+            valorRecolher = 0;
+        }
+        return valorRecolher;
+    }
+
+    private double calculoINSS() {
+        double contribuicao;
+        if (this.salarioBruto > 2920.00) {
+            contribuicao = this.salarioBruto * 0.11;
+        }
+        else if (this.salarioBruto > 1750.00 && this.salarioBruto <= 2920.00) {
+            contribuicao = this.salarioBruto * 0.09;
+        }
+        else {
+            contribuicao = this.salarioBruto * 0.08;
+        }
+        return contribuicao;
     }
 }
