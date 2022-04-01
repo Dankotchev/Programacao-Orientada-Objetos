@@ -14,7 +14,6 @@ public class MenuOperacoes {
         System.out.println("3 -\tCadastrar Técnico Administrativo");
         System.out.println("4 -\tListar todas as pessoas da Universidade");
         System.out.println("0 -\tEncerrar Sistema");
-        opcao = scan.nextInt();
 
         do {
             System.out.print("\tEscolha ==>   ");
