@@ -3,7 +3,7 @@ package modelo;
 import java.util.Scanner;
 import modelo.abstratos.Produto;
 
-public class Indrustrializados extends Produto{
+public class Industrializado extends Produto{
 
     private String sabor;
 
@@ -28,8 +28,7 @@ public class Indrustrializados extends Produto{
 
     @Override
     public String getDescricao() {
-        return "Nome: " + super.nome + " - Marca: " + super.marca +
-                " - Sabor: " + this.sabor;
+        return "Nome: " + super.nome + " - Marca: " + super.marca + " - Sabor: " + this.sabor + ".";
     }
 
 

@@ -3,7 +3,7 @@ package modelo;
 import java.util.Scanner;
 import modelo.abstratos.Produto;
 
-public class Bebidas extends Produto {
+public class Bebida extends Produto {
 
     private int qntml;
 
@@ -18,7 +18,7 @@ public class Bebidas extends Produto {
         } while (codigo < 2000 || codigo >= 3000);
 
         super.setCodigo(codigo);
-
+        
         super.ler();
 
         System.out.println("Quantidade ml");
@@ -27,8 +27,8 @@ public class Bebidas extends Produto {
 
     @Override
     public String getDescricao() {
-        return "Nome: " + super.nome + " - Marca: " + super.marca
-                + " - Quantidade: " + this.qntml + "ml";
+        return "Nome: " + super.nome + " - Marca: "
+                + super.marca + " - Quantidade: " + this.qntml + "ml.";
     }
 
 }

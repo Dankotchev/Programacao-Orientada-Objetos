@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import modelo.interfaces.ItemCardapio;
 
-public class PratosPorcoes implements ItemCardapio {
+public class PratoPorcao implements ItemCardapio {
 
     private int codigo;
     private String nome;
@@ -26,6 +26,7 @@ public class PratosPorcoes implements ItemCardapio {
 
         this.codigo = codigo;
 
+        s.nextLine();
         System.out.println("Digite o nome");
         this.nome = s.nextLine();
 
@@ -35,8 +36,8 @@ public class PratosPorcoes implements ItemCardapio {
         System.out.println("Serve quantas pessoas");
         this.quantPessoas = s.nextInt();
 
-        System.out.println("Digite a descrição");
         s.nextLine();
+        System.out.println("Digite a descrição");
         this.descricao = s.nextLine();
 
         do {
@@ -49,11 +50,20 @@ public class PratosPorcoes implements ItemCardapio {
         } while (temIngredientes.equals("S"));
     }
 
-    public void apresentar() {
-        System.out.println("Codigo - " + this.codigo);
-        this.getDescricao();
-        System.out.println("Valor - " + this.valor);
+    public void apresentarReceita() {
+        System.out.println("Codigo - " + this.codigo + "\tNome: " + this.nome);
+        System.out.println("Ingredientes: ");
 
+        for (int i = 0; i < this.ingredientes.size(); i++) {
+            System.out.println((i + 1) + " - " + this.ingredientes.get(i));
+        }
+    }
+
+//    public void apresentarReceita() {
+//        System.out.println("Codigo - " + this.codigo);
+//        this.getDescricao();
+//        System.out.println("Valor - " + this.valor);
+//
 //        System.out.println("Ingredientes");          
 //        
 //        for(int i=0; i< this.ingredientes.size(); i++)
@@ -67,8 +77,7 @@ public class PratosPorcoes implements ItemCardapio {
 //            System.out.println(i+" - "+ ingrediente);
 //            i++;
 //        }   
-    }
-
+//    }
     @Override
     public int getCodigo() {
         return this.codigo;
@@ -77,7 +86,7 @@ public class PratosPorcoes implements ItemCardapio {
     @Override
     public String getDescricao() {
         return "Nome: " + this.nome + " - Descrição: " + this.descricao
-                + " - Serve  " + this.quantPessoas + " pessoas.";
+                + " - Serve  " + this.quantPessoas + " pessoas";
     }
 
     @Override
