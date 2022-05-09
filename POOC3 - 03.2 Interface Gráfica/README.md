@@ -16,7 +16,7 @@ Permitir que se faça venda e compra de um produto, ou seja, deve ter dois méto
 
 b) Na tela contendo a relação de produtos (Controle de Produtos), deve ter uma tabela apresentando o código, descrição e valor do produto, e os seguintes botões: Novo, Alterar, Excluir, Visualizar, Comprar, Vender e Sair.
 
-![Manutenção de Produtos](ProdInterGraf - ManutencaoProdutos.png)
+![Manutenção de Produtos](https://github.com/Dankotchev/Programacao-Orientada-Objetos/blob/main/POOC3%20-%2003.2%20Interface%20Gr%C3%A1fica/ProdInterGraf%20-%20ManutencaoProdutos.png?raw=true)
 
 Nessa tela quando o usuário clicar nos botões Novo, Alterar e Visualizar deve ser apresentada uma nova janela (JDialog) com todos os dados do produto para o usuário incluir, alterar ou visualizar. 
 
@@ -24,15 +24,15 @@ Quando o usuário clicar em vender e comprar, deve-se apresentar uma outra tela 
 
 c) A tela para manutenção dos dados do produto, deve ter campos para todos os dados do produto permitindo ao usuário digitar valores para esses dados. Lembrar que na alteração a quantidade de produto não pode ser alterada (não deixar o campo editável). Atentar para a conversão do conteúdo dos campos quantidade e valor.
 
-![Dados do Produto](ProdInterGraf - DadosProdutos.png)
+![Dados do Produto](https://github.com/Dankotchev/Programacao-Orientada-Objetos/blob/main/POOC3%20-%2003.2%20Interface%20Gr%C3%A1fica/ProdInterGraf%20-%20DadosProdutos.png?raw=true)
 
 d) A tela para compra e venda de produtos, deve apresentar o código, descrição e quantidade em estoque, que não deve ser editável para o usuário, além de um campo de quantidade vendida ou comprada. Quando for uma venda, a quantidade vendida não deve ser superior a quantidade em estoque, isso deve ser verificado no botão de confirmar. Caso isso ocorra apresente uma mensagem ao usuário.
 
-![Compra de Produtos](ProdInterGraf - CompraProdutos.png)
+![Compra de Produtos](https://raw.githubusercontent.com/Dankotchev/Programacao-Orientada-Objetos/main/POOC3%20-%2003.2%20Interface%20Gr%C3%A1fica/ProdInterGraf%20-%20CompraProdutos.png)
 
 ou 
 
-![Venda de Produtos](ProdInterGraf - VendaProdutos.png)
+![Venda de Produtos](https://github.com/Dankotchev/Programacao-Orientada-Objetos/blob/main/POOC3%20-%2003.2%20Interface%20Gr%C3%A1fica/ProdInterGraf%20-%20VendaProdutos.png?raw=true)
 
 Essa tela deve ter um método setProduto para preencher os dados do produto na tela e um método getQuantidade, que será o conteúdo do campo quantidade comprada ou vendida validada.
 
