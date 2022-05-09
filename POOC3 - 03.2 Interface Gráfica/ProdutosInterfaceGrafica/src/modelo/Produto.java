@@ -59,11 +59,11 @@ public class Produto {
     }
     
     public void vender (int qtd) {
-        
+        this.estoque -= qtd;
     }
     
     public void comprar(int qtd){
-        
+        this.estoque +=qtd;
     }
    
 }

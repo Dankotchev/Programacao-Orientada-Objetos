@@ -44,8 +44,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        botCadAluno3 = new javax.swing.JButton();
         jPanelCRUD = new javax.swing.JPanel();
         botNovoAluno = new javax.swing.JButton();
         botAlterarAluno = new javax.swing.JButton();
@@ -59,14 +57,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-
-        botCadAluno3.setBackground(new java.awt.Color(204, 255, 204));
-        botCadAluno3.setText("Cadastro de Aluno");
-        botCadAluno3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botCadAluno3ActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,10 +233,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botExcluirAlunoActionPerformed
 
-    private void botCadAluno3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCadAluno3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botCadAluno3ActionPerformed
-
     private void botVisualizarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVisualizarAlunoActionPerformed
         // Pega a linha selecionada (-1 senão estiver selecionada)
         int linha = tabelaAlunos.getSelectedRow();
@@ -309,12 +295,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botAlterarAluno;
-    private javax.swing.JButton botCadAluno3;
     private javax.swing.JButton botExcluirAluno;
     private javax.swing.JButton botNovoAluno;
     private javax.swing.JButton botSair;
     private javax.swing.JButton botVisualizarAluno;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabelManuAlunos;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

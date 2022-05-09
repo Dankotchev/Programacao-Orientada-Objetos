@@ -1,36 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package visao;
 
 import modelo.Produto;
 
-/**
- *
- * @author Aluno
- */
 public class DialogDadosProduto extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DialogDadosProduto
-     */
     public DialogDadosProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
     }
-    
-    public void setProduto(Produto p){
+
+    public void setProduto(Produto p) {
         this.txtCodigo.setText(String.valueOf(p.getCodigo()));
         this.txtDescricao.setText(p.getDescricao());
         this.txtMarca.setText(p.getMarca());
         this.txtEstoque.setText(String.valueOf(p.getEstoque()));
         this.txtValor.setText(String.valueOf(p.getValor()));
     }
-    
-    public Produto getProduto (){
+
+    public Produto getProduto() {
         Produto p = new Produto();
         p.setCodigo(Integer.parseInt(this.txtCodigo.getText()));
         p.setDescricao(this.txtDescricao.getText());
@@ -39,16 +27,16 @@ public class DialogDadosProduto extends javax.swing.JDialog {
         p.setValor(Double.parseDouble(this.txtValor.getText()));
         return p;
     }
-    
-    public void bloquearAll(){
+
+    public void bloquearAll() {
         this.txtCodigo.setEditable(false);
         this.txtDescricao.setEditable(false);
         this.txtEstoque.setEditable(false);
         this.txtMarca.setEditable(false);
         this.txtValor.setEditable(false);
     }
-    
-    public void bloquearEstoque(){
+
+    public void bloquearEstoque() {
         this.txtEstoque.setEditable(false);
     }
 
@@ -163,15 +151,15 @@ public class DialogDadosProduto extends javax.swing.JDialog {
                             .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(97, 97, 97))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(painelDadosTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelCodigo)
@@ -195,16 +183,16 @@ public class DialogDadosProduto extends javax.swing.JDialog {
                         .addComponent(labelValor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botConfimarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botConfimarActionPerformed
-       this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_botConfimarActionPerformed
 
     /**

@@ -12,6 +12,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(this);
+        Produto p = new Produto(123456, "Produto Teste", "Marca Teste", 44.86, 345);
+        listaProd.add(p);
+        this.atualizarTabela();
+
     }
 
     private void atualizarTabela() {
@@ -42,6 +46,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         botVisuProd = new javax.swing.JButton();
         botComprarProd = new javax.swing.JButton();
         botVenderProd = new javax.swing.JButton();
+        botSair = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProdutos = new javax.swing.JTable();
 
@@ -55,13 +60,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(550, 300));
+        setPreferredSize(null);
 
         painelManterProdTop.setBackground(new java.awt.Color(204, 204, 204));
         painelManterProdTop.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         labelManterProd.setBackground(new java.awt.Color(204, 204, 204));
         labelManterProd.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        labelManterProd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelManterProd.setText("Manutenção de Produtos");
 
         javax.swing.GroupLayout painelManterProdTopLayout = new javax.swing.GroupLayout(painelManterProdTop);
@@ -71,7 +77,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelManterProdTopLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelManterProd)
-                .addGap(197, 197, 197))
+                .addGap(224, 224, 224))
         );
         painelManterProdTopLayout.setVerticalGroup(
             painelManterProdTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +89,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         painelManterProdBotton.setBackground(new java.awt.Color(204, 204, 204));
         painelManterProdBotton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        painelManterProdBotton.setLayout(new java.awt.GridLayout(1, 1, 10, 10));
+        painelManterProdBotton.setMaximumSize(new java.awt.Dimension(600, 50));
+        painelManterProdBotton.setPreferredSize(new java.awt.Dimension(600, 32));
 
         botNovoProd.setBackground(new java.awt.Color(153, 255, 255));
         botNovoProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -93,7 +100,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botNovoProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botNovoProd);
 
         botExcluirProd.setBackground(new java.awt.Color(153, 255, 255));
         botExcluirProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -103,7 +109,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botExcluirProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botExcluirProd);
 
         botAltProd.setBackground(new java.awt.Color(153, 255, 255));
         botAltProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -113,7 +118,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botAltProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botAltProd);
 
         botVisuProd.setBackground(new java.awt.Color(153, 255, 255));
         botVisuProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -123,7 +127,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botVisuProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botVisuProd);
 
         botComprarProd.setBackground(new java.awt.Color(153, 255, 255));
         botComprarProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -133,7 +136,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botComprarProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botComprarProd);
 
         botVenderProd.setBackground(new java.awt.Color(153, 255, 255));
         botVenderProd.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -143,7 +145,54 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 botVenderProdActionPerformed(evt);
             }
         });
-        painelManterProdBotton.add(botVenderProd);
+
+        botSair.setBackground(new java.awt.Color(153, 255, 255));
+        botSair.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        botSair.setText("Sair");
+        botSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botSairActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelManterProdBottonLayout = new javax.swing.GroupLayout(painelManterProdBotton);
+        painelManterProdBotton.setLayout(painelManterProdBottonLayout);
+        painelManterProdBottonLayout.setHorizontalGroup(
+            painelManterProdBottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelManterProdBottonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botNovoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botExcluirProd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botAltProd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botVisuProd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botComprarProd, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botVenderProd, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(botSair, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        painelManterProdBottonLayout.setVerticalGroup(
+            painelManterProdBottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelManterProdBottonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelManterProdBottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelManterProdBottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botVisuProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botComprarProd))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelManterProdBottonLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(painelManterProdBottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botNovoProd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botExcluirProd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botAltProd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botVenderProd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
 
         tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,12 +212,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelManterProdTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelManterProdBotton, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(painelManterProdBotton, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,10 +221,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(painelManterProdTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(painelManterProdBotton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -198,12 +243,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botNovoProdActionPerformed
 
     private void botExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botExcluirProdActionPerformed
-        // TODO add your handling code here:
+        int linha = this.tabelaProdutos.getSelectedRow();
+
+        if (linha != 1) {
+            JOptionPane.showConfirmDialog(null, "Confimar");
+                listaProd.remove(linha);
+            this.atualizarTabela();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha!");
+        }
+
     }//GEN-LAST:event_botExcluirProdActionPerformed
 
     private void botAltProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAltProdActionPerformed
- // Pega a linha selecionada (-1 senão estiver selecionada)
-        int linha = tabelaProdutos.getSelectedRow();
+        // Pega a linha selecionada (-1 senão estiver selecionada)
+        int linha = this.tabelaProdutos.getSelectedRow();
 
         if (linha != -1) {
             DialogDadosProduto tela = new DialogDadosProduto(this, true);
@@ -223,11 +277,38 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botAltProdActionPerformed
 
     private void botVisuProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVisuProdActionPerformed
-        // TODO add your handling code here:
+        int linha = this.tabelaProdutos.getSelectedRow();
+
+        if (linha != -1) {
+            DialogDadosProduto tela = new DialogDadosProduto(this, true);
+            tela.setProduto(this.listaProd.get(linha));
+            tela.bloquearAll();
+            tela.setVisible(true);
+
+            tela.dispose();
+        } else {
+            // Não selecionou uma linha da tabela, apresentar mensagem
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+        }
     }//GEN-LAST:event_botVisuProdActionPerformed
 
     private void botComprarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botComprarProdActionPerformed
-        // TODO add your handling code here:
+        int linha = this.tabelaProdutos.getSelectedRow();
+
+        if (linha != -1) {
+            DialogCompraVendaProduto tela = new DialogCompraVendaProduto(this, true);
+            tela.comprar();
+            tela.bloquear();
+            tela.setProduto(this.listaProd.get(linha));
+            tela.setVisible(true);
+
+            this.listaProd.get(linha).comprar(tela.qtdC());
+            this.atualizarTabela();
+            tela.dispose();
+        } else {
+            // Não selecionou uma linha da tabela, apresentar mensagem
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+        }
     }//GEN-LAST:event_botComprarProdActionPerformed
 
     private void botNovoProd5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botNovoProd5ActionPerformed
@@ -235,8 +316,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botNovoProd5ActionPerformed
 
     private void botVenderProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botVenderProdActionPerformed
-        // TODO add your handling code here:
+        int linha = this.tabelaProdutos.getSelectedRow();
+
+        if (linha != -1) {
+            DialogCompraVendaProduto tela = new DialogCompraVendaProduto(this, true);
+            tela.vender();
+            tela.bloquear();
+            tela.setProduto(listaProd.get(linha));
+            tela.setVisible(true);
+
+            this.listaProd.get(linha).vender(tela.qtdC());
+            this.atualizarTabela();
+
+            tela.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma lina!");
+        }
     }//GEN-LAST:event_botVenderProdActionPerformed
+
+    private void botSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,6 +379,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botExcluirProd;
     private javax.swing.JButton botNovoProd;
     private javax.swing.JButton botNovoProd5;
+    private javax.swing.JButton botSair;
     private javax.swing.JButton botVenderProd;
     private javax.swing.JButton botVisuProd;
     private javax.swing.JScrollPane jScrollPane1;

@@ -1,22 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package visao;
 
-/**
- *
- * @author Aluno
- */
+import modelo.Produto;
+
 public class DialogCompraVendaProduto extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DialogDadosProduto
-     */
     public DialogCompraVendaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
+    }
+
+    public void bloquear ()
+    {
+        this.txtCodigoCV.setEditable(false);
+        this.txtDescricaoCV.setEditable(false);
+        this.txtEstoqueCV.setEditable(false);
+    }
+    public void comprar() {
+        this.labelCVTop.setText("Compra de Produto");
+        this.labelQuantidade.setText("Quantidade Comprada");
+    }
+
+    public void vender() {
+        this.labelCVTop.setText("Venda de Produto");
+        this.labelQuantidade.setText("Quantidade Vendida");
+    }
+
+    public void setProduto(Produto p) {
+        this.txtCodigoCV.setText(String.valueOf(p.getCodigo()));
+        this.txtDescricaoCV.setText(p.getDescricao());
+        this.txtEstoqueCV.setText(String.valueOf(p.getEstoque()));
+    }
+
+    public int qtdC() {
+        int qtd; 
+        qtd = (Integer.parseInt(this.txtQuantidadeCV.getText()));
+        return qtd;
+    }
+    
+    public int qtdV (int estq)
+    {
+        int qtd = 0;
+        
+        return qtd;
     }
 
     /**
@@ -29,25 +55,24 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
     private void initComponents() {
 
         painelDadosTop = new javax.swing.JPanel();
-        labelCompraProd = new javax.swing.JLabel();
+        labelCVTop = new javax.swing.JLabel();
         txtCodigoCV = new javax.swing.JTextField();
         labelCodigo = new javax.swing.JLabel();
         labelDescricao = new javax.swing.JLabel();
         txtDescricaoCV = new javax.swing.JTextField();
         labelEstoque = new javax.swing.JLabel();
         txtEstoqueCV = new javax.swing.JTextField();
-        labelValor = new javax.swing.JLabel();
-        txtValorCV = new javax.swing.JTextField();
+        labelQuantidade = new javax.swing.JLabel();
+        txtQuantidadeCV = new javax.swing.JTextField();
         botConfimar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(516, 375));
 
         painelDadosTop.setBackground(new java.awt.Color(204, 204, 204));
         painelDadosTop.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        labelCompraProd.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        labelCompraProd.setText("Compra de Produto");
+        labelCVTop.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        labelCVTop.setText("Comprar / Vender Produto");
 
         javax.swing.GroupLayout painelDadosTopLayout = new javax.swing.GroupLayout(painelDadosTop);
         painelDadosTop.setLayout(painelDadosTopLayout);
@@ -55,14 +80,14 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
             painelDadosTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosTopLayout.createSequentialGroup()
                 .addGap(130, 130, 130)
-                .addComponent(labelCompraProd)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addComponent(labelCVTop)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         painelDadosTopLayout.setVerticalGroup(
             painelDadosTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelCompraProd, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(labelCVTop, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -81,10 +106,15 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
 
         txtEstoqueCV.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
 
-        labelValor.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        labelValor.setText("Valor (R$)");
+        labelQuantidade.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        labelQuantidade.setText("Quantidade COMPRAR/VENDER");
 
-        txtValorCV.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txtQuantidadeCV.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txtQuantidadeCV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQuantidadeCVActionPerformed(evt);
+            }
+        });
 
         botConfimar.setBackground(new java.awt.Color(153, 255, 153));
         botConfimar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -120,13 +150,15 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
                             .addComponent(txtEstoqueCV, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorCV, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(65, 65, 65))))
+                            .addComponent(labelQuantidade)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtQuantidadeCV, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)))
+                        .addGap(40, 40, 40))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(203, Short.MAX_VALUE)
-                .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(202, 202, 202))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,12 +176,12 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEstoque)
-                    .addComponent(labelValor))
+                    .addComponent(labelQuantidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEstoqueCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtValorCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                    .addComponent(txtQuantidadeCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(botConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -158,8 +190,12 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botConfimarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botConfimarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_botConfimarActionPerformed
+
+    private void txtQuantidadeCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeCVActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_txtQuantidadeCVActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,6 +227,7 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 DialogCompraVendaProduto dialog = new DialogCompraVendaProduto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -206,15 +243,15 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botConfimar;
+    private javax.swing.JLabel labelCVTop;
     private javax.swing.JLabel labelCodigo;
-    private javax.swing.JLabel labelCompraProd;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelEstoque;
-    private javax.swing.JLabel labelValor;
+    private javax.swing.JLabel labelQuantidade;
     private javax.swing.JPanel painelDadosTop;
     private javax.swing.JTextField txtCodigoCV;
     private javax.swing.JTextField txtDescricaoCV;
     private javax.swing.JTextField txtEstoqueCV;
-    private javax.swing.JTextField txtValorCV;
+    private javax.swing.JTextField txtQuantidadeCV;
     // End of variables declaration//GEN-END:variables
 }
