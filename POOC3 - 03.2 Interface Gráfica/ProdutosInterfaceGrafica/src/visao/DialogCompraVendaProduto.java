@@ -10,12 +10,12 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
         this.setLocationRelativeTo(this);
     }
 
-    public void bloquear ()
-    {
+    public void bloquear() {
         this.txtCodigoCV.setEditable(false);
         this.txtDescricaoCV.setEditable(false);
         this.txtEstoqueCV.setEditable(false);
     }
+
     public void comprar() {
         this.labelCVTop.setText("Compra de Produto");
         this.labelQuantidade.setText("Quantidade Comprada");
@@ -33,15 +33,8 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
     }
 
     public int qtdC() {
-        int qtd; 
+        int qtd;
         qtd = (Integer.parseInt(this.txtQuantidadeCV.getText()));
-        return qtd;
-    }
-    
-    public int qtdV (int estq)
-    {
-        int qtd = 0;
-        
         return qtd;
     }
 
@@ -110,11 +103,6 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
         labelQuantidade.setText("Quantidade COMPRAR/VENDER");
 
         txtQuantidadeCV.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        txtQuantidadeCV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQuantidadeCVActionPerformed(evt);
-            }
-        });
 
         botConfimar.setBackground(new java.awt.Color(153, 255, 153));
         botConfimar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -192,10 +180,6 @@ public class DialogCompraVendaProduto extends javax.swing.JDialog {
     private void botConfimarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botConfimarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_botConfimarActionPerformed
-
-    private void txtQuantidadeCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeCVActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_txtQuantidadeCVActionPerformed
 
     /**
      * @param args the command line arguments
