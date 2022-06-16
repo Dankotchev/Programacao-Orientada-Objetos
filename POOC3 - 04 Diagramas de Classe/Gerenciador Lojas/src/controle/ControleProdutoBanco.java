@@ -72,7 +72,7 @@ public class ControleProdutoBanco {
     public void alterar(Produto p) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
         // criar a string contendo o SQL
-        String comandoSQL = "UPDATE produto set descricao = ?, valorVenda = ?, valorVenda = ?"
+        String comandoSQL = "UPDATE produto set descricao = ?, valorVenda = ?, valorCusto = ?"
                 + " where codigo = ?";
 
         // Preparar a string para execução do SQL

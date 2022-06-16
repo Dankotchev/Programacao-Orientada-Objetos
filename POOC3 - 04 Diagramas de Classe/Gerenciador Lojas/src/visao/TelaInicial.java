@@ -18,23 +18,24 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        butaoInicialProdutos = new javax.swing.JButton();
+        boaoInicialProdutos = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        butaoInicialClientes = new javax.swing.JButton();
-        butaoInicialVendas = new javax.swing.JButton();
-        butaoInicialCaixa = new javax.swing.JButton();
+        botaoInicialClientes = new javax.swing.JButton();
+        botaoInicialVendas = new javax.swing.JButton();
+        botaoInicialCaixa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Lojas Hortolândia: Controle Geral");
         setBackground(new java.awt.Color(0, 102, 102));
         setMaximumSize(new java.awt.Dimension(1000, 1000));
         setMinimumSize(new java.awt.Dimension(500, 400));
         setResizable(false);
 
-        butaoInicialProdutos.setText("Produtos");
-        butaoInicialProdutos.addActionListener(new java.awt.event.ActionListener() {
+        boaoInicialProdutos.setText("Produtos");
+        boaoInicialProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butaoInicialProdutosActionPerformed(evt);
+                boaoInicialProdutosActionPerformed(evt);
             }
         });
 
@@ -46,34 +47,37 @@ public class TelaInicial extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(455, 455, 455))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
-        butaoInicialClientes.setText("Clientes");
-        butaoInicialClientes.addActionListener(new java.awt.event.ActionListener() {
+        botaoInicialClientes.setText("Clientes");
+        botaoInicialClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butaoInicialClientesActionPerformed(evt);
+                botaoInicialClientesActionPerformed(evt);
             }
         });
 
-        butaoInicialVendas.setText("Vendas");
-        butaoInicialVendas.addActionListener(new java.awt.event.ActionListener() {
+        botaoInicialVendas.setText("Vendas");
+        botaoInicialVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butaoInicialVendasActionPerformed(evt);
+                botaoInicialVendasActionPerformed(evt);
             }
         });
 
-        butaoInicialCaixa.setText("Caixa");
-        butaoInicialCaixa.addActionListener(new java.awt.event.ActionListener() {
+        botaoInicialCaixa.setText("Caixa");
+        botaoInicialCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butaoInicialCaixaActionPerformed(evt);
+                botaoInicialCaixaActionPerformed(evt);
             }
         });
 
@@ -84,11 +88,13 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(butaoInicialClientes)
-                    .addComponent(butaoInicialProdutos)
-                    .addComponent(butaoInicialVendas)
-                    .addComponent(butaoInicialCaixa))
-                .addContainerGap(370, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(boaoInicialProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoInicialClientes))
+                    .addComponent(botaoInicialVendas)
+                    .addComponent(botaoInicialCaixa))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -99,36 +105,36 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-                .addComponent(butaoInicialProdutos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boaoInicialProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoInicialClientes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(butaoInicialClientes)
+                .addComponent(botaoInicialVendas)
                 .addGap(18, 18, 18)
-                .addComponent(butaoInicialVendas)
-                .addGap(18, 18, 18)
-                .addComponent(butaoInicialCaixa)
+                .addComponent(botaoInicialCaixa)
                 .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void butaoInicialProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butaoInicialProdutosActionPerformed
+    private void boaoInicialProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boaoInicialProdutosActionPerformed
         TelaProduto tela = new TelaProduto();
         tela.setVisible(true);
-    }//GEN-LAST:event_butaoInicialProdutosActionPerformed
+    }//GEN-LAST:event_boaoInicialProdutosActionPerformed
 
-    private void butaoInicialClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butaoInicialClientesActionPerformed
+    private void botaoInicialClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialClientesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_butaoInicialClientesActionPerformed
+    }//GEN-LAST:event_botaoInicialClientesActionPerformed
 
-    private void butaoInicialVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butaoInicialVendasActionPerformed
+    private void botaoInicialVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialVendasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_butaoInicialVendasActionPerformed
+    }//GEN-LAST:event_botaoInicialVendasActionPerformed
 
-    private void butaoInicialCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butaoInicialCaixaActionPerformed
+    private void botaoInicialCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialCaixaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_butaoInicialCaixaActionPerformed
+    }//GEN-LAST:event_botaoInicialCaixaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,10 +172,10 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton butaoInicialCaixa;
-    private javax.swing.JButton butaoInicialClientes;
-    private javax.swing.JButton butaoInicialProdutos;
-    private javax.swing.JButton butaoInicialVendas;
+    private javax.swing.JButton boaoInicialProdutos;
+    private javax.swing.JButton botaoInicialCaixa;
+    private javax.swing.JButton botaoInicialClientes;
+    private javax.swing.JButton botaoInicialVendas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

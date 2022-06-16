@@ -11,7 +11,8 @@ class GerenteConect {
     //   localhost - endereço da máquina onde está o banco
     //   3306 - porta onde o servidor está ouvindo
     //   academico -  nome do banco de dados
-    private static String urlBanco = "jdbc:mysql://localhost:3306/gerenciadorestoque?useSSL=false";
+    private static String urlBanco = "jdbc:mariadb://localhost:3306/ljHorto";
+//    private static String urlBanco = "jdbc:mysql://localhost:3306/ljHorto=";
 
     public static Connection getConexao() {
         // estabelecer conexão com o banco de dados
@@ -31,4 +32,8 @@ class GerenteConect {
         return conexao;
     }
 
+    public static void main(String[] args) {
+       GerenteConect conectar = null;
+       conectar.getConexao();
+    }
 }
