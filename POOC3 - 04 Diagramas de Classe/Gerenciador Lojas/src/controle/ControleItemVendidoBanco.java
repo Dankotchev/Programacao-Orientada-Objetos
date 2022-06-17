@@ -7,6 +7,8 @@ import controle.excecoes.NotExistException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.ItemVendido;
 
 public class ControleItemVendidoBanco {
@@ -55,7 +57,7 @@ public class ControleItemVendidoBanco {
         }
         return listaIV;
     }
-    
+
     public void excluir(int nrNF) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
 
@@ -72,5 +74,49 @@ public class ControleItemVendidoBanco {
         if (linhas == 0) {
             throw new NotExistException();
         }
+    }
+
+    public double getTotalVenda(int nrNF) {
+        double totalVenda = 0;
+        List<ItemVendido> listaIV = new ArrayList<>();
+
+        try {
+            listaIV = this.retonarItemVendido(nrNF);
+            for (ItemVendido iv : listaIV) {
+                totalVenda += (iv.getPrecoVenda() * iv.getQuantidadeVendida());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleItemVendidoBanco.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotExistException ex) {
+            Logger.getLogger(ControleItemVendidoBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return totalVenda;
+    }
+    
+        public ItemVendido pesquisar(int nrNF) throws SQLException, NotExistException {
+        ItemVendido iv = null;
+        Connection conexao = GerenteConect.getConexao();
+
+        String comandoSQL = "SELECT * FROM itemvendido WHERE nrNFVenda = ?";
+        
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        
+        executarSQL.setInt(1, nrNF);
+        
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+
+        resultadoConsulta.last();
+        if (resultadoConsulta.getRow() > 0) {
+            iv = new ItemVendido();
+            iv.setPrecoVenda(resultadoConsulta.getDouble("precoVenda"));
+            iv.setQuantidadeVendida(resultadoConsulta.getInt("quantidadeVendida"));
+
+        } else {
+            throw new NotExistException();
+        }
+        executarSQL.close();
+        conexao.close();
+        return iv;
     }
 }

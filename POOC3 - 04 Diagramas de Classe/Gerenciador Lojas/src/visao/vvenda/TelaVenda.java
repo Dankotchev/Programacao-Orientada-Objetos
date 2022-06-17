@@ -2,9 +2,11 @@ package visao.vvenda;
 
 import controle.ControleItemVendidoBanco;
 import controle.ControleVendaBanco;
+import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ItemVendido;
 import modelo.Venda;
 import visao.TelaInicial;
@@ -13,6 +15,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
     ControleVendaBanco bancoVenda = new ControleVendaBanco();
     ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+
     List<ItemVendido> listaIV = new ArrayList<>();
     List<Venda> listaVenda = new ArrayList<>();
 
@@ -123,25 +126,13 @@ public class TelaVenda extends javax.swing.JFrame {
     private void botaoVendaNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaNovoActionPerformed
         DialogInserirVenda tela = new DialogInserirVenda(this, true);
         tela.setVisible(true);
-
-    
-        try {
-            this.bancoVenda.inserir(tela.getVenda());
-//            this.listaIV = 
-            this.bancoIV.inserir(tela.getIV(), tela.getNrNF(), tela.getCodProd());
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-      
-
-
         tela.dispose();
     }//GEN-LAST:event_botaoVendaNovoActionPerformed
 
     private void botaoVendaListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarTodosActionPerformed
-try {
+        try {
             listaVenda = bancoVenda.listarTodos();
-            DialogListaVenda tela = new DialogListaVenda(this,true);
+            DialogListaVenda tela = new DialogListaVenda(this, true);
             tela.atualizarTabela(listaVenda);
 
             this.setVisible(false);

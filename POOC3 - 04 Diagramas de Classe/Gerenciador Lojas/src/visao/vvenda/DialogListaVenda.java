@@ -1,36 +1,30 @@
-package visao.vcliente;
+package visao.vvenda;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import java.sql.SQLException;
-import modelo.Cliente;
-import controle.ControleClienteBanco;
+import controle.ControleItemVendidoBanco;
+import java.text.SimpleDateFormat;
+import modelo.Venda;
 
-public class DialogListaCliente extends javax.swing.JDialog {
+public class DialogListaVenda extends javax.swing.JDialog {
 
-    List<Cliente> listaCliente = new ArrayList<>();
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
 
-    public DialogListaCliente(java.awt.Frame parent, boolean modal) {
+    public DialogListaVenda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
-
-        try {
-            listaCliente = bancoCliente.listarTodos();
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-
-        this.atualizarTabela();
     }
 
-    private void atualizarTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaClientes.getModel();
+    public void atualizarTabela(List<Venda> listaVenda) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaVenda.getModel();
         modelo.setRowCount(0);
-        for (Cliente c : listaCliente) {
-            modelo.addRow(new Object[]{c.getCodigo(), c.getNome(), c.getContato()});
+
+        for (Venda v : listaVenda) {
+
+            modelo.addRow(new Object[]{v.getNrNF(), sdf.format(v.getData()),
+                v.getFormaPagto(), this.bancoIV.getTotalVenda(v.getNrNF())});
         }
     }
 
@@ -44,14 +38,14 @@ public class DialogListaCliente extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaClientes = new javax.swing.JTable();
+        tabelaVenda = new javax.swing.JTable();
         botaoFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de Produtos");
         setMinimumSize(new java.awt.Dimension(600, 230));
 
-        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -59,9 +53,9 @@ public class DialogListaCliente extends javax.swing.JDialog {
                 "Nota Fiscal", "Data", "Forma de Pagamento", "Valor Total"
             }
         ));
-        jScrollPane1.setViewportView(tabelaClientes);
-        if (tabelaClientes.getColumnModel().getColumnCount() > 0) {
-            tabelaClientes.getColumnModel().getColumn(1).setMaxWidth(80);
+        jScrollPane1.setViewportView(tabelaVenda);
+        if (tabelaVenda.getColumnModel().getColumnCount() > 0) {
+            tabelaVenda.getColumnModel().getColumn(1).setMaxWidth(80);
         }
 
         botaoFechar.setBackground(new java.awt.Color(255, 51, 51));
@@ -146,7 +140,7 @@ public class DialogListaCliente extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DialogListaCliente dialog = new DialogListaCliente(new javax.swing.JFrame(), true);
+                DialogListaVenda dialog = new DialogListaVenda(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -161,10 +155,10 @@ public class DialogListaCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaClientes;
+    private javax.swing.JTable tabelaVenda;
     // End of variables declaration//GEN-END:variables
 
-    private ControleClienteBanco ControleClienteBanco() {
+    private ControleItemVendidoBanco controleItemVendidoBanco() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

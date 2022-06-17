@@ -50,3 +50,5 @@ INSERT INTO cliente (codigoCliente, nome, contato) VALUES
     (26, "Gilberto Frio", "17 321-720-333"),
     (33, "Tales João Carlo", "18 654-100-112"),
     (36, "Fernanda Quesia", "19 335-184-854");
+
+INSERT INTO venda (nrNF, data, formaPagto, codigo) VALUES

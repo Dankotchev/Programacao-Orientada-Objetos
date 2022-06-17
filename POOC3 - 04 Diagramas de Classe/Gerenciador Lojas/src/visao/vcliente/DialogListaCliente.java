@@ -1,32 +1,19 @@
 package visao.vcliente;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import java.sql.SQLException;
 import modelo.Cliente;
 import controle.ControleClienteBanco;
 
 public class DialogListaCliente extends javax.swing.JDialog {
 
-    List<Cliente> listaCliente = new ArrayList<>();
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
-
     public DialogListaCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
-
-        try {
-            listaCliente = bancoCliente.listarTodos();
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-
-        this.atualizarTabela();
     }
 
-    private void atualizarTabela() {
+    public void atualizarTabela(List<Cliente> listaCliente) {
         DefaultTableModel modelo = (DefaultTableModel) tabelaClientes.getModel();
         modelo.setRowCount(0);
         for (Cliente c : listaCliente) {

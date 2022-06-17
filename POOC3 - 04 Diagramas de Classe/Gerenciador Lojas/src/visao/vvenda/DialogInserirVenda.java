@@ -1,6 +1,9 @@
 package visao.vvenda;
 
+import controle.ControleClienteBanco;
+import controle.ControleItemVendidoBanco;
 import controle.ControleProdutoBanco;
+import controle.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import controle.excecoes.InsufficientStockException;
 import java.sql.SQLException;
@@ -18,9 +21,13 @@ import modelo.Venda;
 
 public class DialogInserirVenda extends javax.swing.JDialog {
 
-    List<ItemVendido> listaIV = new ArrayList<>();
     List<Produto> listaProduto = new ArrayList<>();
+
     ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+    ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    ControleVendaBanco bancoVenda = new ControleVendaBanco();
+
     private int item;
     private double totalVenda;
 
@@ -45,9 +52,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         return v;
     }
 
-//    public Produto getProduto() {
-//        
-//    }
     public ItemVendido getIV() {
         ItemVendido iv = new ItemVendido();
         iv.setQuantidadeVendida(Integer.parseInt(this.txtQtdProduto.getText()));
@@ -63,15 +67,22 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         return Integer.parseInt(this.txtCodProduto.getText());
     }
 
+    public int getCodCli() {
+        return Integer.parseInt(this.txtCodCliente.getText());
+    }
+
     public void atualizarTabela(List<Produto> listaProduto) {
         this.item = 1;
         this.totalVenda = 0;
         double subtotal = 0;
+
         DefaultTableModel modelo = (DefaultTableModel) tabelaResumoVenda.getModel();
         modelo.setRowCount(0);
+
         for (Produto p : listaProduto) {
             subtotal = p.getValorVenda() * p.getQuantidade();
-            modelo.addRow(new Object[]{item++, p.getCodigo(), p.getDescricao(), p.getValorVenda(), p.getQuantidade(), subtotal});
+            modelo.addRow(new Object[]{item++, p.getCodigo(), p.getDescricao(),
+                p.getValorVenda(), p.getQuantidade(), subtotal});
             this.totalVenda += subtotal;
         }
     }
@@ -324,6 +335,22 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
+        ItemVendido iv;
+        int cod = Integer.parseInt(this.txtCodCliente.getText());
+
+        try {
+            this.bancoVenda.inserir(this.getVenda(), cod);
+
+            for (Produto p : this.listaProduto) {
+                iv = new ItemVendido();
+                iv.setPrecoVenda(p.getValorVenda());
+                iv.setQuantidadeVendida(p.getQuantidade());
+
+                this.bancoIV.inserir(iv, this.getNrNF(), p.getCodigo());
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
         this.setVisible(false);
     }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
 
@@ -354,7 +381,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                     this.txtTotalVenda.setText(String.valueOf(this.totalVenda));
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Estoque Insuficiente", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+                    throw new InsufficientStockException();
                 }
 
             } catch (SQLException ex) {
@@ -363,6 +390,8 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             } catch (CloneNotSupportedException ex) {
                 System.out.println(ex.toString());
+            } catch (InsufficientStockException ex) {
+                JOptionPane.showMessageDialog(null, ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
@@ -370,17 +399,17 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoInserirProdutoActionPerformed
 
     private void txtCodClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodClienteFocusLost
-//        int codigo = Integer.parseInt(this.txtCodCliente.getText());
-//        try {
-//            if (!(bancoCliente.existe(codigo))) {
-//                JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex.toString());
-//        } catch (NotExistException ex) {
-//            System.out.println(ex.toString());
-//            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-//        }
+        int codigo = Integer.parseInt(this.txtCodCliente.getText());
+        try {
+            if (!(bancoCliente.existe(codigo))) {
+                JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_txtCodClienteFocusLost
 
     /**

@@ -3,6 +3,8 @@ package visao.vcliente;
 import controle.ControleClienteBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
 import visao.TelaInicial;
@@ -10,6 +12,7 @@ import visao.TelaInicial;
 public class TelaCliente extends javax.swing.JFrame {
 
     ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    List<Cliente> listaCliente = new ArrayList<>();
 
     public TelaCliente() {
         initComponents();
@@ -206,10 +209,17 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoClienteNovoActionPerformed
 
     private void botaoClienteListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteListarTodosActionPerformed
-        DialogListaCliente tela = new DialogListaCliente(this, true);
-        this.setVisible(false);
-        tela.setVisible(true);
-        this.setVisible(true);
+        try {
+            this.listaCliente = this.bancoCliente.listarTodos();
+            DialogListaCliente tela = new DialogListaCliente(this, true);
+            tela.atualizarTabela(listaCliente);
+            
+            this.setVisible(false);
+            tela.setVisible(true);
+            this.setVisible(true);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_botaoClienteListarTodosActionPerformed
 
     private void botCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCancelarActionPerformed
