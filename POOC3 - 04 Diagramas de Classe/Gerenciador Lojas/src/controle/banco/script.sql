@@ -3,46 +3,48 @@ CREATE DATABASE ljHorto;
 USE ljHorto;
 
 CREATE TABLE produto (
-    codigo      int             not null,
-    descricao   varchar(100)    not null,
-    quantidade  int             not null default 0,
-    valorVenda  double,
-    valorCusto  double,
-    PRIMARY KEY (codigo)
+    codigoProduto       int             not null,
+    descricao           varchar(100)    not null,
+    quantidade          int             not null default 0,
+    valorVenda          double,
+    valorCusto          double,
+    PRIMARY KEY (codigoProduto)
 );
 
 CREATE TABLE cliente (
-    codigo      int             not null,
-    nome        varchar(100)    not null,
-    contato     varchar(80)     not null,
-    PRIMARY KEY (codigo)
+    codigoCliente   int             not null,
+    nome            varchar(100)    not null,
+    contato         varchar(80)     not null,
+    PRIMARY KEY (codigoCliente)
 );
 
 CREATE TABLE venda (
-    nrNF        int             not null,
-    data        date            not null,
-    formaPagto  varchar(30)     not null,
-    PRIMARY KEY (nrNF)
+    nrNF                int             not null,
+    data                date            not null,
+    formaPagto          varchar(30)     not null,
+    codigoClienteVenda   int         not null,
+    PRIMARY KEY (nrNF),
+    FOREIGN KEY (codigoClienteVenda) REFERENCES cliente (codigoCliente)
 );
 
 CREATE TABLE itemvendido (
-    quantidadeVendida   int     not null,
-    precoVenda  double          not null,
-    nrNFVenda   int             not null,
-    codigoProduto       int     not null,
-    PRIMARY KEY (nrNFVenda, codigoProduto),
+    quantidadeVendida       int     not null,
+    precoVenda              double  not null,
+    nrNFVenda               int     not null,
+    codigoProdutoIV         int     not null,
+    PRIMARY KEY (nrNFVenda, codigoProdutoIV),
     FOREIGN KEY (nrNFVenda) REFERENCES venda (nrNF),
-    FOREIGN KEY (codigoProduto) REFERENCES produto (codigo)
+    FOREIGN KEY (codigoProdutoIV) REFERENCES produto (codigoProduto)
 );
 
-INSERT INTO produto (codigo, descricao, quantidade, valorVenda, valorCusto) VALUES 
+INSERT INTO produto (codigoProduto, descricao, quantidade, valorVenda, valorCusto) VALUES 
     (1000, "Batedeira", 23, 450, 235),
     (1500, "Lava-Louça", 15, 659.99, 349.90),
     (1700, "Sapateira", 300, 259.99, 100),
     (2000, "Geladeira Duplex", 25, 3699.99, 1420),
     (2300, "Conjunto de Pratos", 178, 36, 12);
 
-INSERT INTO cliente (codigo, nome, contato) VALUES
+INSERT INTO cliente (codigoCliente, nome, contato) VALUES
     (10, "Andrade Peixoto", "18 958-236-102"),
     (22, "Helena de Rondésia", "16 125-365-758"),
     (26, "Gilberto Frio", "17 321-720-333"),

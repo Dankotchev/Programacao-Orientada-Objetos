@@ -32,14 +32,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="botaoClienteListarTodos" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoVendaListarTodos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="botaoClienteListarTodos1" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoVendaListarUltimas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="botaoClienteNovo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="botaoVendaNovo" alignment="0" max="32767" attributes="0"/>
                           <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jSeparator3" alignment="1" max="32767" attributes="0"/>
                       </Group>
@@ -60,13 +60,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="botaoClienteNovo" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="botaoVendaNovo" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="botaoClienteListarTodos" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="botaoClienteListarTodos1" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="botaoVendaListarTodos" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="botaoVendaListarUltimas" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="botaoClienteNovo">
+    <Component class="javax.swing.JButton" name="botaoVendaNovo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="ff" red="99" type="rgb"/>
@@ -89,10 +89,10 @@
         <Property name="text" type="java.lang.String" value="Nova Venda"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoClienteNovoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoVendaNovoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="botaoClienteListarTodos">
+    <Component class="javax.swing.JButton" name="botaoVendaListarTodos">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="ff" red="99" type="rgb"/>
@@ -103,7 +103,7 @@
         <Property name="text" type="java.lang.String" value="Listar Todas Vendas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoClienteListarTodosActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoVendaListarTodosActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botCancelar">
@@ -126,7 +126,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator3">
     </Component>
-    <Component class="javax.swing.JButton" name="botaoClienteListarTodos1">
+    <Component class="javax.swing.JButton" name="botaoVendaListarUltimas">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="ff" red="99" type="rgb"/>
@@ -137,7 +137,7 @@
         <Property name="text" type="java.lang.String" value="Listar Ultimas Vendas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoClienteListarTodos1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoVendaListarUltimasActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -2,14 +2,15 @@ package visao.vvenda;
 
 import visao.vcliente.*;
 import controle.ControleClienteBanco;
-import controle.excecoes.NotExistException;
+import controle.ControleItemVendidoBanco;
+import controle.ControleVendaBanco;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import modelo.Cliente;
 import visao.TelaInicial;
 
 public class TelaVenda extends javax.swing.JFrame {
 
+    ControleVendaBanco bancoVenda = new ControleVendaBanco();
+    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
     ControleClienteBanco bancoCliente = new ControleClienteBanco();
 
     public TelaVenda() {
@@ -21,33 +22,33 @@ public class TelaVenda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        botaoClienteNovo = new javax.swing.JButton();
-        botaoClienteListarTodos = new javax.swing.JButton();
+        botaoVendaNovo = new javax.swing.JButton();
+        botaoVendaListarTodos = new javax.swing.JButton();
         botCancelar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        botaoClienteListarTodos1 = new javax.swing.JButton();
+        botaoVendaListarUltimas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vendas");
         setMinimumSize(new java.awt.Dimension(230, 230));
 
-        botaoClienteNovo.setBackground(new java.awt.Color(153, 255, 153));
-        botaoClienteNovo.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteNovo.setText("Nova Venda");
-        botaoClienteNovo.addActionListener(new java.awt.event.ActionListener() {
+        botaoVendaNovo.setBackground(new java.awt.Color(153, 255, 153));
+        botaoVendaNovo.setForeground(new java.awt.Color(0, 0, 0));
+        botaoVendaNovo.setText("Nova Venda");
+        botaoVendaNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteNovoActionPerformed(evt);
+                botaoVendaNovoActionPerformed(evt);
             }
         });
 
-        botaoClienteListarTodos.setBackground(new java.awt.Color(153, 255, 153));
-        botaoClienteListarTodos.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteListarTodos.setText("Listar Todas Vendas");
-        botaoClienteListarTodos.addActionListener(new java.awt.event.ActionListener() {
+        botaoVendaListarTodos.setBackground(new java.awt.Color(153, 255, 153));
+        botaoVendaListarTodos.setForeground(new java.awt.Color(0, 0, 0));
+        botaoVendaListarTodos.setText("Listar Todas Vendas");
+        botaoVendaListarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteListarTodosActionPerformed(evt);
+                botaoVendaListarTodosActionPerformed(evt);
             }
         });
 
@@ -60,12 +61,12 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
 
-        botaoClienteListarTodos1.setBackground(new java.awt.Color(153, 255, 153));
-        botaoClienteListarTodos1.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteListarTodos1.setText("Listar Ultimas Vendas");
-        botaoClienteListarTodos1.addActionListener(new java.awt.event.ActionListener() {
+        botaoVendaListarUltimas.setBackground(new java.awt.Color(153, 255, 153));
+        botaoVendaListarUltimas.setForeground(new java.awt.Color(0, 0, 0));
+        botaoVendaListarUltimas.setText("Listar Ultimas Vendas");
+        botaoVendaListarUltimas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteListarTodos1ActionPerformed(evt);
+                botaoVendaListarUltimasActionPerformed(evt);
             }
         });
 
@@ -78,13 +79,13 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoClienteListarTodos)
+                        .addComponent(botaoVendaListarTodos)
                         .addGap(18, 18, 18)
-                        .addComponent(botaoClienteListarTodos1)
+                        .addComponent(botaoVendaListarUltimas)
                         .addGap(8, 8, 8))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoClienteNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoVendaNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())))
@@ -99,13 +100,13 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoClienteNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoVendaNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoClienteListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoClienteListarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botaoVendaListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoVendaListarUltimas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -116,32 +117,37 @@ public class TelaVenda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoClienteNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteNovoActionPerformed
+    private void botaoVendaNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaNovoActionPerformed
         DialogInserirVenda tela = new DialogInserirVenda(this, true);
         tela.setVisible(true);
 
+    
         try {
-            bancoCliente.inserir(tela.getCliente());
+            this.bancoVenda.inserir(tela.getVenda());
+            this.bancoIV.inserir(tela.getIV(), tela.getNrNF(), tela.getCodProd());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        tela.dispose();
-    }//GEN-LAST:event_botaoClienteNovoActionPerformed
+      
 
-    private void botaoClienteListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteListarTodosActionPerformed
+
+        tela.dispose();
+    }//GEN-LAST:event_botaoVendaNovoActionPerformed
+
+    private void botaoVendaListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarTodosActionPerformed
         DialogListaCliente tela = new DialogListaCliente(this, true);
         this.setVisible(false);
         tela.setVisible(true);
         this.setVisible(true);
-    }//GEN-LAST:event_botaoClienteListarTodosActionPerformed
+    }//GEN-LAST:event_botaoVendaListarTodosActionPerformed
 
     private void botCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_botCancelarActionPerformed
 
-    private void botaoClienteListarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteListarTodos1ActionPerformed
+    private void botaoVendaListarUltimasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarUltimasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoClienteListarTodos1ActionPerformed
+    }//GEN-LAST:event_botaoVendaListarUltimasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,9 +188,9 @@ public class TelaVenda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;
-    private javax.swing.JButton botaoClienteListarTodos;
-    private javax.swing.JButton botaoClienteListarTodos1;
-    private javax.swing.JButton botaoClienteNovo;
+    private javax.swing.JButton botaoVendaListarTodos;
+    private javax.swing.JButton botaoVendaListarUltimas;
+    private javax.swing.JButton botaoVendaNovo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

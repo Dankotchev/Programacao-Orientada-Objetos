@@ -15,7 +15,7 @@ public class ControleClienteBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "INSERT INTO cliente (codigo, nome, contato) values (?, ?, ?)";
+        String comandoSQL = "INSERT INTO cliente (codigoCliente, nome, contato) values (?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
@@ -35,7 +35,7 @@ public class ControleClienteBanco {
     public void excluir(int codigo) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "DELETE FROM cliente WHERE codigo = ?";
+        String comandoSQL = "DELETE FROM cliente WHERE codigoCliente = ?";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
@@ -57,7 +57,7 @@ public class ControleClienteBanco {
     public void alterar(Cliente c) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "UPDATE cliente set nome = ?, contato = ? WHERE codigo = ?";
+        String comandoSQL = "UPDATE cliente set nome = ?, contato = ? WHERE codigoCliente = ?";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
@@ -83,7 +83,7 @@ public class ControleClienteBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "SELECT * FROM cliente WHERE codigo = ?";
+        String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
@@ -127,7 +127,7 @@ public class ControleClienteBanco {
 
         while (resultadoConsulta.next()) {
             c = new Cliente();
-            c.setCodigo(resultadoConsulta.getInt("codigo"));
+            c.setCodigo(resultadoConsulta.getInt("codigoCliente"));
             c.setNome(resultadoConsulta.getString("nome"));
             c.setContato(resultadoConsulta.getString("contato"));
             listaCliente.add(c);
@@ -140,7 +140,7 @@ public class ControleClienteBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "SELECT * FROM cliente WHERE codigo = ?";
+        String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 

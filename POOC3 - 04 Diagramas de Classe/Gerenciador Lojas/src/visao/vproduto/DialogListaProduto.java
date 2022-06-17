@@ -1,35 +1,22 @@
 package visao.vproduto;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import modelo.Venda;
 import controle.ControleProdutoBanco;
-import java.sql.SQLException;
+import modelo.Produto;
 
 public class DialogListaProduto extends javax.swing.JDialog {
-
-    List<Venda> listaProdutos = new ArrayList<>();
-    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
 
     public DialogListaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
-        
-        try {
-            listaProdutos = bancoProduto.listarTodos();
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-        
-        this.atualizarTabela();
     }
 
-    private void atualizarTabela() {
+    public void atualizarTabela(List<Produto> listaProduto) {
         DefaultTableModel modelo = (DefaultTableModel) tabelaProdutos.getModel();
         modelo.setRowCount(0);
-        for (Venda p : listaProdutos) {
+        for (Produto p : listaProduto) {
             modelo.addRow(new Object[]{p.getCodigo(), p.getDescricao(), p.getQuantidade(), p.getValorVenda(), p.getValorCusto()});
         }
     }

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import modelo.Venda;
 import controle.excecoes.NotExistException;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,52 +16,30 @@ public class ControleVendaBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        // criar a string contendo o SQL
         String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto) values (?, ?, ?)";
 
-        // Preparar a string para execução do SQL
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-
-        // passar os parametros para o SQL
         executarSQL.setInt(1, v.getNrNF());
-        executarSQL.setDate(2, v.getData());
+        executarSQL.setDate(2, (Date) v.getData());
         executarSQL.setString(3, v.getFormaPagto());
 
-        // executar o comando SQL montado
         executarSQL.executeUpdate();
-
-        // fazer o commit na conexao
         conexao.commit();
-
-        //finaliza a execução do SQL
         executarSQL.close();
-
-        // finaliza a conexão com o banco de dados
         conexao.close();
     }
 
-    public void excluir(int codigo) throws SQLException, NotExistException {
+    public void excluir(int nrNF) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
 
-        // criar a string contendo o SQL
-        String comandoSQL = "DELETE FROM produto WHERE codigo = ?";
+        String comandoSQL = "DELETE FROM venda WHERE nrNF = ?";
 
-        // Preparar a string para execução do SQL
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        executarSQL.setInt(1, nrNF);
 
-        // passar os parametros para o SQL
-        executarSQL.setInt(1, codigo);
-
-        // executar o comando SQL montado
         int linhas = executarSQL.executeUpdate();
-
-        // fazer o commit na conexao
         conexao.commit();
-
-        //finaliza a execução do SQL
         executarSQL.close();
-
-        // finaliza a conexão com o banco de dados
         conexao.close();
 
         if (linhas == 0) {
@@ -68,119 +47,23 @@ public class ControleVendaBanco {
         }
     }
 
-    public void alterar(Venda p) throws SQLException, NotExistException {
-        Connection conexao = GerenteConect.getConexao();
-        // criar a string contendo o SQL
-        String comandoSQL = "UPDATE produto set descricao = ?, valorVenda = ?, valorCusto = ?"
-                + " where codigo = ?";
-
-        // Preparar a string para execução do SQL
-        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-
-        // passar os parametros para o SQL
-        executarSQL.setString(1, p.getDescricao());
-        executarSQL.setDouble(2, p.getValorVenda());
-        executarSQL.setDouble(3, p.getValorCusto());
-        executarSQL.setInt(4, p.getCodigo());
-
-        // executar o comando SQL montado retornando o número de linhas afetadas
-        int quantAlterados = executarSQL.executeUpdate();
-
-        // fazer o commit na conexao
-        conexao.commit();
-
-        //finaliza a execução do SQL
-        executarSQL.close();
-
-        // finaliza a conexão com o banco de dados
-        conexao.close();
-
-        if (quantAlterados == 0) {
-            throw new NotExistException();
-        }
-    }
-
-    public Venda pesquisar(int codigo) throws SQLException, NotExistException {
-        // curso a ser retornado
-        Venda p = null;
-
-        // pega uma conexao
-        Connection conexao = GerenteConect.getConexao();
-
-        // criar a string contendo o SQL
-        String comandoSQL = "SELECT * FROM produto WHERE codigo = ?";
-
-        // Preparar a string para execução do SQL
-        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-
-        // passar os parametros para o SQL
-        executarSQL.setInt(1, codigo);
-
-        // Objeto para armazenar o resuldado de uma consulta SQL
-        ResultSet resultadoConsulta;
-
-        // executa a consulta
-        resultadoConsulta = executarSQL.executeQuery();
-
-//        resultadoConsulta.first();
-//        resultadoConsulta.next();
-        // avança para a última linha
-        resultadoConsulta.last();
-        // Pega o número da última linha (para esse caso)
-        if (resultadoConsulta.getRow() > 0) {
-            p = new Venda();
-            p.setCodigo(codigo);
-            p.setDescricao(resultadoConsulta.getString("descricao"));
-            p.setQuantidade(resultadoConsulta.getInt("quantidade"));
-            p.setValorCusto(resultadoConsulta.getDouble("valorCusto"));
-            p.setValorVenda(resultadoConsulta.getDouble("valorVenda"));
-        } else {
-            throw new NotExistException();
-        }
-
-        //finaliza a execução do SQL
-        executarSQL.close();
-
-        // finaliza a conexão com o banco de dados
-        conexao.close();
-
-        return p;
-    }
-
     public List<Venda> listarTodos() throws SQLException {
-        // lista contendo os cursos
-        List<Venda> listaProduto = new ArrayList<>();
-
-        // pega uma conexao
+        List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
 
-        // criar a string contendo o SQL
-        String comandoSQL = "SELECT * FROM produto";
+        String comandoSQL = "SELECT * FROM venda";
 
-        // Preparar a string para execução do SQL
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
 
-        // Objeto para armazenar o resuldado de uma consulta SQL
-        ResultSet resultadoConsulta;
-
-        // executa a consulta
-        resultadoConsulta = executarSQL.executeQuery();
-
-        Venda p;
-        // verifica se tem mais registros no resultadoConsulta
+        Venda v;
         while (resultadoConsulta.next()) {
-            // preencher o objeto curso com os dados do banco
-            p = new Venda();
-            p.setCodigo(resultadoConsulta.getInt("codigo"));
-            p.setDescricao(resultadoConsulta.getString("descricao"));
-            p.setQuantidade(resultadoConsulta.getInt("quantidade"));
-            p.setValorCusto(resultadoConsulta.getDouble("valorCusto"));
-            p.setValorVenda(resultadoConsulta.getDouble("valorVenda"));
-
-            // adicionar na lista de cursos
-            listaProduto.add(p);
+            v = new Venda();
+            v.setNrNF(resultadoConsulta.getInt("nrNF"));
+            v.setData(resultadoConsulta.getDate("data"));
+            v.setFormaPagto(resultadoConsulta.getString("formaPagto"));
+            listaVenda.add(v);
         }
-        return listaProduto;
+        return listaVenda;
     }
-
 }

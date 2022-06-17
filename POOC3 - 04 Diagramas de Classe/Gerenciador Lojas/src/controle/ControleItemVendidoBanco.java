@@ -16,7 +16,7 @@ public class ControleItemVendidoBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "INSERT INTO itemvendido (quantidadeVendida, precoVenda, nrNFVenda, codigoProduto) values (?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO itemvendido (quantidadeVendida, precoVenda, nrNFVenda, codigoProdutoIV) values (?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
@@ -34,7 +34,7 @@ public class ControleItemVendidoBanco {
         conexao.close();
     }
 
-     public List<ItemVendido> pesquisar(int notaFiscal) throws SQLException, NotExistException {
+    public List<ItemVendido> retonarItemVendido(int notaFiscal) throws SQLException, NotExistException {
         List<ItemVendido> listaIV = new ArrayList<>();
         ItemVendido iv = null;
 
@@ -55,5 +55,23 @@ public class ControleItemVendidoBanco {
             listaIV.add(iv);
         }
         return listaIV;
+    }
+    
+    public void excluir(int nrNF) throws SQLException, NotExistException {
+        Connection conexao = GerenteConect.getConexao();
+
+        String comandoSQL = "DELETE FROM itemvendido WHERE nrNF = ?";
+
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        executarSQL.setInt(1, nrNF);
+
+        int linhas = executarSQL.executeUpdate();
+        conexao.commit();
+        executarSQL.close();
+        conexao.close();
+
+        if (linhas == 0) {
+            throw new NotExistException();
+        }
     }
 }

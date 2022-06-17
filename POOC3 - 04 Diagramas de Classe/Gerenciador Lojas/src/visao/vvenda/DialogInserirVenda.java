@@ -1,51 +1,51 @@
 package visao.vvenda;
 
-import controle.ControleClienteBanco;
-import controle.excecoes.NotExistException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import visao.vcliente.*;
 import modelo.Cliente;
 import modelo.ItemVendido;
+import modelo.Venda;
 
 public class DialogInserirVenda extends javax.swing.JDialog {
 
     List<ItemVendido> listaVenda = new ArrayList<>();
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
+
+    private Date data = new Date(System.currentTimeMillis());
+    private SimpleDateFormat sdfBanco = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdfVisao = new SimpleDateFormat("dd/MM/yyyy");
 
     public DialogInserirVenda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
         this.botaoOK.setVisible(false);
-
-        Date data = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdfBanco = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfVisao = new SimpleDateFormat("dd/MM/yyyy");
         this.txtData.setText(sdfVisao.format(data));
     }
 
-    public void setCliente(Cliente c) {
-        this.txtnrNF.setText(String.valueOf(c.getCodigo()));
-        this.txtNome.setText(c.getNome());
-        this.txtContato.setText(c.getContato());
+    public Venda getVenda() {
+        Venda v = new Venda();
+
+        v.setNrNF(Integer.parseInt(this.txtnrNF.getText()));
+        v.setData(data);
+        v.setFormaPagto(String.valueOf(this.cbFormaPagto.getSelectedItem()));
+        return v;
     }
-
-    public Cliente getCliente() {
-        Cliente c = new Cliente();
-
-        c.setCodigo(Integer.parseInt(this.txtnrNF.getText()));
-        c.setNome(this.txtNome.getText());
-        c.setContato(this.txtContato.getText());
-
-        return c;
+    
+    public ItemVendido getIV() {
+        ItemVendido iv = new ItemVendido();
+        iv.setQuantidadeVendida(Integer.parseInt(this.txtQtdProduto.getText()));
+        iv.setPrecoVenda(Double.parseDouble(this.txtValorVenda.getText()));
+        return iv;
+    }
+    
+    public int getNrNF (){
+        return Integer.parseInt(this.txtnrNF.getText());
+    }
+    
+    public int getCodProd () {
+        return Integer.parseInt(this.txtCodProduto.getText());
     }
 
     @SuppressWarnings("unchecked")
@@ -280,10 +280,11 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                     .addComponent(txtTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTotalVenda))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 

@@ -1,6 +1,6 @@
 package visao.vproduto;
 
-import modelo.Venda;
+import modelo.Produto;
 
 public class DialogInformacoesProduto extends javax.swing.JDialog {
 
@@ -11,7 +11,7 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
         this.botaoOK.setVisible(false);
     }
 
-    public void setProduto(Venda p) {
+    public void setProduto(Produto p) {
         this.txtCodigo.setText(String.valueOf(p.getCodigo()));
         this.txtDescricao.setText(p.getDescricao());
         this.txtQuantidade.setText(String.valueOf(p.getQuantidade()));
@@ -19,8 +19,8 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
         this.txtValorVenda.setText(String.valueOf(p.getValorVenda()));
     }
 
-    public Venda getProduto() {
-        Venda p = new Venda();
+    public Produto getProduto() {
+       Produto p = new Produto();
         
         p.setCodigo(Integer.parseInt(this.txtCodigo.getText()));
         p.setDescricao(this.txtDescricao.getText());

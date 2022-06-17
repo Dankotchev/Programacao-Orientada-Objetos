@@ -3,15 +3,16 @@ package visao.vproduto;
 import controle.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.Venda;
+import modelo.Produto;
 import visao.TelaInicial;
 
 public class TelaProduto extends javax.swing.JFrame {
 
     ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    List<Produto> listaProduto = new ArrayList<>();
 
     public TelaProduto() {
         initComponents();
@@ -173,7 +174,7 @@ public class TelaProduto extends javax.swing.JFrame {
 
         if (cod > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Venda p = null;
+            Produto p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);
@@ -191,7 +192,6 @@ public class TelaProduto extends javax.swing.JFrame {
             }
             tela.dispose();
         } else {
-            // Não inseriu um código, apresentar mensagem
             JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoProdutoPequisarActionPerformed
@@ -206,15 +206,22 @@ public class TelaProduto extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-
         tela.dispose();
     }//GEN-LAST:event_botaoProdutoNovoActionPerformed
 
     private void botaoProdutoListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoListarTodosActionPerformed
-        DialogListaProduto tela = new DialogListaProduto(this, true);
-        this.setVisible(false);
-        tela.setVisible(true);
-        this.setVisible(true);
+        try {
+            listaProduto = bancoProduto.listarTodos();
+            DialogListaProduto tela = new DialogListaProduto(this, true);
+            tela.atualizarTabela(listaProduto);
+
+            this.setVisible(false);
+            tela.setVisible(true);
+            this.setVisible(true);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_botaoProdutoListarTodosActionPerformed
 
     private void botCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCancelarActionPerformed
@@ -226,14 +233,13 @@ public class TelaProduto extends javax.swing.JFrame {
 
         if (cod > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Venda p = null;
+            Produto p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);
             } catch (SQLException ex) {
-                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
             } catch (NotExistException ex) {
-                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -254,7 +260,6 @@ public class TelaProduto extends javax.swing.JFrame {
             }
             tela.dispose();
         } else {
-            // Não inseriu um código, apresentar mensagem
             JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoProdutoAlterarActionPerformed
@@ -263,7 +268,7 @@ public class TelaProduto extends javax.swing.JFrame {
         int cod = Integer.parseInt(this.txtCodigoProduto.getText());
 
         if (cod > 0) {
-            Venda p = null;
+            Produto p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);
