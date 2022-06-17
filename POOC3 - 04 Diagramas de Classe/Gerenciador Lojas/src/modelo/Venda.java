@@ -3,15 +3,15 @@ package modelo;
 import java.util.Date;
 import modelo.interfaces.MovimentoFinanceiro;
 
-public class Vendas implements MovimentoFinanceiro {
+public class Venda implements MovimentoFinanceiro {
     private int nrNF;
     private Date data;
     private String formaPagto;
 
-    public Vendas() {
+    public Venda() {
     }
 
-    public Vendas(int nrNF, Date data, String formaPagto) {
+    public Venda(int nrNF, Date data, String formaPagto) {
         this.nrNF = nrNF;
         this.data = data;
         this.formaPagto = formaPagto;

@@ -134,4 +134,33 @@ public class ControleClienteBanco {
         }
         return listaCliente;
     }
+    
+        public boolean existe (int codigo) throws SQLException, NotExistException {
+        boolean existe = false;
+
+        Connection conexao = GerenteConect.getConexao();
+
+        String comandoSQL = "SELECT * FROM cliente WHERE codigo = ?";
+
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, codigo);
+
+        ResultSet resultadoConsulta;
+
+        resultadoConsulta = executarSQL.executeQuery();
+
+        resultadoConsulta.last();
+
+        if (resultadoConsulta.getRow() > 0) {
+            existe = true;
+        } else {
+            throw new NotExistException();
+        }
+
+        executarSQL.close();
+
+        conexao.close();
+        return existe;
+    }
 }

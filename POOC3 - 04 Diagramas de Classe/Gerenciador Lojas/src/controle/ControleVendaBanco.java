@@ -9,23 +9,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControleProdutoBanco {
+public class ControleVendaBanco {
 
-    public void inserir(Venda p) throws SQLException {
+    public void inserir(Venda v) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
 
         // criar a string contendo o SQL
-        String comandoSQL = "INSERT INTO produto (codigo, descricao, valorVenda, valorCusto) values (?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto) values (?, ?, ?)";
 
         // Preparar a string para execução do SQL
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         // passar os parametros para o SQL
-        executarSQL.setInt(1, p.getCodigo());
-        executarSQL.setString(2, p.getDescricao());
-        executarSQL.setDouble(3, p.getValorVenda());
-        executarSQL.setDouble(4, p.getValorCusto());
+        executarSQL.setInt(1, v.getNrNF());
+        executarSQL.setDate(2, v.getData());
+        executarSQL.setString(3, v.getFormaPagto());
 
         // executar o comando SQL montado
         executarSQL.executeUpdate();

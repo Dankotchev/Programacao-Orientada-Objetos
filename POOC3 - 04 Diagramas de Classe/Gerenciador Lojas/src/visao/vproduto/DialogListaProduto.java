@@ -3,13 +3,13 @@ package visao.vproduto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import modelo.Produto;
+import modelo.Venda;
 import controle.ControleProdutoBanco;
 import java.sql.SQLException;
 
 public class DialogListaProduto extends javax.swing.JDialog {
 
-    List<Produto> listaProdutos = new ArrayList<>();
+    List<Venda> listaProdutos = new ArrayList<>();
     ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
 
     public DialogListaProduto(java.awt.Frame parent, boolean modal) {
@@ -29,7 +29,7 @@ public class DialogListaProduto extends javax.swing.JDialog {
     private void atualizarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaProdutos.getModel();
         modelo.setRowCount(0);
-        for (Produto p : listaProdutos) {
+        for (Venda p : listaProdutos) {
             modelo.addRow(new Object[]{p.getCodigo(), p.getDescricao(), p.getQuantidade(), p.getValorVenda(), p.getValorCusto()});
         }
     }

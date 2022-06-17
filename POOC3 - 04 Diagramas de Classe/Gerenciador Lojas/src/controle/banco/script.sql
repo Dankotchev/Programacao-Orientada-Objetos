@@ -18,6 +18,23 @@ CREATE TABLE cliente (
     PRIMARY KEY (codigo)
 );
 
+CREATE TABLE venda (
+    nrNF        int             not null,
+    data        date            not null,
+    formaPagto  varchar(30)     not null,
+    PRIMARY KEY (nrNF)
+);
+
+CREATE TABLE itemvendido (
+    quantidadeVendida   int     not null,
+    precoVenda  double          not null,
+    nrNFVenda   int             not null,
+    codigoProduto       int     not null,
+    PRIMARY KEY (nrNFVenda, codigoProduto),
+    FOREIGN KEY (nrNFVenda) REFERENCES venda (nrNF),
+    FOREIGN KEY (codigoProduto) REFERENCES produto (codigo)
+);
+
 INSERT INTO produto (codigo, descricao, quantidade, valorVenda, valorCusto) VALUES 
     (1000, "Batedeira", 23, 450, 235),
     (1500, "Lava-Louça", 15, 659.99, 349.90),

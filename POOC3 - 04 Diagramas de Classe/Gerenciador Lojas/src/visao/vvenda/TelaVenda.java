@@ -22,61 +22,29 @@ public class TelaVenda extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoClienteNovo = new javax.swing.JButton();
-        botaoClienteExcluir = new javax.swing.JButton();
-        botaoClienteAlterar = new javax.swing.JButton();
-        botaoClientePequisar = new javax.swing.JButton();
         botaoClienteListarTodos = new javax.swing.JButton();
         botCancelar = new javax.swing.JButton();
-        txtCodigoCliente = new javax.swing.JTextField();
-        codigoProduto = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
+        botaoClienteListarTodos1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Clientes");
+        setTitle("Vendas");
         setMinimumSize(new java.awt.Dimension(230, 230));
 
         botaoClienteNovo.setBackground(new java.awt.Color(153, 255, 153));
         botaoClienteNovo.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteNovo.setText("Novo Cliente");
+        botaoClienteNovo.setText("Nova Venda");
         botaoClienteNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoClienteNovoActionPerformed(evt);
             }
         });
 
-        botaoClienteExcluir.setBackground(new java.awt.Color(153, 255, 255));
-        botaoClienteExcluir.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteExcluir.setText("Excluir");
-        botaoClienteExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteExcluirActionPerformed(evt);
-            }
-        });
-
-        botaoClienteAlterar.setBackground(new java.awt.Color(153, 255, 255));
-        botaoClienteAlterar.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteAlterar.setText("Alterar");
-        botaoClienteAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteAlterarActionPerformed(evt);
-            }
-        });
-
-        botaoClientePequisar.setBackground(new java.awt.Color(153, 255, 255));
-        botaoClientePequisar.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClientePequisar.setText("Pesquisar");
-        botaoClientePequisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClientePequisarActionPerformed(evt);
-            }
-        });
-
         botaoClienteListarTodos.setBackground(new java.awt.Color(153, 255, 153));
         botaoClienteListarTodos.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteListarTodos.setText("Listar Todos");
+        botaoClienteListarTodos.setText("Listar Todas Vendas");
         botaoClienteListarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoClienteListarTodosActionPerformed(evt);
@@ -92,48 +60,38 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
 
-        txtCodigoCliente.setText("10");
-
-        codigoProduto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        codigoProduto.setText("Informe um Código de Cliente");
-        codigoProduto.setToolTipText("");
-        codigoProduto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botaoClienteListarTodos1.setBackground(new java.awt.Color(153, 255, 153));
+        botaoClienteListarTodos1.setForeground(new java.awt.Color(0, 0, 0));
+        botaoClienteListarTodos1.setText("Listar Ultimas Vendas");
+        botaoClienteListarTodos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoClienteListarTodos1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(codigoProduto)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(botaoClienteAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(botaoClientePequisar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(botaoClienteExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jSeparator4)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoClienteNovo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(botaoClienteListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoClienteListarTodos)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoClienteListarTodos1)
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoClienteNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator2)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,17 +104,8 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codigoProduto))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoClienteAlterar)
-                    .addComponent(botaoClientePequisar)
-                    .addComponent(botaoClienteExcluir))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botaoClienteListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoClienteListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoClienteListarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,35 +116,8 @@ public class TelaVenda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoClientePequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClientePequisarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
-            DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
-            Cliente c = null;
-
-            try {
-                c = bancoCliente.pesquisar(cod);
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            if (c != null) {
-                tela.setCliente(c);
-                tela.ocultarBotoes();
-                tela.setVisible(true);
-                tela.setVisible(false);
-            }
-            tela.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_botaoClientePequisarActionPerformed
-
     private void botaoClienteNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteNovoActionPerformed
-        DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
+        DialogInserirVenda tela = new DialogInserirVenda(this, true);
         tela.setVisible(true);
 
         try {
@@ -217,72 +139,9 @@ public class TelaVenda extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botCancelarActionPerformed
 
-    private void botaoClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteAlterarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
-            DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
-            Cliente c = null;
-
-            try {
-                c = bancoCliente.pesquisar(cod);
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            if (c != null) {
-                tela.setCliente(c);
-                tela.setVisible(true);
-
-                c = tela.getCliente();
-                try {
-                    bancoCliente.alterar(c);
-                } catch (SQLException ex) {
-                    System.out.println(ex.toString());
-                } catch (NotExistException ex) {
-                    JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-                }
-                tela.setVisible(false);
-            }
-            tela.dispose();
-        } else {
-            // Não inseriu um código, apresentar mensagem
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_botaoClienteAlterarActionPerformed
-
-    private void botaoClienteExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteExcluirActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
-            Cliente c = null;
-
-            try {
-                c = bancoCliente.pesquisar(cod);
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            if (c != null) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    try {
-                        bancoCliente.excluir(cod);
-                    } catch (SQLException ex) {
-                        System.out.println(ex.toString());
-                    } catch (NotExistException ex) {
-                        JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_botaoClienteExcluirActionPerformed
+    private void botaoClienteListarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteListarTodos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoClienteListarTodos1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,17 +182,12 @@ public class TelaVenda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;
-    private javax.swing.JButton botaoClienteAlterar;
-    private javax.swing.JButton botaoClienteExcluir;
     private javax.swing.JButton botaoClienteListarTodos;
+    private javax.swing.JButton botaoClienteListarTodos1;
     private javax.swing.JButton botaoClienteNovo;
-    private javax.swing.JButton botaoClientePequisar;
-    private javax.swing.JLabel codigoProduto;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField txtCodigoCliente;
     // End of variables declaration//GEN-END:variables
 
 }

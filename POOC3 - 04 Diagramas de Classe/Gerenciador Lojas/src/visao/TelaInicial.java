@@ -2,6 +2,7 @@ package visao;
 
 import visao.vcliente.TelaCliente;
 import visao.vproduto.TelaProduto;
+import visao.vvenda.TelaVenda;
 
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -136,7 +137,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoInicialClientesActionPerformed
 
     private void botaoInicialVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialVendasActionPerformed
-        // TODO add your handling code here:
+        TelaVenda tela = new TelaVenda();
+        tela.setVisible(true);
     }//GEN-LAST:event_botaoInicialVendasActionPerformed
 
     private void botaoInicialCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialCaixaActionPerformed

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.Produto;
+import modelo.Venda;
 import visao.TelaInicial;
 
 public class TelaProduto extends javax.swing.JFrame {
@@ -173,7 +173,7 @@ public class TelaProduto extends javax.swing.JFrame {
 
         if (cod > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Produto p = null;
+            Venda p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);
@@ -226,7 +226,7 @@ public class TelaProduto extends javax.swing.JFrame {
 
         if (cod > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Produto p = null;
+            Venda p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);
@@ -263,7 +263,7 @@ public class TelaProduto extends javax.swing.JFrame {
         int cod = Integer.parseInt(this.txtCodigoProduto.getText());
 
         if (cod > 0) {
-            Produto p = null;
+            Venda p = null;
 
             try {
                 p = bancoProduto.pesquisar(cod);

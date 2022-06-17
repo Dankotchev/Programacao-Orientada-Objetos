@@ -1,5 +1,7 @@
 package modelo;
-public class ItemVendido {
+
+public class ItemVendido extends Venda {
+
     private int quantidadeVendida;
     private double precoVenda;
 
@@ -26,6 +28,5 @@ public class ItemVendido {
     public void setPrecoVenda(double precoVenda) {
         this.precoVenda = precoVenda;
     }
-    
-    
+
 }
