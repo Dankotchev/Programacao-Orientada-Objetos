@@ -50,7 +50,7 @@ public class ControleClienteBanco {
         conexao.close();
 
         if (linhas == 0) {
-            throw new NotExistException("Cliente não existente");
+            throw new NotExistException();
         }
     }
 
@@ -74,7 +74,7 @@ public class ControleClienteBanco {
         conexao.close();
 
         if (quantAlterados == 0) {
-            throw new NotExistException("Cliente não foi encontrado");
+            throw new NotExistException();
         }
     }
 
@@ -101,7 +101,7 @@ public class ControleClienteBanco {
             c.setNome(resultadoConsulta.getString("nome"));
             c.setContato(resultadoConsulta.getString("contato"));
         } else {
-            throw new NotExistException("Cliente não foi encontrado");
+            throw new NotExistException();
         }
 
         executarSQL.close();

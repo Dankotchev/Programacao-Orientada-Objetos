@@ -1,4 +1,4 @@
-package visao;
+package visao.vproduto;
 
 import modelo.Produto;
 
@@ -43,6 +43,7 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
     }
     
     public void ocultarBotoes() {
+        this.bloquearAll();
         this.botaoCancelar.setVisible(false);
         this.botaoOK.setVisible(true);
         this.botaoConfimar.setVisible(false);
@@ -52,8 +53,6 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelDadosTop = new javax.swing.JPanel();
-        labelDadosProd = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         labelCodigo = new javax.swing.JLabel();
         labelDescricao = new javax.swing.JLabel();
@@ -69,97 +68,129 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
         botaoConfimar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        painelDadosTop.setBackground(new java.awt.Color(204, 204, 204));
-        painelDadosTop.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        labelDadosProd.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        labelDadosProd.setText("Informações do Produto");
-
-        javax.swing.GroupLayout painelDadosTopLayout = new javax.swing.GroupLayout(painelDadosTop);
-        painelDadosTop.setLayout(painelDadosTopLayout);
-        painelDadosTopLayout.setHorizontalGroup(
-            painelDadosTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosTopLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelDadosProd)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelDadosTopLayout.setVerticalGroup(
-            painelDadosTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosTopLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelDadosProd, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        getContentPane().add(painelDadosTop, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 455, -1));
 
         txtCodigo.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 99, 200, -1));
 
         labelCodigo.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelCodigo.setText("Código");
-        getContentPane().add(labelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 76, 70, -1));
 
         labelDescricao.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelDescricao.setText("Descrição");
-        getContentPane().add(labelDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 140, 70, -1));
 
         txtDescricao.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        getContentPane().add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 163, 455, 35));
 
         labelValorCompra.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelValorCompra.setText("Valor de Compra");
-        getContentPane().add(labelValorCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 216, 200, -1));
 
         txtValorCusto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        getContentPane().add(txtValorCusto, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 239, 200, -1));
 
         labelEstoque.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelEstoque.setText("Estoque");
-        getContentPane().add(labelEstoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 76, 70, -1));
 
         txtQuantidade.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        getContentPane().add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 99, 200, -1));
 
         labelValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelValorVenda.setText("Valor de Venda");
-        getContentPane().add(labelValorVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 216, 200, -1));
 
         txtValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        getContentPane().add(txtValorVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 239, 200, -1));
 
         botaoOK.setBackground(new java.awt.Color(153, 255, 153));
         botaoOK.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        botaoOK.setForeground(new java.awt.Color(0, 0, 0));
         botaoOK.setText("OK");
         botaoOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoOKActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoOK, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 70, 46));
 
         botaoCancelar.setBackground(new java.awt.Color(255, 51, 0));
         botaoCancelar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        botaoCancelar.setForeground(new java.awt.Color(0, 0, 0));
         botaoCancelar.setText("Cancelar");
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 145, 46));
 
         botaoConfimar.setBackground(new java.awt.Color(153, 255, 153));
         botaoConfimar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        botaoConfimar.setForeground(new java.awt.Color(0, 0, 0));
         botaoConfimar.setText("Confimar");
         botaoConfimar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConfimarActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoConfimar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 145, 46));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(180, 180, 180)
+                                .addComponent(labelEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelValorCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botaoConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(botaoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(5, 5, 5))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCodigo)
+                    .addComponent(labelEstoque))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(labelDescricao)
+                .addGap(13, 13, 13)
+                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelValorCompra)
+                    .addComponent(labelValorVenda))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -208,6 +239,7 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 DialogInformacoesProduto dialog = new DialogInformacoesProduto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -226,12 +258,10 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
     private javax.swing.JButton botaoConfimar;
     private javax.swing.JButton botaoOK;
     private javax.swing.JLabel labelCodigo;
-    private javax.swing.JLabel labelDadosProd;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelEstoque;
     private javax.swing.JLabel labelValorCompra;
     private javax.swing.JLabel labelValorVenda;
-    private javax.swing.JPanel painelDadosTop;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtQuantidade;

@@ -1,29 +1,28 @@
-package visao;
+package visao.vproduto;
 
-import controle.ControleProdutoBanco;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.Produto;
 import controle.ControleProdutoBanco;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class DialogListaProdutos extends javax.swing.JDialog {
+public class DialogListaProduto extends javax.swing.JDialog {
 
     List<Produto> listaProdutos = new ArrayList<>();
     ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
 
-    public DialogListaProdutos(java.awt.Frame parent, boolean modal) {
+    public DialogListaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
+        
         try {
             listaProdutos = bancoProduto.listarTodos();
         } catch (SQLException ex) {
-            Logger.getLogger(DialogListaProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         }
+        
         this.atualizarTabela();
     }
 
@@ -50,9 +49,7 @@ public class DialogListaProdutos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de Produtos");
-        setMaximumSize(new java.awt.Dimension(600, 230));
         setMinimumSize(new java.awt.Dimension(600, 230));
-        setPreferredSize(new java.awt.Dimension(600, 230));
 
         tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,14 +114,18 @@ public class DialogListaProdutos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogListaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogListaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogListaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogListaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogListaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogListaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogListaProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogListaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -133,7 +134,7 @@ public class DialogListaProdutos extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogListaProdutos dialog = new DialogListaProdutos(new javax.swing.JFrame(), true);
+                DialogListaProduto dialog = new DialogListaProduto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

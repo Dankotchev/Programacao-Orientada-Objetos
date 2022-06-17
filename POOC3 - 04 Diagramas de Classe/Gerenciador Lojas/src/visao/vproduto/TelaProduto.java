@@ -1,4 +1,4 @@
-package visao;
+package visao.vproduto;
 
 import controle.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Produto;
+import visao.TelaInicial;
 
 public class TelaProduto extends javax.swing.JFrame {
 
@@ -50,6 +51,11 @@ public class TelaProduto extends javax.swing.JFrame {
         botaoProdutoExcluir.setBackground(new java.awt.Color(153, 255, 255));
         botaoProdutoExcluir.setForeground(new java.awt.Color(0, 0, 0));
         botaoProdutoExcluir.setText("Excluir");
+        botaoProdutoExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProdutoExcluirActionPerformed(evt);
+            }
+        });
 
         botaoProdutoAlterar.setBackground(new java.awt.Color(153, 255, 255));
         botaoProdutoAlterar.setForeground(new java.awt.Color(0, 0, 0));
@@ -104,23 +110,22 @@ public class TelaProduto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(codigoProduto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtCodigoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(botaoProdutoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(botaoProdutoPequisar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(botaoProdutoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(codigoProduto)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtCodigoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botaoProdutoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(botaoProdutoPequisar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(botaoProdutoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jSeparator4)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(botaoProdutoNovo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -173,18 +178,16 @@ public class TelaProduto extends javax.swing.JFrame {
             try {
                 p = bancoProduto.pesquisar(cod);
             } catch (SQLException ex) {
-                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.toString());
             } catch (NotExistException ex) {
-                Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (p != null) {
                 tela.setProduto(p);
-                tela.bloquearAll();
                 tela.ocultarBotoes();
                 tela.setVisible(true);
-                tela.setVisible(false);   
+                tela.setVisible(false);
             }
             tela.dispose();
         } else {
@@ -201,14 +204,14 @@ public class TelaProduto extends javax.swing.JFrame {
         try {
             bancoProduto.inserir(tela.getProduto());
         } catch (SQLException ex) {
-            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         }
 
         tela.dispose();
     }//GEN-LAST:event_botaoProdutoNovoActionPerformed
 
     private void botaoProdutoListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoListarTodosActionPerformed
-        DialogListaProdutos tela = new DialogListaProdutos(this, true);
+        DialogListaProduto tela = new DialogListaProduto(this, true);
         this.setVisible(false);
         tela.setVisible(true);
         this.setVisible(true);
@@ -243,11 +246,11 @@ public class TelaProduto extends javax.swing.JFrame {
                 try {
                     bancoProduto.alterar(p);
                 } catch (SQLException ex) {
-                    Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.toString());
                 } catch (NotExistException ex) {
-                    Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
                 }
-                tela.setVisible(false);   
+                tela.setVisible(false);
             }
             tela.dispose();
         } else {
@@ -255,6 +258,37 @@ public class TelaProduto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoProdutoAlterarActionPerformed
+
+    private void botaoProdutoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoExcluirActionPerformed
+        int cod = Integer.parseInt(this.txtCodigoProduto.getText());
+
+        if (cod > 0) {
+            Produto p = null;
+
+            try {
+                p = bancoProduto.pesquisar(cod);
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            } catch (NotExistException ex) {
+                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            if (p != null) {
+                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    try {
+                        bancoProduto.excluir(cod);
+                    } catch (SQLException ex) {
+                        System.out.println(ex.toString());
+                    } catch (NotExistException ex) {
+                        JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_botaoProdutoExcluirActionPerformed
 
     /**
      * @param args the command line arguments

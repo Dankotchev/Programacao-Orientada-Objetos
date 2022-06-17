@@ -65,7 +65,7 @@ public class ControleProdutoBanco {
         conexao.close();
 
         if (linhas == 0) {
-            throw new NotExistException("Produto não existente");
+            throw new NotExistException();
         }
     }
 
@@ -97,7 +97,7 @@ public class ControleProdutoBanco {
         conexao.close();
 
         if (quantAlterados == 0) {
-            throw new NotExistException("Produto não foi encontrado");
+            throw new NotExistException();
         }
     }
 
@@ -136,7 +136,7 @@ public class ControleProdutoBanco {
             p.setValorCusto(resultadoConsulta.getDouble("valorCusto"));
             p.setValorVenda(resultadoConsulta.getDouble("valorVenda"));
         } else {
-            throw new NotExistException("Produto não foi encontrado");
+            throw new NotExistException();
         }
 
         //finaliza a execução do SQL
