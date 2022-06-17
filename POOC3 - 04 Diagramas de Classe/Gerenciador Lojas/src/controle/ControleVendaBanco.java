@@ -12,16 +12,17 @@ import java.util.List;
 
 public class ControleVendaBanco {
 
-    public void inserir(Venda v) throws SQLException {
+    public void inserir(Venda v, int codCliente) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto) values (?, ?, ?)";
+        String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto, codigoClienteVenda) values (?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, v.getNrNF());
         executarSQL.setDate(2, (Date) v.getData());
         executarSQL.setString(3, v.getFormaPagto());
+        executarSQL.setInt(4, codCliente);
 
         executarSQL.executeUpdate();
         conexao.commit();

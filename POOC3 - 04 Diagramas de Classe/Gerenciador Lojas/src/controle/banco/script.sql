@@ -22,7 +22,7 @@ CREATE TABLE venda (
     nrNF                int             not null,
     data                date            not null,
     formaPagto          varchar(30)     not null,
-    codigoClienteVenda   int         not null,
+    codigoClienteVenda  int             not null,
     PRIMARY KEY (nrNF),
     FOREIGN KEY (codigoClienteVenda) REFERENCES cliente (codigoCliente)
 );
@@ -38,7 +38,7 @@ CREATE TABLE itemvendido (
 );
 
 INSERT INTO produto (codigoProduto, descricao, quantidade, valorVenda, valorCusto) VALUES 
-    (1000, "Batedeira", 23, 450, 235),
+    (1000, "Batedeira", 2300, 450, 235),
     (1500, "Lava-Louça", 15, 659.99, 349.90),
     (1700, "Sapateira", 300, 259.99, 100),
     (2000, "Geladeira Duplex", 25, 3699.99, 1420),

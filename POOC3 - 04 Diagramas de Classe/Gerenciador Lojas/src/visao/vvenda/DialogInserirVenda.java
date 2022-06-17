@@ -1,16 +1,28 @@
 package visao.vvenda;
 
+import controle.ControleProdutoBanco;
+import controle.excecoes.NotExistException;
+import controle.excecoes.InsufficientStockException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import modelo.Cliente;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.ItemVendido;
+import modelo.Produto;
 import modelo.Venda;
 
 public class DialogInserirVenda extends javax.swing.JDialog {
 
-    List<ItemVendido> listaVenda = new ArrayList<>();
+    List<ItemVendido> listaIV = new ArrayList<>();
+    List<Produto> listaProduto = new ArrayList<>();
+    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    private int item;
+    private double totalVenda;
 
     private Date data = new Date(System.currentTimeMillis());
     private SimpleDateFormat sdfBanco = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,22 +44,39 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         v.setFormaPagto(String.valueOf(this.cbFormaPagto.getSelectedItem()));
         return v;
     }
-    
+
+//    public Produto getProduto() {
+//        
+//    }
     public ItemVendido getIV() {
         ItemVendido iv = new ItemVendido();
         iv.setQuantidadeVendida(Integer.parseInt(this.txtQtdProduto.getText()));
         iv.setPrecoVenda(Double.parseDouble(this.txtValorVenda.getText()));
         return iv;
     }
-    
-    public int getNrNF (){
+
+    public int getNrNF() {
         return Integer.parseInt(this.txtnrNF.getText());
     }
-    
-    public int getCodProd () {
+
+    public int getCodProd() {
         return Integer.parseInt(this.txtCodProduto.getText());
     }
 
+    public void atualizarTabela(List<Produto> listaProduto) {
+        this.item = 1;
+        this.totalVenda = 0;
+        double subtotal = 0;
+        DefaultTableModel modelo = (DefaultTableModel) tabelaResumoVenda.getModel();
+        modelo.setRowCount(0);
+        for (Produto p : listaProduto) {
+            subtotal = p.getValorVenda() * p.getQuantidade();
+            modelo.addRow(new Object[]{item++, p.getCodigo(), p.getDescricao(), p.getValorVenda(), p.getQuantidade(), subtotal});
+            this.totalVenda += subtotal;
+        }
+    }
+
+//     throw InsufficientStockException 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,7 +85,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         labelCodigo = new javax.swing.JLabel();
         labelCodCliente = new javax.swing.JLabel();
         botaoCancelar = new javax.swing.JButton();
-        botaoConfimar = new javax.swing.JButton();
+        botaoFinalizarVenda = new javax.swing.JButton();
         botaoOK = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         txtData = new javax.swing.JTextField();
@@ -99,13 +128,13 @@ public class DialogInserirVenda extends javax.swing.JDialog {
             }
         });
 
-        botaoConfimar.setBackground(new java.awt.Color(153, 255, 153));
-        botaoConfimar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        botaoConfimar.setForeground(new java.awt.Color(0, 0, 0));
-        botaoConfimar.setText("Finalizar Venda");
-        botaoConfimar.addActionListener(new java.awt.event.ActionListener() {
+        botaoFinalizarVenda.setBackground(new java.awt.Color(153, 255, 153));
+        botaoFinalizarVenda.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        botaoFinalizarVenda.setForeground(new java.awt.Color(0, 0, 0));
+        botaoFinalizarVenda.setText("Finalizar Venda");
+        botaoFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConfimarActionPerformed(evt);
+                botaoFinalizarVendaActionPerformed(evt);
             }
         });
 
@@ -165,13 +194,16 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         labelCodProduto.setText("Código Produto:");
 
         txtCodProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txtCodProduto.setText("0");
 
         txtQtdProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txtQtdProduto.setText("0");
 
         labelQtdProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelQtdProduto.setText("Qtd");
 
         txtValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txtValorVenda.setText("0");
 
         labelValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelValorVenda.setText("Valor Unitário");
@@ -187,11 +219,11 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtnrNF, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(labelCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -208,7 +240,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                                     .addComponent(labelFormaPagto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbFormaPagto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(botaoInserirProduto)
                                 .addGap(18, 18, 18)
                                 .addComponent(labelCodProduto)
@@ -217,30 +248,27 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(labelQtdProduto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtQtdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtQtdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(labelValorVenda)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1)
-                            .addComponent(jSeparator2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(botaoConfimar)
-                                .addGap(179, 179, 179)
-                                .addComponent(botaoOK)
-                                .addGap(164, 164, 164)
-                                .addComponent(botaoCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelTotalVenda)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelResumoVenda)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botaoFinalizarVenda)
+                        .addGap(179, 179, 179)
+                        .addComponent(botaoOK)
+                        .addGap(164, 164, 164)
+                        .addComponent(botaoCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelTotalVenda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelResumoVenda)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -283,7 +311,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoConfimar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botaoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -295,16 +323,50 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void botaoConfimarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfimarActionPerformed
+    private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
         this.setVisible(false);
-    }//GEN-LAST:event_botaoConfimarActionPerformed
+    }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
 
     private void botaoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOKActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_botaoOKActionPerformed
 
     private void botaoInserirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInserirProdutoActionPerformed
-        // TODO add your handling code here:
+        int codProduto = Integer.parseInt(this.txtCodProduto.getText());
+        int qtdProduto = Integer.parseInt(this.txtQtdProduto.getText());
+        double valorVenda = Double.parseDouble(this.txtValorVenda.getText());
+
+        Produto pBanco = null;
+
+        if (codProduto > -1) {
+            try {
+                pBanco = bancoProduto.pesquisar(codProduto);
+                Produto pVenda = pBanco.clone();
+
+                if (qtdProduto <= pBanco.getQuantidade()) {
+                    pBanco.efetuarVenda(qtdProduto);
+                    pVenda.setQuantidade(qtdProduto);
+                    pVenda.setValorVenda(valorVenda);
+
+                    this.bancoProduto.alterarVC(pBanco);
+                    this.listaProduto.add(pVenda);
+                    this.atualizarTabela(listaProduto);
+                    this.txtTotalVenda.setText(String.valueOf(this.totalVenda));
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Estoque Insuficiente", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            } catch (NotExistException ex) {
+                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            } catch (CloneNotSupportedException ex) {
+                System.out.println(ex.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_botaoInserirProdutoActionPerformed
 
     private void txtCodClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodClienteFocusLost
@@ -397,7 +459,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
-    private javax.swing.JButton botaoConfimar;
+    private javax.swing.JButton botaoFinalizarVenda;
     private javax.swing.JButton botaoInserirProduto;
     private javax.swing.JButton botaoOK;
     private javax.swing.JComboBox<String> cbFormaPagto;

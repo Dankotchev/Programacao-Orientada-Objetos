@@ -67,6 +67,29 @@ public class ControleProdutoBanco {
             throw new NotExistException();
         }
     }
+    
+        public void alterarVC (Produto p) throws SQLException, NotExistException {
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "UPDATE produto set descricao = ?, quantidade = ?, valorVenda = ?, valorCusto = ?"
+                + " where codigoProduto = ?";
+
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setString(1, p.getDescricao());
+        executarSQL.setInt(2, p.getQuantidade());
+        executarSQL.setDouble(3, p.getValorVenda());
+        executarSQL.setDouble(4, p.getValorCusto());
+        executarSQL.setInt(5, p.getCodigo());
+
+        int quantAlterados = executarSQL.executeUpdate();
+        conexao.commit();
+        executarSQL.close();
+        conexao.close();
+
+        if (quantAlterados == 0) {
+            throw new NotExistException();
+        }
+    }
 
     public Produto pesquisar(int codigo) throws SQLException, NotExistException {
         Produto p = null;

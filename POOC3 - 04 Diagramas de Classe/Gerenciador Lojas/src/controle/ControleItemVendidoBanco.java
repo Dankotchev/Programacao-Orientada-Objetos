@@ -3,7 +3,6 @@ package controle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import modelo.Venda;
 import controle.excecoes.NotExistException;
 import java.sql.ResultSet;
 import java.util.ArrayList;

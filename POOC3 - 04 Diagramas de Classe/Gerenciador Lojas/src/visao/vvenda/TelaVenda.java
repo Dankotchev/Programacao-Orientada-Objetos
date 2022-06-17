@@ -1,17 +1,20 @@
 package visao.vvenda;
 
-import visao.vcliente.*;
-import controle.ControleClienteBanco;
 import controle.ControleItemVendidoBanco;
 import controle.ControleVendaBanco;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import modelo.ItemVendido;
+import modelo.Venda;
 import visao.TelaInicial;
 
 public class TelaVenda extends javax.swing.JFrame {
 
     ControleVendaBanco bancoVenda = new ControleVendaBanco();
     ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    List<ItemVendido> listaIV = new ArrayList<>();
+    List<Venda> listaVenda = new ArrayList<>();
 
     public TelaVenda() {
         initComponents();
@@ -124,6 +127,7 @@ public class TelaVenda extends javax.swing.JFrame {
     
         try {
             this.bancoVenda.inserir(tela.getVenda());
+//            this.listaIV = 
             this.bancoIV.inserir(tela.getIV(), tela.getNrNF(), tela.getCodProd());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -135,10 +139,18 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVendaNovoActionPerformed
 
     private void botaoVendaListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarTodosActionPerformed
-        DialogListaCliente tela = new DialogListaCliente(this, true);
-        this.setVisible(false);
-        tela.setVisible(true);
-        this.setVisible(true);
+try {
+            listaVenda = bancoVenda.listarTodos();
+            DialogListaVenda tela = new DialogListaVenda(this,true);
+            tela.atualizarTabela(listaVenda);
+
+            this.setVisible(false);
+            tela.setVisible(true);
+            this.setVisible(true);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_botaoVendaListarTodosActionPerformed
 
     private void botCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botCancelarActionPerformed
