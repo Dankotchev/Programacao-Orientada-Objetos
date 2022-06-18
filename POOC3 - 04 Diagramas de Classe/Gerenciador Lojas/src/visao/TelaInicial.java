@@ -3,6 +3,7 @@ package visao;
 import visao.vcliente.TelaCliente;
 import visao.vproduto.TelaProduto;
 import visao.vvenda.TelaVenda;
+import visao.vcompra.DialogInserirCompra;
 
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -28,6 +29,7 @@ public class TelaInicial extends javax.swing.JFrame {
         botaoInicialVendas = new javax.swing.JButton();
         botaoInicialCaixa = new javax.swing.JButton();
         labelTituloGL = new javax.swing.JLabel();
+        botaoInicialCompra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciador de Lojas");
@@ -70,22 +72,34 @@ public class TelaInicial extends javax.swing.JFrame {
         labelTituloGL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTituloGL.setText("Gerenciador de Lojas");
 
+        botaoInicialCompra.setText("Comprar");
+        botaoInicialCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoInicialCompraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoInicialVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoInicialCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botaoInicialVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(botaoInicialCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(boaoInicialProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(botaoInicialClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelTituloGL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(boaoInicialProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoInicialClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(labelTituloGL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(114, 114, 114)
+                        .addComponent(botaoInicialCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,7 +115,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(botaoInicialVendas, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(botaoInicialCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(botaoInicialCompra, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -125,6 +141,11 @@ public class TelaInicial extends javax.swing.JFrame {
     private void botaoInicialCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialCaixaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoInicialCaixaActionPerformed
+
+    private void botaoInicialCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInicialCompraActionPerformed
+        DialogInserirCompra tela = new DialogInserirCompra(this, true);
+        tela.setVisible(true);
+    }//GEN-LAST:event_botaoInicialCompraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +186,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton boaoInicialProdutos;
     private javax.swing.JButton botaoInicialCaixa;
     private javax.swing.JButton botaoInicialClientes;
+    private javax.swing.JButton botaoInicialCompra;
     private javax.swing.JButton botaoInicialVendas;
     private javax.swing.JLabel labelTituloGL;
     // End of variables declaration//GEN-END:variables

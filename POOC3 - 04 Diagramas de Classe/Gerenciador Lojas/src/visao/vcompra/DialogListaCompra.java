@@ -1,31 +1,25 @@
-package visao.vvenda;
+package visao.vcompra;
 
+import visao.vcliente.*;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import controle.ControleItemVendidoBanco;
-import java.text.SimpleDateFormat;
-import modelo.Venda;
+import modelo.Cliente;
+import controle.ControleClienteBanco;
+import modelo.Compra;
 
-public class DialogListaVenda extends javax.swing.JDialog {
+public class DialogListaCompra extends javax.swing.JDialog {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
-
-    public DialogListaVenda(java.awt.Frame parent, boolean modal) {
+    public DialogListaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
     }
 
-    public void atualizarTabela(List<Venda> listaVenda) {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaVenda.getModel();
+    public void atualizarTabela(List<Compra> listaCompra) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaClientes.getModel();
         modelo.setRowCount(0);
-        double totalVenda;
-
-        for (Venda v : listaVenda) {
-            totalVenda = this.bancoIV.getTotalVenda(v.getNrNF());
-            modelo.addRow(new Object[]{v.getNrNF(), sdf.format(v.getData()),
-                v.getFormaPagto(), totalVenda});
+        for (Compra c : listaCompra) {
+            modelo.addRow(new Object[]{c.getCodigo(), c.getNome(), c.getContato()});
         }
     }
 
@@ -39,24 +33,24 @@ public class DialogListaVenda extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaVenda = new javax.swing.JTable();
+        tabelaClientes = new javax.swing.JTable();
         botaoFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de Produtos");
         setMinimumSize(new java.awt.Dimension(600, 230));
 
-        tabelaVenda.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nota Fiscal", "Data", "Forma de Pagamento", "Valor Total"
+                "Código", "Nome", "Contato"
             }
         ));
-        jScrollPane1.setViewportView(tabelaVenda);
-        if (tabelaVenda.getColumnModel().getColumnCount() > 0) {
-            tabelaVenda.getColumnModel().getColumn(1).setMaxWidth(80);
+        jScrollPane1.setViewportView(tabelaClientes);
+        if (tabelaClientes.getColumnModel().getColumnCount() > 0) {
+            tabelaClientes.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
         botaoFechar.setBackground(new java.awt.Color(255, 51, 51));
@@ -76,7 +70,7 @@ public class DialogListaVenda extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botaoFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,25 +103,33 @@ public class DialogListaVenda extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DialogListaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DialogListaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DialogListaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogListaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -149,7 +151,7 @@ public class DialogListaVenda extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DialogListaVenda dialog = new DialogListaVenda(new javax.swing.JFrame(), true);
+                DialogListaCompra dialog = new DialogListaCompra(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -164,10 +166,10 @@ public class DialogListaVenda extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaVenda;
+    private javax.swing.JTable tabelaClientes;
     // End of variables declaration//GEN-END:variables
 
-    private ControleItemVendidoBanco controleItemVendidoBanco() {
+    private ControleClienteBanco ControleClienteBanco() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

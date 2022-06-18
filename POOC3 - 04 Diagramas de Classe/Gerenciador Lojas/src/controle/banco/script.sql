@@ -28,13 +28,23 @@ CREATE TABLE venda (
 );
 
 CREATE TABLE itemvendido (
-    quantidadeVendida       int     not null,
-    precoVenda              double  not null,
-    nrNFVenda               int     not null,
-    codigoProdutoIV         int     not null,
+    quantidadeVendida       int         not null,
+    precoVenda              double      not null,
+    nrNFVenda               int         not null,
+    codigoProdutoIV         int         not null,
     PRIMARY KEY (nrNFVenda, codigoProdutoIV),
     FOREIGN KEY (nrNFVenda) REFERENCES venda (nrNF),
     FOREIGN KEY (codigoProdutoIV) REFERENCES produto (codigoProduto)
+);
+
+CREATE TABLE compra (
+    nrCompra                int             not null,
+    fornecedor              varchar(100)    not null,
+    qtdComprada           int             not null,
+    valorCompra             double          not null,
+    codigoProdutoCompra     int             not null,
+    PRIMARY KEY (nrCompra),
+    FOREIGN KEY (codigoProdutoCompra) REFERENCES produto (codigoProduto)
 );
 
 INSERT INTO produto (codigoProduto, descricao, quantidade, valorVenda, valorCusto) VALUES 
