@@ -93,7 +93,7 @@ public class ControleClienteBanco {
 
         resultadoConsulta = executarSQL.executeQuery();
 
-        resultadoConsulta.last();
+        resultadoConsulta.next();
 
         if (resultadoConsulta.getRow() > 0) {
             c = new Cliente();

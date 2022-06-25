@@ -4,6 +4,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.ControleItemVendidoBanco;
 import java.text.SimpleDateFormat;
+import java.util.logging.Logger;
 import modelo.Venda;
 
 public class DialogListaVenda extends javax.swing.JDialog {
@@ -113,20 +114,16 @@ public class DialogListaVenda extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogListaCliente.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           System.out.println(ex.toString());
         }
         //</editor-fold>
         //</editor-fold>
@@ -168,6 +165,6 @@ public class DialogListaVenda extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private ControleItemVendidoBanco controleItemVendidoBanco() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

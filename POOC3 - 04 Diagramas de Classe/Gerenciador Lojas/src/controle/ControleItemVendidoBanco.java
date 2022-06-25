@@ -13,7 +13,7 @@ import modelo.ItemVendido;
 
 public class ControleItemVendidoBanco {
 
-    public void inserir(ItemVendido iv, int nrNF, int codProduto) throws SQLException {
+    public void inserir(ItemVendido iv, int nrNF) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
 
@@ -24,7 +24,7 @@ public class ControleItemVendidoBanco {
         executarSQL.setInt(1, iv.getQuantidadeVendida());
         executarSQL.setDouble(2, iv.getPrecoVenda());
         executarSQL.setInt(3, nrNF);
-        executarSQL.setInt(4, codProduto);
+        executarSQL.setInt(4, iv.getCodProduto());
 
         executarSQL.executeUpdate();
 

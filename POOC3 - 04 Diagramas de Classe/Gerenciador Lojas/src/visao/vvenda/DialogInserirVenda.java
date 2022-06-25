@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ItemVendido;
@@ -21,12 +19,16 @@ import modelo.Venda;
 
 public class DialogInserirVenda extends javax.swing.JDialog {
 
-    List<Produto> listaProduto = new ArrayList<>();
+    // Para atualizar a Tabela de Resumo das Vendas
+    private List<Produto> listaProduto = new ArrayList<>();
 
-    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
-    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
-    ControleVendaBanco bancoVenda = new ControleVendaBanco();
+    private ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    private ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+    private ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    private ControleVendaBanco bancoVenda = new ControleVendaBanco();
+
+    private Venda venda = new Venda();
+    private List<ItemVendido> listaIV = new ArrayList<>();
 
     private int item;
     private double totalVenda;
@@ -49,6 +51,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         v.setNrNF(Integer.parseInt(this.txtnrNF.getText()));
         v.setData(data);
         v.setFormaPagto(String.valueOf(this.cbFormaPagto.getSelectedItem()));
+        v.setListaIV(listaIV);
         return v;
     }
 
@@ -57,18 +60,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         iv.setQuantidadeVendida(Integer.parseInt(this.txtQtdProduto.getText()));
         iv.setPrecoVenda(Double.parseDouble(this.txtValorVenda.getText()));
         return iv;
-    }
-
-    public int getNrNF() {
-        return Integer.parseInt(this.txtnrNF.getText());
-    }
-
-    public int getCodProd() {
-        return Integer.parseInt(this.txtCodProduto.getText());
-    }
-
-    public int getCodCli() {
-        return Integer.parseInt(this.txtCodCliente.getText());
     }
 
     public void atualizarTabela(List<Produto> listaProduto) {
@@ -131,7 +122,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
         botaoCancelar.setBackground(new java.awt.Color(255, 51, 0));
         botaoCancelar.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        botaoCancelar.setForeground(new java.awt.Color(0, 0, 0));
         botaoCancelar.setText("Cancelar");
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,7 +131,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
         botaoFinalizarVenda.setBackground(new java.awt.Color(153, 255, 153));
         botaoFinalizarVenda.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        botaoFinalizarVenda.setForeground(new java.awt.Color(0, 0, 0));
         botaoFinalizarVenda.setText("Finalizar Venda");
         botaoFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +140,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
         botaoOK.setBackground(new java.awt.Color(153, 255, 153));
         botaoOK.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        botaoOK.setForeground(new java.awt.Color(0, 0, 0));
         botaoOK.setText("OK");
         botaoOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +181,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
         botaoInserirProduto.setBackground(new java.awt.Color(204, 204, 204));
         botaoInserirProduto.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        botaoInserirProduto.setForeground(new java.awt.Color(0, 0, 0));
         botaoInserirProduto.setText("Inserir Produto");
         botaoInserirProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,16 +192,13 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         labelCodProduto.setText("Código Produto:");
 
         txtCodProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        txtCodProduto.setText("0");
 
         txtQtdProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        txtQtdProduto.setText("0");
 
         labelQtdProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelQtdProduto.setText("Qtd");
 
         txtValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        txtValorVenda.setText("0");
 
         labelValorVenda.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         labelValorVenda.setText("Valor Unitário");
@@ -336,21 +320,20 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
     private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
         ItemVendido iv;
-        int cod = Integer.parseInt(this.txtCodCliente.getText());
 
-        try {
-            this.bancoVenda.inserir(this.getVenda(), cod);
-
-            for (Produto p : this.listaProduto) {
-                iv = new ItemVendido();
-                iv.setPrecoVenda(p.getValorVenda());
-                iv.setQuantidadeVendida(p.getQuantidade());
-
-                this.bancoIV.inserir(iv, this.getNrNF(), p.getCodigo());
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
+        // Coloca todos os produtos vendidos na lista de Item Vendido
+        for (Produto p : this.listaProduto) {
+            iv = new ItemVendido();
+            iv.setPrecoVenda(p.getValorVenda());
+            iv.setQuantidadeVendida(p.getQuantidade());
+            iv.setCodProduto(p.getCodigo());
+            this.listaIV.add(iv);
         }
+
+        // Coloca a lista dentro de uma venda
+        this.venda.setListaIV(listaIV);
+
+        // Oculta a tela e o processamento volta para a TelaVenda para inserção no Banco de Dados
         this.setVisible(false);
     }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
 
@@ -359,24 +342,26 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoOKActionPerformed
 
     private void botaoInserirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInserirProdutoActionPerformed
-        int codProduto = Integer.parseInt(this.txtCodProduto.getText());
-        int qtdProduto = Integer.parseInt(this.txtQtdProduto.getText());
-        double valorVenda = Double.parseDouble(this.txtValorVenda.getText());
-
         Produto pBanco = null;
 
-        if (codProduto > -1) {
+        if (this.getCodProd() > -1) {
             try {
-                pBanco = bancoProduto.pesquisar(codProduto);
-                Produto pVenda = pBanco.clone();
+                pBanco = bancoProduto.pesquisar(this.getCodProd());
 
-                if (qtdProduto <= pBanco.getQuantidade()) {
-                    pBanco.efetuarVenda(qtdProduto);
-                    pVenda.setQuantidade(qtdProduto);
-                    pVenda.setValorVenda(valorVenda);
+                // Crio um clone para trabalhar em memoria, por segurança
+                Produto pMemoria = pBanco.clone();
 
+                if (this.getQtdProd() <= pBanco.getQuantidade()) {
+                    // Atualizo o estoque do produto e atualizo o Banco de Dados
+                    pBanco.efetuarVenda(this.getQtdProd());
                     this.bancoProduto.alterarVC(pBanco);
-                    this.listaProduto.add(pVenda);
+
+                    // Atualizo os valores para os informados na compra
+                    pMemoria.setQuantidade(this.getQtdProd());
+                    pMemoria.setValorVenda(this.getValorVenda());
+
+                    // Inserção do Produto na lista da Tabela de Resumo e atualização de Campos
+                    this.listaProduto.add(pMemoria);
                     this.atualizarTabela(listaProduto);
                     this.txtTotalVenda.setText(String.valueOf(this.totalVenda));
 
@@ -484,6 +469,26 @@ public class DialogInserirVenda extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    public int getNrNF() {
+        return Integer.parseInt(this.txtnrNF.getText());
+    }
+
+    public int getCodProd() {
+        return Integer.parseInt(this.txtCodProduto.getText());
+    }
+
+    public int getCodCli() {
+        return Integer.parseInt(this.txtCodCliente.getText());
+    }
+
+    private int getQtdProd() {
+        return Integer.parseInt(this.txtQtdProduto.getText());
+    }
+
+    private double getValorVenda() {
+        return Double.parseDouble(this.txtCodCliente.getText());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

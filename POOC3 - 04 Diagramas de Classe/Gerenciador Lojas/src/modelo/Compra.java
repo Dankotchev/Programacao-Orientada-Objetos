@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Date;
 import modelo.interfaces.MovimentoFinanceiro;
 
 public class Compra implements MovimentoFinanceiro{
@@ -7,6 +8,7 @@ public class Compra implements MovimentoFinanceiro{
     private String fornecedor;
     private int qtdComprada;
     private double valorCompra;
+    private Date data;
 
     public Compra() {
     }
@@ -50,14 +52,23 @@ public class Compra implements MovimentoFinanceiro{
         this.valorCompra = valorCompra;
     }
 
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+    
+
     @Override
     public String getTextoMovimento() {
-        return "";
+        return ("Nr Compra: " + this.nrCompra + ". Fornecedor: " + this.fornecedor);
     }
 
     @Override
     public Double getValorMovimento() {
-        return 0.0;
+        return (-1) * (this.qtdComprada * this.valorCompra);
     }
     
     

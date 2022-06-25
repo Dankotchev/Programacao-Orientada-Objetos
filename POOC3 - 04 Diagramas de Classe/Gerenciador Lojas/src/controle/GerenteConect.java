@@ -11,8 +11,8 @@ class GerenteConect {
     //   localhost - endereço da máquina onde está o banco
     //   3306 - porta onde o servidor está ouvindo
     //   academico -  nome do banco de dados
-    private static String urlBanco = "jdbc:mariadb://localhost:3306/ljHorto";
-//    private static String urlBanco = "jdbc:mysql://localhost:3306/ljHorto=";
+    private static String urlBanco = "jdbc:mariadb://localhost:3306/geren_loja";
+//    private static String urlBanco = "jdbc:mysql://localhost:3306/geren_loja?useSSL=false";
 
     public static Connection getConexao() {
         // estabelecer conexão com o banco de dados
@@ -20,7 +20,7 @@ class GerenteConect {
         Connection conexao = null;
         try {
             // estabelece cponexão com o banco de dados
-//            conexao = DriverManager.getConnection(urlBanco, "root", "IFSP");
+//            conexao = DriverManager.getConnection(urlBanco, "root", "ifsp");
             conexao = DriverManager.getConnection(urlBanco, "root", "dknilo");
             // retira o autcommit da conexão
             conexao.setAutoCommit(false);

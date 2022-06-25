@@ -1,6 +1,6 @@
-DROP DATABASE if exists ljHorto;
-CREATE DATABASE ljHorto;
-USE ljHorto;
+DROP DATABASE if exists geren_loja;
+CREATE DATABASE geren_loja;
+USE geren_loja;
 
 CREATE TABLE produto (
     codigoProduto       int             not null,
@@ -61,4 +61,4 @@ INSERT INTO cliente (codigoCliente, nome, contato) VALUES
     (33, "Tales João Carlo", "18 654-100-112"),
     (36, "Fernanda Quesia", "19 335-184-854");
 
-INSERT INTO venda (nrNF, data, formaPagto, codigo) VALUES
+--INSERT INTO venda (nrNF, data, formaPagto, codigo) VALUES

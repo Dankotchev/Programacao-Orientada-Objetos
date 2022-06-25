@@ -67,4 +67,24 @@ public class ControleVendaBanco {
         }
         return listaVenda;
     }
+    
+        public List<Venda> listarUltimas() throws SQLException {
+        List<Venda> listaVenda = new ArrayList<>();
+        Connection conexao = GerenteConect.getConexao();
+
+        String comandoSQL = "SELECT * FROM venda ORDER BY data ASC {LIMIT 10} ";
+
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+
+        Venda v;
+        while (resultadoConsulta.next()) {
+            v = new Venda();
+            v.setNrNF(resultadoConsulta.getInt("nrNF"));
+            v.setData(resultadoConsulta.getDate("data"));
+            v.setFormaPagto(resultadoConsulta.getString("formaPagto"));
+            listaVenda.add(v);
+        }
+        return listaVenda;
+    }
 }

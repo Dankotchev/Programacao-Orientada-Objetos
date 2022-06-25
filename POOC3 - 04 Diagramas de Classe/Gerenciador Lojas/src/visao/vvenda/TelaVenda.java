@@ -6,6 +6,8 @@ import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ItemVendido;
 import modelo.Venda;
@@ -124,8 +126,21 @@ public class TelaVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoVendaNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaNovoActionPerformed
+
         DialogInserirVenda tela = new DialogInserirVenda(this, true);
         tela.setVisible(true);
+
+        int codCliente = tela.getCodCli();
+
+        try {
+            bancoVenda.inserir(tela.getVenda(), codCliente);
+            for (ItemVendido itemVendido : tela.getVenda().getListaIV()) {
+                bancoIV.inserir(itemVendido, tela.getNrNF());
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
         tela.dispose();
     }//GEN-LAST:event_botaoVendaNovoActionPerformed
 
@@ -149,7 +164,18 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoVendaListarUltimasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarUltimasActionPerformed
-        // TODO add your handling code here:
+        try {
+            listaVenda = bancoVenda.listarTodos();
+            DialogListaVenda tela = new DialogListaVenda(this, true);
+            tela.atualizarTabela(listaVenda);
+
+            this.setVisible(false);
+            tela.setVisible(true);
+            this.setVisible(true);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }//GEN-LAST:event_botaoVendaListarUltimasActionPerformed
 
     /**

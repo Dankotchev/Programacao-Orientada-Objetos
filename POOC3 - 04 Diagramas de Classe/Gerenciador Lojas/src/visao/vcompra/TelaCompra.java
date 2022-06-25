@@ -1,17 +1,20 @@
 package visao.vcompra;
 
 import controle.ControleCompraBanco;
+import controle.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Compra;
+import modelo.Produto;
 import visao.TelaInicial;
 
 public class TelaCompra extends javax.swing.JFrame {
 
     ControleCompraBanco bancoCompra = new ControleCompraBanco();
+    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
     List<Compra> listaCompra = new ArrayList<>();
 
     public TelaCompra() {
@@ -145,10 +148,31 @@ public class TelaCompra extends javax.swing.JFrame {
         tela.setVisible(true);
 
         try {
-            bancoCompra.inserir(tela.getCompra());
+            bancoCompra.inserir(tela.getCompra(), tela.getCodProduto());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        
+        Produto p = null;
+
+        try {
+            p = bancoProduto.pesquisar(tela.getCodProduto());
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        p.efetuarCompra(tela.getQtd(), tela.getValorCompra());
+        
+        try {
+            bancoProduto.alterarVC(p);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
+
         tela.dispose();
     }//GEN-LAST:event_botaoCompraNovoActionPerformed
 

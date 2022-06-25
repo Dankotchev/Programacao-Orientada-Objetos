@@ -70,12 +70,11 @@ public class ControleProdutoBanco {
     
         public void alterarVC (Produto p) throws SQLException, NotExistException {
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "UPDATE produto set descricao = ?, quantidade = ?, valorVenda = ?, valorCusto = ?"
+        String comandoSQL = "UPDATE produto set quantidade = ?, valorVenda = ?, valorCusto = ?"
                 + " where codigoProduto = ?";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setString(1, p.getDescricao());
         executarSQL.setInt(2, p.getQuantidade());
         executarSQL.setDouble(3, p.getValorVenda());
         executarSQL.setDouble(4, p.getValorCusto());

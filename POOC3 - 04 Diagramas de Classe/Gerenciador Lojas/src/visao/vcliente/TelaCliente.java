@@ -188,7 +188,7 @@ public class TelaCliente extends javax.swing.JFrame {
                 tela.setCliente(c);
                 tela.ocultarBotoes();
                 tela.setVisible(true);
-                tela.setVisible(false);
+//                tela.setVisible(false);
             }
             tela.dispose();
         } else {
@@ -229,7 +229,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private void botaoClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteAlterarActionPerformed
         int cod = Integer.parseInt(this.txtCodigoCliente.getText());
 
-        if (cod > 0) {
+        if (cod > -1) {
             DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
             Cliente c = null;
 

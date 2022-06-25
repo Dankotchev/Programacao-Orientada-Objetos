@@ -16,10 +16,13 @@ public class DialogListaCompra extends javax.swing.JDialog {
     }
 
     public void atualizarTabela(List<Compra> listaCompra) {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaClientes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCompras.getModel();
         modelo.setRowCount(0);
+        double totalCompra;
         for (Compra c : listaCompra) {
-            modelo.addRow(new Object[]{c.getCodigo(), c.getNome(), c.getContato()});
+            totalCompra = c.getQtdComprada() * c.getValorCompra();
+            modelo.addRow(new Object[]{c.getNrCompra(), c.getFornecedor(),
+                c.getQtdComprada(), c.getValorCompra(), totalCompra});
         }
     }
 
@@ -33,24 +36,24 @@ public class DialogListaCompra extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaClientes = new javax.swing.JTable();
+        tabelaCompras = new javax.swing.JTable();
         botaoFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de Produtos");
         setMinimumSize(new java.awt.Dimension(600, 230));
 
-        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "Contato"
+                "Nr Compra", "Fornecedor", "Qtd Comprada", "ValorCompra", "Total Compra"
             }
         ));
-        jScrollPane1.setViewportView(tabelaClientes);
-        if (tabelaClientes.getColumnModel().getColumnCount() > 0) {
-            tabelaClientes.getColumnModel().getColumn(0).setMaxWidth(60);
+        jScrollPane1.setViewportView(tabelaCompras);
+        if (tabelaCompras.getColumnModel().getColumnCount() > 0) {
+            tabelaCompras.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
         botaoFechar.setBackground(new java.awt.Color(255, 51, 51));
@@ -166,7 +169,7 @@ public class DialogListaCompra extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoFechar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaClientes;
+    private javax.swing.JTable tabelaCompras;
     // End of variables declaration//GEN-END:variables
 
     private ControleClienteBanco ControleClienteBanco() {
