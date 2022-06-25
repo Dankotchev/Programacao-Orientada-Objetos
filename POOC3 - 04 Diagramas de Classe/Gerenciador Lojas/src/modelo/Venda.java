@@ -1,5 +1,6 @@
 package modelo;
 
+import controle.ControleItemVendidoBanco;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,12 +56,16 @@ public class Venda implements MovimentoFinanceiro {
 
     @Override
     public String getTextoMovimento() {
-        return "";
+        return ("Nota fiscal: " + this.nrNF + ". Forma de Pagamento: " + this.formaPagto);
     }
 
     @Override
     public Double getValorMovimento() {
-        return 0.0;
+        double valor = 0;
+        for (ItemVendido iv : listaIV) {
+            valor += (iv.getQuantidadeVendida() * iv.getPrecoVenda());
+        }
+        return valor;
     }
 
 }
