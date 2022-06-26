@@ -14,9 +14,7 @@ public class ControleClienteBanco {
     public void inserir(Cliente c) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
-
-        String comandoSQL = "INSERT INTO cliente (codigoCliente, nome, contato) values (?, ?, ?)";
-
+        String comandoSQL = "INSERT INTO cliente (codigoCliente, nome, contato) VALUES (?, ?, ?)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, c.getCodigo());
@@ -24,29 +22,21 @@ public class ControleClienteBanco {
         executarSQL.setString(3, c.getContato());
 
         executarSQL.executeUpdate();
-
         conexao.commit();
-
         executarSQL.close();
-
         conexao.close();
     }
 
     public void excluir(int codigo) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "DELETE FROM cliente WHERE codigoCliente = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
-
         int linhas = executarSQL.executeUpdate();
-
         conexao.commit();
-
         executarSQL.close();
-
         conexao.close();
 
         if (linhas == 0) {
@@ -55,10 +45,9 @@ public class ControleClienteBanco {
     }
 
     public void alterar(Cliente c) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
-
-        String comandoSQL = "UPDATE cliente set nome = ?, contato = ? WHERE codigoCliente = ?";
-
+        String comandoSQL = "UPDATE cliente SET nome = ?, contato = ? WHERE codigoCliente = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setString(1, c.getNome());
@@ -66,11 +55,8 @@ public class ControleClienteBanco {
         executarSQL.setDouble(3, c.getCodigo());
 
         int quantAlterados = executarSQL.executeUpdate();
-
         conexao.commit();
-
         executarSQL.close();
-
         conexao.close();
 
         if (quantAlterados == 0) {
@@ -79,20 +65,15 @@ public class ControleClienteBanco {
     }
 
     public Cliente pesquisar(int codigo) throws SQLException, NotExistException {
+
         Cliente c = null;
-
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
-
         ResultSet resultadoConsulta;
-
         resultadoConsulta = executarSQL.executeQuery();
-
         resultadoConsulta.next();
 
         if (resultadoConsulta.getRow() > 0) {
@@ -105,26 +86,21 @@ public class ControleClienteBanco {
         }
 
         executarSQL.close();
-
         conexao.close();
         return c;
     }
 
     public List<Cliente> listarTodos() throws SQLException {
+
         List<Cliente> listaCliente = new ArrayList<>();
-
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM cliente";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-
+        
         ResultSet resultadoConsulta;
-
         resultadoConsulta = executarSQL.executeQuery();
-
+        
         Cliente c;
-
         while (resultadoConsulta.next()) {
             c = new Cliente();
             c.setCodigo(resultadoConsulta.getInt("codigoCliente"));
@@ -134,24 +110,20 @@ public class ControleClienteBanco {
         }
         return listaCliente;
     }
-    
-        public boolean existe (int codigo) throws SQLException, NotExistException {
+
+    public boolean existe(int codigo) throws SQLException, NotExistException {
+        
         boolean existe = false;
-
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
-
+        
         ResultSet resultadoConsulta;
-
         resultadoConsulta = executarSQL.executeQuery();
-
-        resultadoConsulta.last();
-
+        
+        resultadoConsulta.next();
         if (resultadoConsulta.getRow() > 0) {
             existe = true;
         } else {
@@ -159,7 +131,6 @@ public class ControleClienteBanco {
         }
 
         executarSQL.close();
-
         conexao.close();
         return existe;
     }

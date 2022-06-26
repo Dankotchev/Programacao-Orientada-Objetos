@@ -20,8 +20,8 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
     }
 
     public Produto getProduto() {
-       Produto p = new Produto();
-        
+        Produto p = new Produto();
+
         p.setCodigo(Integer.parseInt(this.txtCodigo.getText()));
         p.setDescricao(this.txtDescricao.getText());
         p.setValorCusto(Double.parseDouble(this.txtValorCusto.getText()));
@@ -41,7 +41,7 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
     public void bloquearEstoque() {
         this.txtQuantidade.setEditable(false);
     }
-    
+
     public void ocultarBotoes() {
         this.bloquearAll();
         this.botaoCancelar.setVisible(false);
@@ -232,8 +232,6 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DialogInformacoesProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

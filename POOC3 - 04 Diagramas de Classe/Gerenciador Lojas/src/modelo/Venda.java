@@ -1,6 +1,5 @@
 package modelo;
 
-import controle.ControleItemVendidoBanco;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,15 +11,6 @@ public class Venda implements MovimentoFinanceiro {
     private Date data;
     private String formaPagto;
     private List<ItemVendido> listaIV = new ArrayList<>();
-
-    public Venda() {
-    }
-
-    public Venda(int nrNF, Date data, String formaPagto) {
-        this.nrNF = nrNF;
-        this.data = data;
-        this.formaPagto = formaPagto;
-    }
 
     public int getNrNF() {
         return nrNF;
@@ -67,5 +57,4 @@ public class Venda implements MovimentoFinanceiro {
         }
         return valor;
     }
-
 }

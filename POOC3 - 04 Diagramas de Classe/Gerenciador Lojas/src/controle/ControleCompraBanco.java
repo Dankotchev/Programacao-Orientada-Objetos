@@ -10,13 +10,13 @@ import java.util.List;
 import modelo.Compra;
 
 public class ControleCompraBanco {
+
     public void inserir(Compra c, int codProd) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra, data) VALUES (?, ?, ?, ?, ?, ?)";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
         executarSQL.setInt(1, c.getNrCompra());
         executarSQL.setString(2, c.getFornecedor());
         executarSQL.setInt(3, c.getQtdComprada());
@@ -29,16 +29,16 @@ public class ControleCompraBanco {
         executarSQL.close();
         conexao.close();
     }
-    
+
     public List<Compra> listarTodos() throws SQLException {
+
         List<Compra> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM compra";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        
         ResultSet resultadoConsulta = executarSQL.executeQuery();
-
+        
         Compra c;
         while (resultadoConsulta.next()) {
             c = new Compra();
@@ -51,12 +51,11 @@ public class ControleCompraBanco {
         }
         return listaVenda;
     }
-    
-        public void excluir(int codCompra) throws SQLException, NotExistException {
+
+    public void excluir(int codCompra) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "DELETE FROM compra WHERE nrCompra = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, codCompra);
 

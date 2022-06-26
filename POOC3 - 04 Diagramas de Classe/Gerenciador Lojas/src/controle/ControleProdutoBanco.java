@@ -12,15 +12,16 @@ import java.util.List;
 public class ControleProdutoBanco {
 
     public void inserir(Produto p) throws SQLException {
+
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "INSERT INTO produto (codigoProduto, descricao, valorVenda, valorCusto) values (?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO produto (codigoProduto, descricao, valorVenda, valorCusto) VALUES (?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, p.getCodigo());
         executarSQL.setString(2, p.getDescricao());
         executarSQL.setDouble(3, p.getValorVenda());
         executarSQL.setDouble(4, p.getValorCusto());
-        
+
         executarSQL.executeUpdate();
         conexao.commit();
         executarSQL.close();
@@ -28,14 +29,13 @@ public class ControleProdutoBanco {
     }
 
     public void excluir(int codigo) throws SQLException, NotExistException {
-        Connection conexao = GerenteConect.getConexao();
 
+        Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "DELETE FROM produto WHERE codigoProduto = ?";
-        
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        
+
         executarSQL.setInt(1, codigo);
-        
+
         int linhas = executarSQL.executeUpdate();
         conexao.commit();
         executarSQL.close();
@@ -47,10 +47,9 @@ public class ControleProdutoBanco {
     }
 
     public void alterar(Produto p) throws SQLException, NotExistException {
-        Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "UPDATE produto set descricao = ?, valorVenda = ?, valorCusto = ?"
-                + " where codigoProduto = ?";
 
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "UPDATE produto SET descricao = ?, valorVenda = ?, valorCusto = ? WHERE codigoProduto = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setString(1, p.getDescricao());
@@ -67,11 +66,11 @@ public class ControleProdutoBanco {
             throw new NotExistException();
         }
     }
-    
-        public void alterarVC (Produto p) throws SQLException, NotExistException {
+
+    public void alterarVC(Produto p) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "UPDATE produto SET quantidade = ?, valorVenda = ?, valorCusto = ? WHERE codigoProduto = ?";
-              
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(2, p.getQuantidade());
@@ -90,15 +89,13 @@ public class ControleProdutoBanco {
     }
 
     public Produto pesquisar(int codigo) throws SQLException, NotExistException {
+
         Produto p = null;
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM produto WHERE codigoProduto = ?";
-        
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        
+
         executarSQL.setInt(1, codigo);
-        
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         resultadoConsulta.next();
@@ -138,19 +135,18 @@ public class ControleProdutoBanco {
         }
         return listaProduto;
     }
-    
-            public boolean existe (int codigo) throws SQLException, NotExistException {
+
+    public boolean existe(int codigo) throws SQLException, NotExistException {
+        
         boolean existe = false;
-
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM produto WHERE codigoProduto = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+        
         executarSQL.setInt(1, codigo);
-
         ResultSet resultadoConsulta;
         resultadoConsulta = executarSQL.executeQuery();
-        resultadoConsulta.last();
+        resultadoConsulta.next();
 
         if (resultadoConsulta.getRow() > 0) {
             existe = true;
@@ -159,7 +155,6 @@ public class ControleProdutoBanco {
         }
 
         executarSQL.close();
-
         conexao.close();
         return existe;
     }

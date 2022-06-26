@@ -1,17 +1,10 @@
 package modelo;
+
 public class Cliente {
+
     private int codigo;
     private String nome;
     private String contato;
-
-    public Cliente() {
-    }
-
-    public Cliente(int codigo, String nome, String contato) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.contato = contato;
-    }
 
     public int getCodigo() {
         return codigo;
@@ -36,6 +29,5 @@ public class Cliente {
     public void setContato(String contato) {
         this.contato = contato;
     }
-    
-    
+
 }

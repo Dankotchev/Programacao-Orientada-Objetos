@@ -16,9 +16,7 @@ public class ControleItemVendidoBanco {
     public void inserir(ItemVendido iv, int nrNF) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
-
-        String comandoSQL = "INSERT INTO itemvendido (quantidadeVendida, precoVenda, nrNFVenda, codigoProdutoIV) values (?, ?, ?, ?)";
-
+        String comandoSQL = "INSERT INTO itemvendido (quantidadeVendida, precoVenda, nrNFVenda, codigoProdutoIV) VALUES (?, ?, ?, ?)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, iv.getQuantidadeVendida());
@@ -27,26 +25,20 @@ public class ControleItemVendidoBanco {
         executarSQL.setInt(4, iv.getCodProduto());
 
         executarSQL.executeUpdate();
-
         conexao.commit();
-
         executarSQL.close();
-
         conexao.close();
     }
 
     public List<ItemVendido> retonarItemVendido(int notaFiscal) throws SQLException, NotExistException {
+
         List<ItemVendido> listaIV = new ArrayList<>();
         ItemVendido iv = null;
-
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM itemvendido WHERE nrNFVenda = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, notaFiscal);
-
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         while (resultadoConsulta.next()) {
@@ -59,10 +51,9 @@ public class ControleItemVendidoBanco {
     }
 
     public void excluir(int nrNF) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "DELETE FROM itemvendido WHERE nrNF = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, nrNF);
 
@@ -77,6 +68,7 @@ public class ControleItemVendidoBanco {
     }
 
     public double getTotalVenda(int nrNF) {
+
         double totalVenda = 0;
         List<ItemVendido> listaIV = new ArrayList<>();
 
@@ -90,20 +82,16 @@ public class ControleItemVendidoBanco {
         } catch (NotExistException ex) {
             Logger.getLogger(ControleItemVendidoBanco.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return totalVenda;
     }
-    
-        public ItemVendido pesquisar(int nrNF) throws SQLException, NotExistException {
+
+    public ItemVendido pesquisar(int nrNF) throws SQLException, NotExistException {
         ItemVendido iv = null;
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM itemvendido WHERE nrNFVenda = ?";
-        
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        
+
         executarSQL.setInt(1, nrNF);
-        
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         resultadoConsulta.last();

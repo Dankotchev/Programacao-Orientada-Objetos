@@ -30,7 +30,7 @@ public class TelaCompra extends javax.swing.JFrame {
         botaoCompraExcluir = new javax.swing.JButton();
         botaoCompraListarTodos = new javax.swing.JButton();
         botCancelar = new javax.swing.JButton();
-        txtCodigoCliente = new javax.swing.JTextField();
+        txtCodigoCompra = new javax.swing.JTextField();
         codigoProduto = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -74,7 +74,7 @@ public class TelaCompra extends javax.swing.JFrame {
             }
         });
 
-        txtCodigoCliente.setText("10");
+        txtCodigoCompra.setText("10");
 
         codigoProduto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         codigoProduto.setText("Informe um Código de compra");
@@ -100,7 +100,7 @@ public class TelaCompra extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(botaoCompraExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(136, 136, 136)
-                                .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCodigoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator4)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
@@ -122,7 +122,7 @@ public class TelaCompra extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoCompraExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoProduto)
@@ -189,16 +189,14 @@ public class TelaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoCompraExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompraExcluirActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
+        if (this.getCodCompra() > 0) {
 
             int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
-                    bancoCompra.excluir(cod);
+                    bancoCompra.excluir(this.getCodCompra());
                 } catch (SQLException ex) {
-//                    System.out.println(ex.toString());
+                    System.out.println(ex.toString());
                 } catch (NotExistException ex) {
                     JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -252,6 +250,9 @@ public class TelaCompra extends javax.swing.JFrame {
         });
     }
 
+    private int getCodCompra () {
+        return Integer.parseInt(this.txtCodigoCompra.getText());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;
@@ -263,7 +264,7 @@ public class TelaCompra extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField txtCodigoCliente;
+    private javax.swing.JTextField txtCodigoCompra;
     // End of variables declaration//GEN-END:variables
 
 }

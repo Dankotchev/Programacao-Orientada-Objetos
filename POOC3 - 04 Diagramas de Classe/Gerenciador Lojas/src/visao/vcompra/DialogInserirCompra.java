@@ -13,8 +13,7 @@ public class DialogInserirCompra extends javax.swing.JDialog {
     private ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
 
     private Date data = new Date(System.currentTimeMillis());
-    private SimpleDateFormat sdfBanco = new SimpleDateFormat("yyyy-MM-dd");
-    private SimpleDateFormat sdfVisao = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdfVisao = new SimpleDateFormat("dd/MM/yyyy");
 
     public DialogInserirCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

@@ -2,13 +2,9 @@ package visao.vvenda;
 
 import controle.ControleItemVendidoBanco;
 import controle.ControleVendaBanco;
-import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import modelo.ItemVendido;
 import modelo.Venda;
 import visao.TelaInicial;
@@ -210,7 +206,6 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;

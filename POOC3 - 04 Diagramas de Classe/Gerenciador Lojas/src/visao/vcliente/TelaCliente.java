@@ -11,8 +11,8 @@ import visao.TelaInicial;
 
 public class TelaCliente extends javax.swing.JFrame {
 
-    ControleClienteBanco bancoCliente = new ControleClienteBanco();
-    List<Cliente> listaCliente = new ArrayList<>();
+    private final ControleClienteBanco bancoCliente = new ControleClienteBanco();
+    private List<Cliente> listaCliente = new ArrayList<>();
 
     public TelaCliente() {
         initComponents();
@@ -170,14 +170,12 @@ public class TelaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoClientePequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClientePequisarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
+        if (this.getCodCli() > 0) {
             DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
             Cliente c = null;
 
             try {
-                c = bancoCliente.pesquisar(cod);
+                c = bancoCliente.pesquisar(this.getCodCli());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -227,14 +225,12 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteAlterarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > -1) {
+        if (this.getCodCli() > -1) {
             DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
             Cliente c = null;
 
             try {
-                c = bancoCliente.pesquisar(cod);
+                c = bancoCliente.pesquisar(this.getCodCli());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -263,13 +259,12 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoClienteAlterarActionPerformed
 
     private void botaoClienteExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteExcluirActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoCliente.getText());
-
-        if (cod > 0) {
+        // A função não está completa na parte de Banco de Dados, pq poderá dar erro se já tiver vendas realizadas
+        if (this.getCodCli() > 0) {
             Cliente c = null;
 
             try {
-                c = bancoCliente.pesquisar(cod);
+                c = bancoCliente.pesquisar(this.getCodCli());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -280,7 +275,7 @@ public class TelaCliente extends javax.swing.JFrame {
                 int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     try {
-                        bancoCliente.excluir(cod);
+                        bancoCliente.excluir(this.getCodCli());
                     } catch (SQLException ex) {
                         System.out.println(ex.toString());
                     } catch (NotExistException ex) {
@@ -329,6 +324,9 @@ public class TelaCliente extends javax.swing.JFrame {
         });
     }
 
+    private int getCodCli () {
+        return Integer.parseInt(this.txtCodigoCliente.getText());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;

@@ -11,8 +11,8 @@ import visao.TelaInicial;
 
 public class TelaProduto extends javax.swing.JFrame {
 
-    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
-    List<Produto> listaProduto = new ArrayList<>();
+    private final ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    private List<Produto> listaProduto = new ArrayList<>();
 
     public TelaProduto() {
         initComponents();
@@ -172,14 +172,12 @@ public class TelaProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoProdutoPequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoPequisarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoProduto.getText());
-
-        if (cod > 0) {
+        if (this.getCodProduto() > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
             Produto p = null;
 
             try {
-                p = bancoProduto.pesquisar(cod);
+                p = bancoProduto.pesquisar(this.getCodProduto());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -231,14 +229,12 @@ public class TelaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoProdutoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoAlterarActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoProduto.getText());
-
-        if (cod > 0) {
+        if (this.getCodProduto() > 0) {
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
             Produto p = null;
 
             try {
-                p = bancoProduto.pesquisar(cod);
+                p = bancoProduto.pesquisar(this.getCodProduto());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -267,13 +263,12 @@ public class TelaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoProdutoAlterarActionPerformed
 
     private void botaoProdutoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoExcluirActionPerformed
-        int cod = Integer.parseInt(this.txtCodigoProduto.getText());
-
-        if (cod > 0) {
+        // Excluir não propaga de forma correta no Banco de Dado
+        if (this.getCodProduto() > 0) {
             Produto p = null;
 
             try {
-                p = bancoProduto.pesquisar(cod);
+                p = bancoProduto.pesquisar(this.getCodProduto());
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -284,7 +279,7 @@ public class TelaProduto extends javax.swing.JFrame {
                 int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     try {
-                        bancoProduto.excluir(cod);
+                        bancoProduto.excluir(this.getCodProduto());
                     } catch (SQLException ex) {
                         System.out.println(ex.toString());
                     } catch (NotExistException ex) {
@@ -332,6 +327,9 @@ public class TelaProduto extends javax.swing.JFrame {
         });
     }
 
+    private int getCodProduto() {
+        return Integer.parseInt(this.txtCodigoProduto.getText());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;

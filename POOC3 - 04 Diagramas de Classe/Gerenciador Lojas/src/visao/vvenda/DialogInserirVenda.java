@@ -1,9 +1,7 @@
 package visao.vvenda;
 
 import controle.ControleClienteBanco;
-import controle.ControleItemVendidoBanco;
 import controle.ControleProdutoBanco;
-import controle.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import controle.excecoes.InsufficientStockException;
 import java.sql.SQLException;
@@ -25,9 +23,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     private final List<Produto> listaProduto = new ArrayList<>();
 
     private final ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
-    private final ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
     private final ControleClienteBanco bancoCliente = new ControleClienteBanco();
-    private final ControleVendaBanco bancoVenda = new ControleVendaBanco();
 
     private final Venda venda = new Venda();
     private final List<ItemVendido> listaIV = new ArrayList<>();
@@ -306,7 +302,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 //                prod.efetuarVenda((-1) * p.getQuantidade());
                 prod.setQuantidade((prod.getQuantidade() + p.getQuantidade()));
                 this.bancoProduto.alterar(prod);
-                
+
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
@@ -428,7 +424,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(DialogInserirVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

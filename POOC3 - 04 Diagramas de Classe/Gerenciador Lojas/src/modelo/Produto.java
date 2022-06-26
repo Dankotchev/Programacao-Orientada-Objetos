@@ -1,6 +1,6 @@
 package modelo;
 
-public class Produto implements Cloneable{
+public class Produto implements Cloneable {
 
     private int codigo;
     private String descricao;
@@ -16,17 +16,6 @@ public class Produto implements Cloneable{
 
     public void efetuarVenda(int quantidade) {
         this.quantidade -= quantidade;
-    }
-
-    public Produto() {
-    }
-
-    public Produto(int codigo, String descricao, int quantidade, double valorVenda, double valorCusto) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.quantidade = quantidade;
-        this.valorVenda = valorVenda;
-        this.valorCusto = valorCusto;
     }
 
     public int getCodigo() {
@@ -73,6 +62,4 @@ public class Produto implements Cloneable{
     public Produto clone() throws CloneNotSupportedException {
         return (Produto) super.clone();
     }
-    
-    
 }

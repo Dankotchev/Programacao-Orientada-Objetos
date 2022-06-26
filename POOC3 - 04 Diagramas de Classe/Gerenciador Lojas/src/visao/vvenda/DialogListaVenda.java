@@ -4,7 +4,6 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.ControleItemVendidoBanco;
 import java.text.SimpleDateFormat;
-import java.util.logging.Logger;
 import modelo.Venda;
 
 public class DialogListaVenda extends javax.swing.JDialog {
@@ -123,22 +122,8 @@ public class DialogListaVenda extends javax.swing.JDialog {
             System.out.println(ex.toString());
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-           System.out.println(ex.toString());
+            System.out.println(ex.toString());
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

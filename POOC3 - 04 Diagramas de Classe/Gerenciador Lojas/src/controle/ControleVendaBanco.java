@@ -14,8 +14,7 @@ public class ControleVendaBanco {
     public void inserir(Venda v, int codCliente) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
-
-        String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto, codigoClienteVenda) values (?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO venda (nrNF, data, formaPagto, codigoClienteVenda) VALUES (?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, v.getNrNF());
@@ -30,10 +29,9 @@ public class ControleVendaBanco {
     }
 
     public void excluir(int nrNF) throws SQLException, NotExistException {
+
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "DELETE FROM venda WHERE nrNF = ?";
-
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, nrNF);
 
@@ -48,9 +46,9 @@ public class ControleVendaBanco {
     }
 
     public List<Venda> listarTodos() throws SQLException {
+
         List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM venda";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
@@ -66,11 +64,11 @@ public class ControleVendaBanco {
         }
         return listaVenda;
     }
-    
-        public List<Venda> listarUltimas() throws SQLException {
+
+    public List<Venda> listarUltimas() throws SQLException {
+
         List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-
         String comandoSQL = "SELECT * FROM venda ORDER BY data ASC {LIMIT 10} ";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);

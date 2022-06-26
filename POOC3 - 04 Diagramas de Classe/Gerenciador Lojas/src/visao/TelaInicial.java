@@ -4,7 +4,6 @@ import visao.vcaixa.DialogExtratoCaixa;
 import visao.vcliente.TelaCliente;
 import visao.vproduto.TelaProduto;
 import visao.vvenda.TelaVenda;
-import visao.vcompra.DialogInserirCompra;
 import visao.vcompra.TelaCompra;
 
 public class TelaInicial extends javax.swing.JFrame {
