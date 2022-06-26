@@ -13,9 +13,9 @@ import visao.TelaInicial;
 
 public class TelaCompra extends javax.swing.JFrame {
 
-    ControleCompraBanco bancoCompra = new ControleCompraBanco();
-    ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
-    List<Compra> listaCompra = new ArrayList<>();
+    private final ControleCompraBanco bancoCompra = new ControleCompraBanco();
+    private final ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
+    private List<Compra> listaCompra = new ArrayList<>();
 
     public TelaCompra() {
         initComponents();
@@ -27,7 +27,7 @@ public class TelaCompra extends javax.swing.JFrame {
     private void initComponents() {
 
         botaoCompraNovo = new javax.swing.JButton();
-        botaoClienteExcluir = new javax.swing.JButton();
+        botaoCompraExcluir = new javax.swing.JButton();
         botaoCompraListarTodos = new javax.swing.JButton();
         botCancelar = new javax.swing.JButton();
         txtCodigoCliente = new javax.swing.JTextField();
@@ -42,7 +42,6 @@ public class TelaCompra extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(230, 230));
 
         botaoCompraNovo.setBackground(new java.awt.Color(153, 255, 153));
-        botaoCompraNovo.setForeground(new java.awt.Color(0, 0, 0));
         botaoCompraNovo.setText("Nova Compra");
         botaoCompraNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,17 +49,15 @@ public class TelaCompra extends javax.swing.JFrame {
             }
         });
 
-        botaoClienteExcluir.setBackground(new java.awt.Color(153, 255, 255));
-        botaoClienteExcluir.setForeground(new java.awt.Color(0, 0, 0));
-        botaoClienteExcluir.setText("Excluir");
-        botaoClienteExcluir.addActionListener(new java.awt.event.ActionListener() {
+        botaoCompraExcluir.setBackground(new java.awt.Color(153, 255, 255));
+        botaoCompraExcluir.setText("Excluir");
+        botaoCompraExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoClienteExcluirActionPerformed(evt);
+                botaoCompraExcluirActionPerformed(evt);
             }
         });
 
         botaoCompraListarTodos.setBackground(new java.awt.Color(153, 255, 153));
-        botaoCompraListarTodos.setForeground(new java.awt.Color(0, 0, 0));
         botaoCompraListarTodos.setText("Listar Todos");
         botaoCompraListarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +98,7 @@ public class TelaCompra extends javax.swing.JFrame {
                             .addComponent(botaoCompraNovo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(botaoClienteExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botaoCompraExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(136, 136, 136)
                                 .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator4)
@@ -126,7 +123,7 @@ public class TelaCompra extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoClienteExcluir))
+                    .addComponent(botaoCompraExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoProduto)
                 .addGap(18, 18, 18)
@@ -147,32 +144,29 @@ public class TelaCompra extends javax.swing.JFrame {
         DialogInserirCompra tela = new DialogInserirCompra(this, true);
         tela.setVisible(true);
 
+        // Inserção da Compra no Banco de Dados 
         try {
-            bancoCompra.inserir(tela.getCompra(), tela.getCodProduto());
+            this.bancoCompra.inserir(tela.getCompra(), tela.getCodProduto());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        
+
+        // Atualização das informações do Produto e atualizar Banco de Dados
         Produto p = null;
-
         try {
+
+            // Retornando o Produto para memória
             p = bancoProduto.pesquisar(tela.getCodProduto());
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        } catch (NotExistException ex) {
-            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        p.efetuarCompra(tela.getQtd(), tela.getValorCompra());
-        
-        try {
+            // Efetuando a compra do Produto
+            p.efetuarCompra(tela.getQtd(), tela.getValorCompra());
+            // Retornando para o banco o Produto com informações atualizadas
             bancoProduto.alterarVC(p);
+
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         } catch (NotExistException ex) {
             JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
-
         tela.dispose();
     }//GEN-LAST:event_botaoCompraNovoActionPerformed
 
@@ -194,7 +188,7 @@ public class TelaCompra extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botCancelarActionPerformed
 
-    private void botaoClienteExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteExcluirActionPerformed
+    private void botaoCompraExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompraExcluirActionPerformed
         int cod = Integer.parseInt(this.txtCodigoCliente.getText());
 
         if (cod > 0) {
@@ -204,7 +198,7 @@ public class TelaCompra extends javax.swing.JFrame {
                 try {
                     bancoCompra.excluir(cod);
                 } catch (SQLException ex) {
-                    System.out.println(ex.toString());
+//                    System.out.println(ex.toString());
                 } catch (NotExistException ex) {
                     JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -212,7 +206,7 @@ public class TelaCompra extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_botaoClienteExcluirActionPerformed
+    }//GEN-LAST:event_botaoCompraExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,7 +255,7 @@ public class TelaCompra extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;
-    private javax.swing.JButton botaoClienteExcluir;
+    private javax.swing.JButton botaoCompraExcluir;
     private javax.swing.JButton botaoCompraListarTodos;
     private javax.swing.JButton botaoCompraNovo;
     private javax.swing.JLabel codigoProduto;

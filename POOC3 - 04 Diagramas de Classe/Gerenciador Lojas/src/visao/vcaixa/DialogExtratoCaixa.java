@@ -1,31 +1,25 @@
 package visao.vcaixa;
 
 import controle.ControleCompraBanco;
-import visao.vvenda.*;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.ControleItemVendidoBanco;
-import controle.ControleProdutoBanco;
 import controle.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Compra;
 import modelo.ItemVendido;
-import modelo.Produto;
 import modelo.Venda;
 
 public class DialogExtratoCaixa extends javax.swing.JDialog {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    private ControleVendaBanco bancoVenda = new ControleVendaBanco();
-    private ControleCompraBanco bancoCompra = new ControleCompraBanco();
-    private ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
-    private ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+    private final ControleVendaBanco bancoVenda = new ControleVendaBanco();
+    private final ControleCompraBanco bancoCompra = new ControleCompraBanco();
+    private final ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
 
     private List<Venda> listaVenda = new ArrayList<>();
     private List<Compra> listaCompra = new ArrayList<>();
@@ -59,12 +53,9 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         }
     }
 
-    public void atualizarTabela() {
+    private void atualizarTabela() {
         int tamanhoVendas = this.listaVenda.size();
-        System.out.println("Tamanho venda :: " + tamanhoVendas);
-
         int tamanhoCompras = this.listaCompra.size();
-        System.out.println("Tamanho Compra :: " + tamanhoCompras);
 
         int v = 0, c = 0, linha = 0;
 

@@ -72,9 +72,7 @@
                   <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="botaoFinalizarVenda" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                      <Component id="botaoOK" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="415" max="-2" attributes="0"/>
                       <Component id="botaoCancelar" pref="159" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -134,10 +132,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="botaoCancelar" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botaoFinalizarVenda" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="botaoOK" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="botaoFinalizarVenda" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -194,20 +189,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoFinalizarVendaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="botaoOK">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="99" green="ff" red="99" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Georgia" size="18" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="OK"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoOKActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -347,6 +328,9 @@
           <Font name="Georgia" size="14" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCodProdutoFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtQtdProduto">
       <Properties>

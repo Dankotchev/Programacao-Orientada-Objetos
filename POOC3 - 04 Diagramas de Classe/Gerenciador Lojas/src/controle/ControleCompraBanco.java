@@ -2,21 +2,19 @@ package controle;
 
 import controle.excecoes.NotExistException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Compra;
-import modelo.Venda;
 
 public class ControleCompraBanco {
     public void inserir(Compra c, int codProd) throws SQLException {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra, data) values (?, ?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra, data) VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, c.getNrCompra());
@@ -24,7 +22,7 @@ public class ControleCompraBanco {
         executarSQL.setInt(3, c.getQtdComprada());
         executarSQL.setDouble(4, c.getValorCompra());
         executarSQL.setInt(5, codProd);
-        executarSQL.setDate(6, (Date) c.getData());
+        executarSQL.setDate(6, new java.sql.Date(c.getData().getTime()));
 
         executarSQL.executeUpdate();
         conexao.commit();

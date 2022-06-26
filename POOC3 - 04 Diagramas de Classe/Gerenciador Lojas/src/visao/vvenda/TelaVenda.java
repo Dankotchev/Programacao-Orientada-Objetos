@@ -15,11 +15,9 @@ import visao.TelaInicial;
 
 public class TelaVenda extends javax.swing.JFrame {
 
-    ControleVendaBanco bancoVenda = new ControleVendaBanco();
-    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
-
-    List<ItemVendido> listaIV = new ArrayList<>();
-    List<Venda> listaVenda = new ArrayList<>();
+    private final ControleVendaBanco bancoVenda = new ControleVendaBanco();
+    private final ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+    private List<Venda> listaVenda = new ArrayList<>();
 
     public TelaVenda() {
         initComponents();
@@ -129,13 +127,12 @@ public class TelaVenda extends javax.swing.JFrame {
 
         DialogInserirVenda tela = new DialogInserirVenda(this, true);
         tela.setVisible(true);
-
-        int codCliente = tela.getCodCli();
+        Venda venda = tela.getVenda();
 
         try {
-            bancoVenda.inserir(tela.getVenda(), codCliente);
-            for (ItemVendido itemVendido : tela.getVenda().getListaIV()) {
-                bancoIV.inserir(itemVendido, tela.getNrNF());
+            bancoVenda.inserir(venda, tela.getCodCli());
+            for (ItemVendido itemVendido : venda.getListaIV()) {
+                bancoIV.inserir(itemVendido, venda.getNrNF());
             }
 
         } catch (SQLException ex) {
@@ -165,7 +162,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
     private void botaoVendaListarUltimasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarUltimasActionPerformed
         try {
-            listaVenda = bancoVenda.listarTodos();
+            listaVenda = bancoVenda.listarUltimas();
             DialogListaVenda tela = new DialogListaVenda(this, true);
             tela.atualizarTabela(listaVenda);
 

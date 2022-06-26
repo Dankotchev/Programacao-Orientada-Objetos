@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import modelo.Venda;
 import controle.excecoes.NotExistException;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class ControleVendaBanco {
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, v.getNrNF());
-        executarSQL.setDate(2, (Date) v.getData());
+        executarSQL.setDate(2, new java.sql.Date(v.getData().getTime()));
         executarSQL.setString(3, v.getFormaPagto());
         executarSQL.setInt(4, codCliente);
 

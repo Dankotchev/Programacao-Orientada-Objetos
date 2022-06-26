@@ -8,9 +8,9 @@ public class Produto implements Cloneable{
     private double valorVenda;
     private double valorCusto;
 
-    public void efetuarCompra(int quantidade, double novoValor) {
+    public void efetuarCompra(int quantidade, double novoValorCusto) {
         this.quantidade += quantidade;
-        this.valorCusto = novoValor;
+        this.valorCusto = novoValorCusto;
         this.valorVenda = (2.20 * this.valorCusto);
     }
 
