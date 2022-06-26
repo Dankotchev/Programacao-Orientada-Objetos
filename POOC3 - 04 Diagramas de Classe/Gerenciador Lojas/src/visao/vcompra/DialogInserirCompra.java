@@ -107,7 +107,7 @@ public class DialogInserirCompra extends javax.swing.JDialog {
         txtCodProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
 
         labelCodProduto.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        labelCodProduto.setText("# Compra");
+        labelCodProduto.setText("Codigo do Produto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,8 +136,8 @@ public class DialogInserirCompra extends javax.swing.JDialog {
                             .addComponent(labelNrCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtCodProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(labelCodProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(

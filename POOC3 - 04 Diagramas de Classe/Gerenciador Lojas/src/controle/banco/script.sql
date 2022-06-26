@@ -40,9 +40,10 @@ CREATE TABLE itemvendido (
 CREATE TABLE compra (
     nrCompra                int             not null,
     fornecedor              varchar(100)    not null,
-    qtdComprada           int             not null,
+    qtdComprada             int             not null,
     valorCompra             double          not null,
     codigoProdutoCompra     int             not null,
+    data                    date            not null,
     PRIMARY KEY (nrCompra),
     FOREIGN KEY (codigoProdutoCompra) REFERENCES produto (codigoProduto)
 );
@@ -61,4 +62,21 @@ INSERT INTO cliente (codigoCliente, nome, contato) VALUES
     (33, "Tales João Carlo", "18 654-100-112"),
     (36, "Fernanda Quesia", "19 335-184-854");
 
---INSERT INTO venda (nrNF, data, formaPagto, codigo) VALUES
+INSERT INTO venda (nrNF, data, formaPagto, codigoClienteVenda) VALUES
+    (10, "2022-06-15", "Pix", 22),
+    (11, "2022-06-17", "Dinheiro", 33),
+    (12, "2022-06-22", "Cartão de Crédito", 36);
+    
+INSERT INTO itemvendido (quantidadeVendida, precoVenda, nrNFVenda, codigoProdutoIV) VALUES
+    (1, 400, 10, 1000),
+    (1, 3300, 10, 2000),
+    (3, 150, 11, 2300),
+    (1, 300, 12, 1700),
+    (1, 700, 12, 1500);
+
+INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra, data) VALUES
+    (1, "Alabama Eletrodoméstico", 2300, 235, 1000,"2022-06-01"),
+    (2, "Bratenistemp", 15, 349.90, 1500, "2022-06-05"),
+    (3, "Moveis Guarani", 300, 100, 1700, "2022-06-07"),
+    (4, "ElectBrasil", 25, 1420, 2000, "2022-06-07"),
+    (5, "Orlandeles", 178, 12, 2300, "2022-06-10");

@@ -16,7 +16,7 @@ public class ControleCompraBanco {
 
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra) values (?, ?, ?, ?)";
+        String comandoSQL = "INSERT INTO compra (nrCompra, fornecedor, qtdComprada, valorCompra, codigoProdutoCompra, data) values (?, ?, ?, ?, ?)";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, c.getNrCompra());
@@ -24,6 +24,7 @@ public class ControleCompraBanco {
         executarSQL.setInt(3, c.getQtdComprada());
         executarSQL.setDouble(4, c.getValorCompra());
         executarSQL.setInt(5, codProd);
+        executarSQL.setDate(6, (Date) c.getData());
 
         executarSQL.executeUpdate();
         conexao.commit();
@@ -47,6 +48,7 @@ public class ControleCompraBanco {
             c.setFornecedor(resultadoConsulta.getString("fornecedor"));
             c.setQtdComprada(resultadoConsulta.getInt("qtdComprada"));
             c.setValorCompra(resultadoConsulta.getDouble("valorCompra"));
+            c.setData(resultadoConsulta.getDate("data"));
             listaVenda.add(c);
         }
         return listaVenda;

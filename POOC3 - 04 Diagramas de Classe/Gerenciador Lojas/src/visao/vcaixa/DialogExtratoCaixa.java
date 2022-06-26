@@ -29,7 +29,8 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
 
     private List<Venda> listaVenda = new ArrayList<>();
     private List<Compra> listaCompra = new ArrayList<>();
-    private List<ItemVendido> listaIV;
+
+    private double saldoExtrato = 0.0;
 
     public DialogExtratoCaixa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,6 +39,7 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         this.getVendas();
         this.getCompras();
         this.atualizarTabela();
+        this.labelSaldoAtual.setText(String.valueOf(this.saldoExtrato));
 
     }
 
@@ -58,53 +60,75 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
     }
 
     public void atualizarTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaExtrato.getModel();
-        modelo.setRowCount(0);
-
         int tamanhoVendas = this.listaVenda.size();
+        System.out.println("Tamanho venda :: " + tamanhoVendas);
+
         int tamanhoCompras = this.listaCompra.size();
-        int v = 0, c = 0;
+        System.out.println("Tamanho Compra :: " + tamanhoCompras);
 
-        Compra com;
-        Venda ven;
+        int v = 0, c = 0, linha = 0;
 
-        double saldoExtrato = 0.0;
+        Compra com = null;
+        Venda ven = null;
 
         do {
-            com = this.listaCompra.get(c);
-            ven = this.listaVenda.get(v);
+            if (c < tamanhoCompras) {
+                com = this.listaCompra.get(c);
+            }
+            if (v < tamanhoVendas) {
+                ven = this.listaVenda.get(v);
+            }
 
             // Se a data de Compra for anterior a de venda, apresentar a compra
             // E incrementar o indice de compra
-            if (com.getData().before(ven.getData())) {
-                modelo.addRow(new Object[]{sdf.format(com.getData()),
-                    com.getTextoMovimento(), com.getValorMovimento()});
+            if (c < tamanhoCompras && (com.getData().before(ven.getData()))) {
+                this.inserirCompraTabela(com, linha ++);
                 c++;
-                saldoExtrato += com.getValorMovimento();
             } // Caso ao contrario, apresentar a Venda e incrementar o indice de venda
-            else {
-
-                // Busco todos os Item Vendidos de uma venda, e guardo sua lista
-                try {
-                    listaIV = new ArrayList<>();
-                    listaIV = this.bancoIV.retonarItemVendido(ven.getNrNF());
-                    ven.setListaIV(listaIV);
-
-                    // Apresentar o resultado na Tabela Extrato
-                    modelo.addRow(new Object[]{sdf.format(ven.getData()),
-                        ven.getTextoMovimento(), ven.getValorMovimento()});
-
-                    saldoExtrato += ven.getValorMovimento();
-
-                } catch (SQLException ex) {
-                    System.out.println(ex.toString());
-                } catch (NotExistException ex) {
-                    System.out.println(ex.toString());
-                }
+            else if (c < tamanhoCompras && (com.getData().after(ven.getData()))) {
+                this.inserirVendaTabela(ven, linha ++);
                 v++;
+            } else if (v < tamanhoVendas && (com.getData().before(ven.getData()))) {
+                this.inserirVendaTabela(ven, linha++);
+                v++;
+            } else if (v < tamanhoVendas && (com.getData().after(ven.getData()))) {
+                this.inserirCompraTabela(com, linha++);
+                c++;
             }
-        } while (v < tamanhoVendas && c < tamanhoCompras);
-        this.labelSaldoAtual.setText(String.valueOf(saldoExtrato));
+
+        } while (v < tamanhoVendas || c < tamanhoCompras);
+    }
+
+    private void inserirVendaTabela(Venda venda, int linha) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaExtrato.getModel();
+        modelo.setRowCount(linha);
+
+        try {
+            // Busco todos os Item Vendidos de uma venda, e guardo sua lista
+            List<ItemVendido> listaIV = new ArrayList<>();
+            listaIV = this.bancoIV.retonarItemVendido(venda.getNrNF());
+            venda.setListaIV(listaIV);
+
+            // Apresentar o resultado na Tabela Extrato
+            modelo.addRow(new Object[]{sdf.format(venda.getData()),
+                venda.getTextoMovimento(), venda.getValorMovimento()});
+
+            this.saldoExtrato += venda.getValorMovimento();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
+    private void inserirCompraTabela(Compra compra, int linha) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaExtrato.getModel();
+        modelo.setRowCount(linha);
+
+        modelo.addRow(new Object[]{sdf.format(compra.getData()),
+            compra.getTextoMovimento(), compra.getValorMovimento()});
+
+        this.saldoExtrato += compra.getValorMovimento();
     }
 
     /**
@@ -136,8 +160,8 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tabelaExtrato);
         if (tabelaExtrato.getColumnModel().getColumnCount() > 0) {
-            tabelaExtrato.getColumnModel().getColumn(0).setMaxWidth(80);
-            tabelaExtrato.getColumnModel().getColumn(1).setMinWidth(200);
+            tabelaExtrato.getColumnModel().getColumn(0).setMaxWidth(200);
+            tabelaExtrato.getColumnModel().getColumn(2).setMaxWidth(200);
         }
 
         botaoFechar.setBackground(new java.awt.Color(255, 51, 51));
