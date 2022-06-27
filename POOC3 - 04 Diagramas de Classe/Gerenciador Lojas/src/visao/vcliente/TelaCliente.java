@@ -1,6 +1,6 @@
 package visao.vcliente;
 
-import controle.DAO.ControleClienteBanco;
+import controle.dao.ControleClienteBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -170,27 +170,21 @@ public class TelaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoClientePequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClientePequisarActionPerformed
-        if (this.getCodCli() > 0) {
+        try {
+            Cliente c = this.bancoCliente.pesquisar(this.getCodCli());
             DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
-            Cliente c = null;
 
-            try {
-                c = bancoCliente.pesquisar(this.getCodCli());
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
+            tela.setCliente(c);
+            tela.ocultarBotoes();
+            tela.setVisible(true);
 
-            if (c != null) {
-                tela.setCliente(c);
-                tela.ocultarBotoes();
-                tela.setVisible(true);
-//                tela.setVisible(false);
-            }
             tela.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um código de Cliente", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoClientePequisarActionPerformed
 
@@ -199,7 +193,7 @@ public class TelaCliente extends javax.swing.JFrame {
         tela.setVisible(true);
 
         try {
-            bancoCliente.inserir(tela.getCliente());
+            this.bancoCliente.inserir(tela.getCliente());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
@@ -210,7 +204,7 @@ public class TelaCliente extends javax.swing.JFrame {
         try {
             this.listaCliente = this.bancoCliente.listarTodos();
             DialogListaCliente tela = new DialogListaCliente(this, true);
-            tela.atualizarTabela(listaCliente);
+            tela.atualizarTabela(this.listaCliente);
 
             this.setVisible(false);
             tela.setVisible(true);
@@ -225,54 +219,44 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoClienteAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteAlterarActionPerformed
-        if (this.getCodCli() > -1) {
+        try {
+            Cliente c = this.bancoCliente.pesquisar(this.getCodCli());
             DialogInformacoesCliente tela = new DialogInformacoesCliente(this, true);
-            Cliente c = null;
 
-            try {
-                c = bancoCliente.pesquisar(this.getCodCli());
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
+            tela.setCliente(c);
+            tela.setVisible(true);
 
-            if (c != null) {
-                tela.setCliente(c);
-                tela.setVisible(true);
+            c = tela.getCliente();
+            this.bancoCliente.alterar(c);
 
-                c = tela.getCliente();
-                try {
-                    bancoCliente.alterar(c);
-                } catch (SQLException ex) {
-                    System.out.println(ex.toString());
-                } catch (NotExistException ex) {
-                    JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-                }
-                tela.setVisible(false);
-            }
             tela.dispose();
-        } else {
-            // Não inseriu um código, apresentar mensagem
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um código de Cliente", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoClienteAlterarActionPerformed
 
     private void botaoClienteExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteExcluirActionPerformed
         // Essa função exclui de forma lógica no Banco de Dados
         try {
-            if (bancoCliente.existe(this.getCodCli())) {
+            if (this.bancoCliente.existe(this.getCodCli())) {
                 // Se o cliente existir, pede confirmação da exclusão
                 int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     // Exclui o Cliente do banco de dados
-                    bancoCliente.excluir(this.getCodCli());
+                    this.bancoCliente.excluir(this.getCodCli());
                 }
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         } catch (NotExistException ex) {
             JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um código de Cliente", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_botaoClienteExcluirActionPerformed

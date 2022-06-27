@@ -1,4 +1,4 @@
-package controle.DAO;
+package controle.dao;
 
 import controle.excecoes.NotExistException;
 import java.sql.Connection;

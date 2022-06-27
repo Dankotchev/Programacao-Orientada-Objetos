@@ -1,4 +1,4 @@
-package controle.DAO;
+package controle.dao;
 
 import controle.excecoes.NotExistException;
 import java.sql.Connection;
@@ -69,6 +69,31 @@ public class ControleCompraBanco {
             throw new NotExistException();
         }
     }
+    
+        public Compra pesquisar(int nrCompra) throws SQLException, NotExistException {
+
+        Compra c = null;
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "SELECT * FROM compra WHERE (nrCompra = ?) AND (status = true)";
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, nrCompra);
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+
+        resultadoConsulta.next();
+        if (resultadoConsulta.getRow() > 0) {
+            c = new Compra();
+            c.setFornecedor(resultadoConsulta.getString("fornecedor"));
+            c.setQtdComprada(resultadoConsulta.getInt("qtdComprada"));
+            c.setValorCompra(resultadoConsulta.getDouble("valorCompra"));
+            c.setData(resultadoConsulta.getDate("data")); 
+        } else {
+            throw new NotExistException();
+        }
+        executarSQL.close();
+        conexao.close();
+        return c;
+    }
 
     public boolean existe(int codigo) throws SQLException, NotExistException {
         
@@ -91,5 +116,28 @@ public class ControleCompraBanco {
         executarSQL.close();
         conexao.close();
         return existe;
+    }
+    
+    public int retonarCodProd(int nrCompra) throws SQLException, NotExistException{
+        
+        int codProduto;
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "SELECT * FROM compra WHERE (nrCompra = ?) AND status = true";
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, nrCompra);
+
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+        resultadoConsulta.next();
+        if (resultadoConsulta.getRow() > 0) {
+            codProduto = resultadoConsulta.getInt("codigoProdutoCompra");
+
+        } else {
+            throw new NotExistException();
+        }
+
+        executarSQL.close();
+        conexao.close();
+        return codProduto;
     }
 }

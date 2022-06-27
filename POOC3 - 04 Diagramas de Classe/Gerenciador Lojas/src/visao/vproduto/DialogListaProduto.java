@@ -2,7 +2,7 @@ package visao.vproduto;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import controle.DAO.ControleProdutoBanco;
+import controle.dao.ControleProdutoBanco;
 import modelo.Produto;
 
 public class DialogListaProduto extends javax.swing.JDialog {

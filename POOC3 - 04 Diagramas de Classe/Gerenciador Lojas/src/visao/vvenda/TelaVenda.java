@@ -1,13 +1,12 @@
 package visao.vvenda;
 
-import controle.DAO.ControleItemVendidoBanco;
-import controle.DAO.ControleVendaBanco;
+import controle.Estoque;
+import controle.dao.ControleItemVendidoBanco;
+import controle.dao.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ItemVendido;
 import modelo.Venda;
@@ -162,9 +161,9 @@ public class TelaVenda extends javax.swing.JFrame {
         Venda venda = tela.getVenda();
 
         try {
-            bancoVenda.inserir(venda, tela.getCodCli());
-            for (ItemVendido itemVendido : venda.getListaIV()) {
-                bancoIV.inserir(itemVendido, venda.getNrNF());
+            this.bancoVenda.inserir(venda, tela.getCodCli());
+            for (ItemVendido iv : venda.getListaIV()) {
+                this.bancoIV.inserir(iv, venda.getNrNF());
             }
 
         } catch (SQLException ex) {
@@ -175,9 +174,9 @@ public class TelaVenda extends javax.swing.JFrame {
 
     private void botaoVendaListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarTodosActionPerformed
         try {
-            listaVenda = bancoVenda.listarTodos();
+            this.listaVenda = this.bancoVenda.listarTodos();
             DialogListaVenda tela = new DialogListaVenda(this, true);
-            tela.atualizarTabela(listaVenda);
+            tela.atualizarTabela(this.listaVenda);
 
             this.setVisible(false);
             tela.setVisible(true);
@@ -194,9 +193,9 @@ public class TelaVenda extends javax.swing.JFrame {
 
     private void botaoVendaListarUltimasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaListarUltimasActionPerformed
         try {
-            listaVenda = bancoVenda.listarUltimas();
+            this.listaVenda = this.bancoVenda.listarUltimas();
             DialogListaVenda tela = new DialogListaVenda(this, true);
-            tela.atualizarTabela(listaVenda);
+            tela.atualizarTabela(this.listaVenda);
 
             this.setVisible(false);
             tela.setVisible(true);
@@ -210,17 +209,22 @@ public class TelaVenda extends javax.swing.JFrame {
     private void botaoVendaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaExcluirActionPerformed
         // Essa função exclui de forma lógica no Banco de Dados
         try {
-            if (bancoVenda.existe(this.getNF())) {
-                // Se a venda existir, pede confirmação da exclusão, e logo depois exclui
+            if (this.bancoVenda.existe(this.getNF())) {
+                // Se a venda existir, pede confirmação da exclusão
                 int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
-                    bancoVenda.excluir(this.getNF());
+                    // Retornar os produtos vendidos para o estoque
+                    Estoque e = new Estoque();
+                    e.retornarVenda(this.getNF());
+                    this.bancoVenda.excluir(this.getNF());
                 }
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         } catch (NotExistException ex) {
             JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe uma Nota Fiscal", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoVendaExcluirActionPerformed
 

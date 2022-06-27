@@ -1,6 +1,6 @@
 package visao.vcompra;
 
-import controle.DAO.ControleProdutoBanco;
+import controle.dao.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;

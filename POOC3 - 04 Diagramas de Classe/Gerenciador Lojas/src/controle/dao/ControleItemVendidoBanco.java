@@ -1,4 +1,4 @@
-package controle.DAO;
+package controle.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,6 +45,7 @@ public class ControleItemVendidoBanco {
             iv = new ItemVendido();
             iv.setQuantidadeVendida(resultadoConsulta.getInt("quantidadeVendida"));
             iv.setPrecoVenda(resultadoConsulta.getDouble("precoVenda"));
+            iv.setCodProduto(resultadoConsulta.getInt("codigoProdutoIV"));
             listaIV.add(iv);
         }
         return listaIV;
@@ -67,21 +68,16 @@ public class ControleItemVendidoBanco {
         }
     }
 
-    public double getTotalVenda(int nrNF) {
+    public double getTotalVenda(int nrNF) throws SQLException, NotExistException {
 
         double totalVenda = 0;
         List<ItemVendido> listaIV = new ArrayList<>();
 
-        try {
-            listaIV = this.retonarItemVendido(nrNF);
-            for (ItemVendido iv : listaIV) {
-                totalVenda += (iv.getPrecoVenda() * iv.getQuantidadeVendida());
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControleItemVendidoBanco.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotExistException ex) {
-            Logger.getLogger(ControleItemVendidoBanco.class.getName()).log(Level.SEVERE, null, ex);
+        listaIV = this.retonarItemVendido(nrNF);
+        for (ItemVendido iv : listaIV) {
+            totalVenda += (iv.getPrecoVenda() * iv.getQuantidadeVendida());
         }
+
         return totalVenda;
     }
 

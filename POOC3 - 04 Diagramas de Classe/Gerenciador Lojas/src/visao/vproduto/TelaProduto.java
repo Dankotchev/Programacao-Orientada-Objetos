@@ -1,6 +1,6 @@
 package visao.vproduto;
 
-import controle.DAO.ControleProdutoBanco;
+import controle.dao.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -172,27 +172,22 @@ public class TelaProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoProdutoPequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoPequisarActionPerformed
-        if (this.getCodProduto() > 0) {
+        try {
+            Produto p = this.bancoProduto.pesquisar(this.getCodProduto());
             DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Produto p = null;
 
-            try {
-                p = bancoProduto.pesquisar(this.getCodProduto());
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            if (p != null) {
-                tela.setProduto(p);
-                tela.ocultarBotoes();
-                tela.setVisible(true);
-                tela.setVisible(false);
-            }
+            tela.setProduto(p);
+            tela.ocultarBotoes();
+            tela.setVisible(true);
+            tela.setVisible(false);
             tela.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um código de Produto", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoProdutoPequisarActionPerformed
 
@@ -202,7 +197,7 @@ public class TelaProduto extends javax.swing.JFrame {
         tela.setVisible(true);
 
         try {
-            bancoProduto.inserir(tela.getProduto());
+            this.bancoProduto.inserir(tela.getProduto());
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
@@ -211,9 +206,9 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void botaoProdutoListarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoListarTodosActionPerformed
         try {
-            listaProduto = bancoProduto.listarTodos();
+            this.listaProduto = this.bancoProduto.listarTodos();
             DialogListaProduto tela = new DialogListaProduto(this, true);
-            tela.atualizarTabela(listaProduto);
+            tela.atualizarTabela(this.listaProduto);
 
             this.setVisible(false);
             tela.setVisible(true);
@@ -229,54 +224,45 @@ public class TelaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoProdutoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoAlterarActionPerformed
-        if (this.getCodProduto() > 0) {
-            DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
-            Produto p = null;
-
             try {
-                p = bancoProduto.pesquisar(this.getCodProduto());
+                Produto p = this.bancoProduto.pesquisar(this.getCodProduto());
+                DialogInformacoesProduto tela = new DialogInformacoesProduto(this, true);
+                
+                tela.setProduto(p);
+                tela.bloquearEstoque();
+                tela.setVisible(true);
+                
+                p = tela.getProduto();
+                this.bancoProduto.alterar(p);
+                
+                tela.dispose();
+                
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             } catch (NotExistException ex) {
                 JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Informe um código de Produto", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
-
-            if (p != null) {
-                tela.setProduto(p);
-                tela.bloquearEstoque();
-                tela.setVisible(true);
-
-                p = tela.getProduto();
-                try {
-                    bancoProduto.alterar(p);
-                } catch (SQLException ex) {
-                    System.out.println(ex.toString());
-                } catch (NotExistException ex) {
-                    JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-                }
-                tela.setVisible(false);
-            }
-            tela.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
     }//GEN-LAST:event_botaoProdutoAlterarActionPerformed
 
     private void botaoProdutoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoExcluirActionPerformed
         // Exclusão lógica no Banco de Dados
         try {
-            if (bancoProduto.existe(this.getCodProduto())) {
+            if (this.bancoProduto.existe(this.getCodProduto())) {
                 // Se o produto existir, pedir a confirmação e excluir em seguida
                 int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     // Exclui o Cliente do banco de dados
-                    bancoProduto.excluir(this.getCodProduto());
+                    this.bancoProduto.excluir(this.getCodProduto());
                 }
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         } catch (NotExistException ex) {
             JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um código de Produto", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_botaoProdutoExcluirActionPerformed
 

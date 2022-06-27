@@ -1,4 +1,4 @@
-package controle.DAO;
+package controle.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,6 +44,30 @@ public class ControleVendaBanco {
         if (linhas == 0) {
             throw new NotExistException();
         }
+    }
+
+    public Venda pesquisar(int codigo) throws SQLException, NotExistException {
+
+        Venda v = null;
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "SELECT * FROM venda WHERE (nrNF = ?) AND (status = true)";
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, codigo);
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+
+        resultadoConsulta.next();
+        if (resultadoConsulta.getRow() > 0) {
+            v = new Venda();
+            v.setNrNF(codigo);
+            v.setData(resultadoConsulta.getDate("data"));
+            v.setFormaPagto("formaPagto");
+        } else {
+            throw new NotExistException();
+        }
+        executarSQL.close();
+        conexao.close();
+        return v;
     }
 
     public List<Venda> listarTodos() throws SQLException {

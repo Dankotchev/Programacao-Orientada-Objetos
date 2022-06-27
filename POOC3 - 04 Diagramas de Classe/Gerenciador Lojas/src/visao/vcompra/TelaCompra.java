@@ -1,7 +1,8 @@
 package visao.vcompra;
 
-import controle.DAO.ControleCompraBanco;
-import controle.DAO.ControleProdutoBanco;
+import controle.Estoque;
+import controle.dao.ControleCompraBanco;
+import controle.dao.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -143,24 +144,15 @@ public class TelaCompra extends javax.swing.JFrame {
     private void botaoCompraNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompraNovoActionPerformed
         DialogInserirCompra tela = new DialogInserirCompra(this, true);
         tela.setVisible(true);
-
-        // Inserção da Compra no Banco de Dados 
+        
         try {
+            // Inserção da Compra no Banco de Dados 
             this.bancoCompra.inserir(tela.getCompra(), tela.getCodProduto());
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-
-        // Atualização das informações do Produto e atualizar Banco de Dados
-        Produto p = null;
-        try {
-
-            // Retornando o Produto para memória
-            p = bancoProduto.pesquisar(tela.getCodProduto());
-            // Efetuando a compra do Produto
+            
+            // Atualizando os valores do Produto no Banco de Dados
+            Produto p = this.bancoProduto.pesquisar(tela.getCodProduto());
             p.efetuarCompra(tela.getQtd(), tela.getValorCompra());
-            // Retornando para o banco o Produto com informações atualizadas
-            bancoProduto.alterarVC(p);
+            this.bancoProduto.alterarVC(p);
 
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -174,7 +166,7 @@ public class TelaCompra extends javax.swing.JFrame {
         try {
             this.listaCompra = this.bancoCompra.listarTodos();
             DialogListaCompra tela = new DialogListaCompra(this, true);
-            tela.atualizarTabela(listaCompra);
+            tela.atualizarTabela(this.listaCompra);
 
             this.setVisible(false);
             tela.setVisible(true);
@@ -190,21 +182,25 @@ public class TelaCompra extends javax.swing.JFrame {
 
     private void botaoCompraExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompraExcluirActionPerformed
         // Exclusão lógica da Compra no Banco de Dados
-        //if (this.getCodCompra() > 0) {
-
-            try {
-                if (bancoCompra.existe(this.getCodCompra())) {
-                    // Se existir a compra, pedir a confirmação
-                    int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
-                    if (resposta == JOptionPane.YES_OPTION) {
-                        bancoCompra.excluir(this.getCodCompra());
-                    }
+        // Não há como alterar o valor do Produto para o valor antes da compra, já que não foi guardado o ultimo valor
+        try {
+            if (this.bancoCompra.existe(this.getCodCompra())) {
+                Compra c = this.bancoCompra.pesquisar(this.getCodCompra());
+                int codProduto = this.bancoCompra.retonarCodProd(this.getCodCompra());
+                
+                // Se existir a compra, pedir a confirmação
+                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    Estoque e = new Estoque();
+                    e.retornarCompra(codProduto, c.getQtdComprada());
+                    bancoCompra.excluir(this.getCodCompra());
                 }
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
         //}
 
 

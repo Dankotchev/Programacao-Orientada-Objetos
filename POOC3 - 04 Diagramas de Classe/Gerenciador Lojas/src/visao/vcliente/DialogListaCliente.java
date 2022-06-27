@@ -3,7 +3,7 @@ package visao.vcliente;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
-import controle.DAO.ControleClienteBanco;
+import controle.dao.ControleClienteBanco;
 
 public class DialogListaCliente extends javax.swing.JDialog {
 

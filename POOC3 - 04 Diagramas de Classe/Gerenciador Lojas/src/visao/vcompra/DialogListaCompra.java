@@ -2,7 +2,7 @@ package visao.vcompra;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import controle.DAO.ControleClienteBanco;
+import controle.dao.ControleClienteBanco;
 import modelo.Compra;
 
 public class DialogListaCompra extends javax.swing.JDialog {

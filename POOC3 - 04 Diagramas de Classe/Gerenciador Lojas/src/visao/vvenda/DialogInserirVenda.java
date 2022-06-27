@@ -1,7 +1,8 @@
 package visao.vvenda;
 
-import controle.DAO.ControleClienteBanco;
-import controle.DAO.ControleProdutoBanco;
+import controle.Estoque;
+import controle.dao.ControleClienteBanco;
+import controle.dao.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import controle.excecoes.InsufficientStockException;
 import java.sql.SQLException;
@@ -9,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ItemVendido;
@@ -295,36 +294,18 @@ public class DialogInserirVenda extends javax.swing.JDialog {
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
         // Ao cancelar, tem que atualizar todo os Produtos que tiveram suas quantidades alteradas
-        Produto prod;
-        for (Produto p : listaProduto) {
-            try {
-                prod = this.bancoProduto.pesquisar(p.getCodigo());
-//                prod.efetuarVenda((-1) * p.getQuantidade());
-                prod.setQuantidade((prod.getQuantidade() + p.getQuantidade()));
-                this.bancoProduto.alterar(prod);
-
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
+        try {
+            Estoque e = new Estoque();
+            e.retornarVenda(this.listaIV);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
-
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
-        ItemVendido iv;
-
-        // Coloca todos os produtos vendidos na lista de Item Vendido
-        for (Produto p : this.listaProduto) {
-            iv = new ItemVendido();
-            iv.setPrecoVenda(p.getValorVenda());
-            iv.setQuantidadeVendida(p.getQuantidade());
-            iv.setCodProduto(p.getCodigo());
-            this.listaIV.add(iv);
-        }
-
         // Coloca a lista dentro de uma venda
         this.venda.setListaIV(listaIV);
 
@@ -333,45 +314,48 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
 
     private void botaoInserirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInserirProdutoActionPerformed
-        Produto pBanco = null;
+        try {
+            Produto pBanco = bancoProduto.pesquisar(this.getCodProd());
+            ItemVendido iv = new ItemVendido();
 
-        if (this.getCodProd() > -1) {
-            try {
-                pBanco = bancoProduto.pesquisar(this.getCodProd());
+            // Crio um clone para trabalhar em memoria, por segurança
+            Produto pMemoria = pBanco.clone();
 
-                // Crio um clone para trabalhar em memoria, por segurança
-                Produto pMemoria = pBanco.clone();
+            if (this.getQtdProd() <= pBanco.getQuantidade()) {
+                // Atualizo o estoque do produto e atualizo o Banco de Dados
+                pBanco.efetuarVenda(this.getQtdProd());
+                this.bancoProduto.alterarVC(pBanco);
 
-                if (this.getQtdProd() <= pBanco.getQuantidade()) {
-                    // Atualizo o estoque do produto e atualizo o Banco de Dados
-                    pBanco.efetuarVenda(this.getQtdProd());
-                    this.bancoProduto.alterarVC(pBanco);
+                // Atualizo os valores para os informados na compra
+                pMemoria.setQuantidade(this.getQtdProd());
+                pMemoria.setValorVenda(this.getValorVenda());
 
-                    // Atualizo os valores para os informados na compra
-                    pMemoria.setQuantidade(this.getQtdProd());
-                    pMemoria.setValorVenda(this.getValorVenda());
+                iv.setCodProduto(this.getCodProd());
+                iv.setQuantidadeVendida(this.getQtdProd());
+                iv.setPrecoVenda(this.getValorVenda());
 
-                    // Inserção do Produto na lista da Tabela de Resumo e atualização de Campos
-                    this.listaProduto.add(pMemoria);
-                    this.atualizarTabela(this.listaProduto);
-                    this.txtTotalVenda.setText(String.valueOf(this.totalVenda));
+                // Inserção do Produto na lista da Tabela de Resumo e atualização de Campos
+                this.listaIV.add(iv);
+                this.listaProduto.add(pMemoria);
+                this.atualizarTabela(this.listaProduto);
+                this.txtTotalVenda.setText(String.valueOf(this.totalVenda));
 
-                } else {
-                    throw new InsufficientStockException();
-                }
-
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            } catch (CloneNotSupportedException ex) {
-                System.out.println(ex.toString());
-            } catch (InsufficientStockException ex) {
-                JOptionPane.showMessageDialog(null, ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new InsufficientStockException();
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Produto.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (CloneNotSupportedException ex) {
+            System.out.println(ex.toString());
+        } catch (InsufficientStockException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Informe um Código de Produto", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
+
     }//GEN-LAST:event_botaoInserirProdutoActionPerformed
 
     private void txtCodClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodClienteFocusLost
@@ -382,7 +366,6 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         } catch (NotExistException ex) {
-            System.out.println(ex.toString());
             JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_txtCodClienteFocusLost
@@ -392,9 +375,9 @@ public class DialogInserirVenda extends javax.swing.JDialog {
             Produto p = this.bancoProduto.pesquisar(this.getCodProd());
             this.txtValorVenda.setText(String.valueOf(p.getValorVenda()));
         } catch (SQLException ex) {
-            Logger.getLogger(DialogInserirVenda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         } catch (NotExistException ex) {
-            Logger.getLogger(DialogInserirVenda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
         }
     }//GEN-LAST:event_txtCodProdutoFocusLost
 
@@ -445,12 +428,12 @@ public class DialogInserirVenda extends javax.swing.JDialog {
         return Integer.parseInt(this.txtnrNF.getText());
     }
 
-    private int getCodProd() {
-        return Integer.parseInt(this.txtCodProduto.getText());
-    }
-
     public int getCodCli() {
         return Integer.parseInt(this.txtCodCliente.getText());
+    }
+    
+    private int getCodProd() {
+        return Integer.parseInt(this.txtCodProduto.getText());
     }
 
     private int getQtdProd() {
@@ -458,7 +441,7 @@ public class DialogInserirVenda extends javax.swing.JDialog {
     }
 
     private double getValorVenda() {
-        return Double.parseDouble(this.txtCodCliente.getText());
+        return Double.parseDouble(this.txtValorVenda.getText());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

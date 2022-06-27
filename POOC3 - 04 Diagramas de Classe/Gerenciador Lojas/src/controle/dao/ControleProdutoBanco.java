@@ -1,4 +1,4 @@
-package controle.DAO;
+package controle.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,10 +74,10 @@ public class ControleProdutoBanco {
         String comandoSQL = "UPDATE produto SET quantidade = ?, valorVenda = ?, valorCusto = ? WHERE codigoProduto = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(2, p.getQuantidade());
-        executarSQL.setDouble(3, p.getValorVenda());
-        executarSQL.setDouble(4, p.getValorCusto());
-        executarSQL.setInt(5, p.getCodigo());
+        executarSQL.setInt(1, p.getQuantidade());
+        executarSQL.setDouble(2, p.getValorVenda());
+        executarSQL.setDouble(3, p.getValorCusto());
+        executarSQL.setInt(4, p.getCodigo());
 
         int quantAlterados = executarSQL.executeUpdate();
         conexao.commit();
