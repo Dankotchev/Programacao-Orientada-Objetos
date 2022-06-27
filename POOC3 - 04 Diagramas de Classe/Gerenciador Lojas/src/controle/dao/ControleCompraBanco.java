@@ -53,12 +53,12 @@ public class ControleCompraBanco {
     }
 
     // Exclusão lógica das informações no Banco de Dados
-    public void excluir(int codCompra) throws SQLException, NotExistException {
+    public void excluir(int nrCompra) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "UPDATE compra SET status = false WHERE nrCompra = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        executarSQL.setInt(1, codCompra);
+        executarSQL.setInt(1, nrCompra);
 
         int linhas = executarSQL.executeUpdate();
         conexao.commit();
@@ -95,14 +95,14 @@ public class ControleCompraBanco {
         return c;
     }
 
-    public boolean existe(int codigo) throws SQLException, NotExistException {
+    public boolean existe(int nrCompra) throws SQLException, NotExistException {
         
         boolean existe = false;
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "SELECT * FROM compra WHERE (nrCompra = ?) AND status = true";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, nrCompra);
 
         ResultSet resultadoConsulta = executarSQL.executeQuery();
         resultadoConsulta.next();

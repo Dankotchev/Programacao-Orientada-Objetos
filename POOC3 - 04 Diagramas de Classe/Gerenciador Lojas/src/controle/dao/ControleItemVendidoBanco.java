@@ -7,8 +7,6 @@ import controle.excecoes.NotExistException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ItemVendido;
 
 public class ControleItemVendidoBanco {
@@ -30,7 +28,7 @@ public class ControleItemVendidoBanco {
         conexao.close();
     }
 
-    public List<ItemVendido> retonarItemVendido(int notaFiscal) throws SQLException, NotExistException {
+    public List<ItemVendido> retonarItemVendido(int nrNF) throws SQLException, NotExistException {
 
         List<ItemVendido> listaIV = new ArrayList<>();
         ItemVendido iv = null;
@@ -38,7 +36,7 @@ public class ControleItemVendidoBanco {
         String comandoSQL = "SELECT * FROM itemvendido WHERE nrNFVenda = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, notaFiscal);
+        executarSQL.setInt(1, nrNF);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         while (resultadoConsulta.next()) {

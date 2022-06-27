@@ -29,13 +29,13 @@ public class ControleProdutoBanco {
     }
 
     // Exclusão lógica das informações no Banco de Dados
-    public void excluir(int codigo) throws SQLException, NotExistException {
+    public void excluir(int codigoProduto) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "UPDATE produto SET status = false WHERE codigoProduto = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, codigoProduto);
 
         int linhas = executarSQL.executeUpdate();
         conexao.commit();
@@ -89,20 +89,20 @@ public class ControleProdutoBanco {
         }
     }
 
-    public Produto pesquisar(int codigo) throws SQLException, NotExistException {
+    public Produto pesquisar(int codigoProduto) throws SQLException, NotExistException {
 
         Produto p = null;
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "SELECT * FROM produto WHERE (codigoProduto = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, codigoProduto);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         resultadoConsulta.next();
         if (resultadoConsulta.getRow() > 0) {
             p = new Produto();
-            p.setCodigo(codigo);
+            p.setCodigo(codigoProduto);
             p.setDescricao(resultadoConsulta.getString("descricao"));
             p.setQuantidade(resultadoConsulta.getInt("quantidade"));
             p.setValorCusto(resultadoConsulta.getDouble("valorCusto"));
@@ -137,14 +137,14 @@ public class ControleProdutoBanco {
         return listaProduto;
     }
 
-    public boolean existe(int codigo) throws SQLException, NotExistException {
+    public boolean existe(int codigoProduto) throws SQLException, NotExistException {
 
         boolean existe = false;
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "SELECT * FROM produto WHERE (codigoProduto = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, codigoProduto);
         ResultSet resultadoConsulta;
         resultadoConsulta = executarSQL.executeQuery();
         resultadoConsulta.next();

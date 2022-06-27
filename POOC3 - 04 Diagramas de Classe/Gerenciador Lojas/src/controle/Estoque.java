@@ -1,21 +1,16 @@
 package controle;
 
-import controle.dao.ControleCompraBanco;
 import controle.dao.ControleItemVendidoBanco;
 import controle.dao.ControleProdutoBanco;
-import controle.dao.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Compra;
 import modelo.ItemVendido;
 import modelo.Produto;
 
 public class Estoque {
 
-    private final ControleCompraBanco bancoCompra = new ControleCompraBanco();
-    private final ControleVendaBanco bancovenda = new ControleVendaBanco();
     private final ControleProdutoBanco bancoProduto = new ControleProdutoBanco();
     private final ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
 

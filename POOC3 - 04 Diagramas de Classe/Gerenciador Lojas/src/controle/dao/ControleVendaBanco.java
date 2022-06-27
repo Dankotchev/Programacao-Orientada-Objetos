@@ -46,20 +46,20 @@ public class ControleVendaBanco {
         }
     }
 
-    public Venda pesquisar(int codigo) throws SQLException, NotExistException {
+    public Venda pesquisar(int nrNF) throws SQLException, NotExistException {
 
         Venda v = null;
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "SELECT * FROM venda WHERE (nrNF = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, nrNF);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
         resultadoConsulta.next();
         if (resultadoConsulta.getRow() > 0) {
             v = new Venda();
-            v.setNrNF(codigo);
+            v.setNrNF(nrNF);
             v.setData(resultadoConsulta.getDate("data"));
             v.setFormaPagto("formaPagto");
         } else {
@@ -94,7 +94,7 @@ public class ControleVendaBanco {
 
         List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM venda WHERE status = true ORDER BY data ASC {LIMIT 10} ";
+        String comandoSQL = "SELECT * FROM venda WHERE status = true ORDER BY data ASC LIMIT 10 ";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
@@ -110,14 +110,14 @@ public class ControleVendaBanco {
         return listaVenda;
     }
 
-    public boolean existe(int codigo) throws SQLException, NotExistException {
+    public boolean existe(int nrNF) throws SQLException, NotExistException {
 
         boolean existe = false;
         Connection conexao = GerenteConect.getConexao();
         String comandoSQL = "SELECT * FROM venda WHERE (nrNF = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
-        executarSQL.setInt(1, codigo);
+        executarSQL.setInt(1, nrNF);
 
         ResultSet resultadoConsulta;
         resultadoConsulta = executarSQL.executeQuery();
