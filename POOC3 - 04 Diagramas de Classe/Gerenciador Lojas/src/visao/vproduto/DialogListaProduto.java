@@ -3,21 +3,26 @@ package visao.vproduto;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.dao.ControleProdutoBanco;
+import java.text.NumberFormat;
 import modelo.Produto;
 
 public class DialogListaProduto extends javax.swing.JDialog {
-
+    
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
+    
     public DialogListaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
     }
-
+    
     public void atualizarTabela(List<Produto> listaProduto) {
         DefaultTableModel modelo = (DefaultTableModel) tabelaProdutos.getModel();
         modelo.setRowCount(0);
         for (Produto p : listaProduto) {
-            modelo.addRow(new Object[]{p.getCodigo(), p.getDescricao(), p.getQuantidade(), p.getValorVenda(), p.getValorCusto()});
+            modelo.addRow(new Object[]{p.getCodigo(), p.getDescricao(),
+                p.getQuantidade(), nf.format(p.getValorVenda()),
+                nf.format(p.getValorCusto())});
         }
     }
 

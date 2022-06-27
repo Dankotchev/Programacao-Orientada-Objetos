@@ -3,13 +3,18 @@ package visao.vvenda;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.dao.ControleItemVendidoBanco;
+import controle.excecoes.NotExistException;
+import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import modelo.Venda;
 
 public class DialogListaVenda extends javax.swing.JDialog {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
+    
+    private final ControleItemVendidoBanco bancoIV = new ControleItemVendidoBanco();
 
     public DialogListaVenda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -17,7 +22,7 @@ public class DialogListaVenda extends javax.swing.JDialog {
         this.setLocationRelativeTo(this);
     }
 
-    public void atualizarTabela(List<Venda> listaVenda) {
+    public void atualizarTabela(List<Venda> listaVenda) throws SQLException, NotExistException {
         DefaultTableModel modelo = (DefaultTableModel) tabelaVenda.getModel();
         modelo.setRowCount(0);
         double totalVenda;
@@ -25,7 +30,7 @@ public class DialogListaVenda extends javax.swing.JDialog {
         for (Venda v : listaVenda) {
             totalVenda = this.bancoIV.getTotalVenda(v.getNrNF());
             modelo.addRow(new Object[]{v.getNrNF(), sdf.format(v.getData()),
-                v.getFormaPagto(), totalVenda});
+                v.getFormaPagto(), nf.format(totalVenda)});
         }
     }
 

@@ -184,6 +184,8 @@ public class TelaVenda extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            System.out.println(ex.toString());
         }
     }//GEN-LAST:event_botaoVendaListarTodosActionPerformed
 
@@ -202,6 +204,8 @@ public class TelaVenda extends javax.swing.JFrame {
             this.setVisible(true);
 
         } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
             System.out.println(ex.toString());
         }
     }//GEN-LAST:event_botaoVendaListarUltimasActionPerformed

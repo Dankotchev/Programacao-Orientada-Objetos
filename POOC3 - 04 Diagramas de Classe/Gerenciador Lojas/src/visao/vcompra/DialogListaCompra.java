@@ -3,16 +3,19 @@ package visao.vcompra;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import controle.dao.ControleClienteBanco;
+import java.text.NumberFormat;
 import modelo.Compra;
 
 public class DialogListaCompra extends javax.swing.JDialog {
-
+    
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
+    
     public DialogListaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
     }
-
+    
     public void atualizarTabela(List<Compra> listaCompra) {
         DefaultTableModel modelo = (DefaultTableModel) tabelaCompras.getModel();
         modelo.setRowCount(0);
@@ -20,7 +23,8 @@ public class DialogListaCompra extends javax.swing.JDialog {
         for (Compra c : listaCompra) {
             totalCompra = c.getQtdComprada() * c.getValorCompra();
             modelo.addRow(new Object[]{c.getNrCompra(), c.getFornecedor(),
-                c.getQtdComprada(), c.getValorCompra(), totalCompra});
+                c.getQtdComprada(), nf.format(c.getValorCompra()),
+                nf.format(totalCompra)});
         }
     }
 
@@ -116,7 +120,7 @@ public class DialogListaCompra extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(DialogListaCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

@@ -7,6 +7,7 @@ import controle.dao.ControleItemVendidoBanco;
 import controle.dao.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import modelo.Compra;
@@ -16,6 +17,7 @@ import modelo.Venda;
 public class DialogExtratoCaixa extends javax.swing.JDialog {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     private final ControleVendaBanco bancoVenda = new ControleVendaBanco();
     private final ControleCompraBanco bancoCompra = new ControleCompraBanco();
@@ -33,7 +35,7 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         this.getVendas();
         this.getCompras();
         this.atualizarTabela();
-        this.labelSaldoAtual.setText(String.valueOf(this.saldoExtrato));
+        this.labelSaldoAtual.setText(nf.format(this.saldoExtrato));
 
     }
 
@@ -102,7 +104,7 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
 
             // Apresentar o resultado na Tabela Extrato
             modelo.addRow(new Object[]{sdf.format(venda.getData()),
-                venda.getTextoMovimento(), venda.getValorMovimento()});
+                venda.getTextoMovimento(), nf.format(venda.getValorMovimento())});
 
             this.saldoExtrato += venda.getValorMovimento();
         } catch (SQLException ex) {
@@ -117,7 +119,7 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         modelo.setRowCount(linha);
 
         modelo.addRow(new Object[]{sdf.format(compra.getData()),
-            compra.getTextoMovimento(), compra.getValorMovimento()});
+            compra.getTextoMovimento(), nf.format(compra.getValorMovimento())});
 
         this.saldoExtrato += compra.getValorMovimento();
     }
@@ -152,7 +154,8 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tabelaExtrato);
         if (tabelaExtrato.getColumnModel().getColumnCount() > 0) {
             tabelaExtrato.getColumnModel().getColumn(0).setMaxWidth(200);
-            tabelaExtrato.getColumnModel().getColumn(2).setMaxWidth(200);
+            tabelaExtrato.getColumnModel().getColumn(1).setMinWidth(200);
+            tabelaExtrato.getColumnModel().getColumn(2).setMinWidth(100);
         }
 
         botaoFechar.setBackground(new java.awt.Color(255, 51, 51));
@@ -187,7 +190,7 @@ public class DialogExtratoCaixa extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(labelDescSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelSaldoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

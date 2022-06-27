@@ -1,8 +1,11 @@
 package visao.vproduto;
 
+import java.text.NumberFormat;
 import modelo.Produto;
 
 public class DialogInformacoesProduto extends javax.swing.JDialog {
+    
+    private final NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public DialogInformacoesProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -15,8 +18,8 @@ public class DialogInformacoesProduto extends javax.swing.JDialog {
         this.txtCodigo.setText(String.valueOf(p.getCodigo()));
         this.txtDescricao.setText(p.getDescricao());
         this.txtQuantidade.setText(String.valueOf(p.getQuantidade()));
-        this.txtValorCusto.setText(String.valueOf(p.getValorCusto()));
-        this.txtValorVenda.setText(String.valueOf(p.getValorVenda()));
+        this.txtValorCusto.setText(nf.format(p.getValorCusto()));
+        this.txtValorVenda.setText(nf.format(p.getValorVenda()));
     }
 
     public Produto getProduto() {
