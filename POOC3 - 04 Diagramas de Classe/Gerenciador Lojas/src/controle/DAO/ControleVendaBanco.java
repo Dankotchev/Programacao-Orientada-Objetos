@@ -1,4 +1,4 @@
-package controle;
+package controle.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +28,11 @@ public class ControleVendaBanco {
         conexao.close();
     }
 
+    // Exclusão lógica das informações no Banco de Dados
     public void excluir(int nrNF) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "DELETE FROM venda WHERE nrNF = ?";
+        String comandoSQL = "UPDATE venda SET status = false WHERE nrNF = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, nrNF);
 
@@ -49,7 +50,7 @@ public class ControleVendaBanco {
 
         List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM venda";
+        String comandoSQL = "SELECT * FROM venda WHERE status = true";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
@@ -69,7 +70,7 @@ public class ControleVendaBanco {
 
         List<Venda> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM venda ORDER BY data ASC {LIMIT 10} ";
+        String comandoSQL = "SELECT * FROM venda WHERE status = true ORDER BY data ASC {LIMIT 10} ";
 
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
@@ -83,5 +84,29 @@ public class ControleVendaBanco {
             listaVenda.add(v);
         }
         return listaVenda;
+    }
+
+    public boolean existe(int codigo) throws SQLException, NotExistException {
+
+        boolean existe = false;
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "SELECT * FROM venda WHERE (nrNF = ?) AND (status = true)";
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, codigo);
+
+        ResultSet resultadoConsulta;
+        resultadoConsulta = executarSQL.executeQuery();
+
+        resultadoConsulta.next();
+        if (resultadoConsulta.getRow() > 0) {
+            existe = true;
+        } else {
+            throw new NotExistException();
+        }
+
+        executarSQL.close();
+        conexao.close();
+        return existe;
     }
 }

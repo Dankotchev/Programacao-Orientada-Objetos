@@ -2,7 +2,7 @@ package visao.vvenda;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import controle.ControleItemVendidoBanco;
+import controle.DAO.ControleItemVendidoBanco;
 import java.text.SimpleDateFormat;
 import modelo.Venda;
 

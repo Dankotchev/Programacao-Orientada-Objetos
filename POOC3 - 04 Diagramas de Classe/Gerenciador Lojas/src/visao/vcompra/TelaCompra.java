@@ -1,7 +1,7 @@
 package visao.vcompra;
 
-import controle.ControleCompraBanco;
-import controle.ControleProdutoBanco;
+import controle.DAO.ControleCompraBanco;
+import controle.DAO.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -189,21 +189,25 @@ public class TelaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botCancelarActionPerformed
 
     private void botaoCompraExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCompraExcluirActionPerformed
-        if (this.getCodCompra() > 0) {
+        // Exclusão lógica da Compra no Banco de Dados
+        //if (this.getCodCompra() > 0) {
 
-            int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                try {
-                    bancoCompra.excluir(this.getCodCompra());
-                } catch (SQLException ex) {
-                    System.out.println(ex.toString());
-                } catch (NotExistException ex) {
-                    JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                if (bancoCompra.existe(this.getCodCompra())) {
+                    // Se existir a compra, pedir a confirmação
+                    int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        bancoCompra.excluir(this.getCodCompra());
+                    }
                 }
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            } catch (NotExistException ex) {
+                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-        }
+        //}
+
+
     }//GEN-LAST:event_botaoCompraExcluirActionPerformed
 
     /**
@@ -250,7 +254,7 @@ public class TelaCompra extends javax.swing.JFrame {
         });
     }
 
-    private int getCodCompra () {
+    private int getCodCompra() {
         return Integer.parseInt(this.txtCodigoCompra.getText());
     }
 

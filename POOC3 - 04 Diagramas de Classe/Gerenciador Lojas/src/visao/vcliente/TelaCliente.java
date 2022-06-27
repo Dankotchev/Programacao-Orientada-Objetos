@@ -1,6 +1,6 @@
 package visao.vcliente;
 
-import controle.ControleClienteBanco;
+import controle.DAO.ControleClienteBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -211,7 +211,7 @@ public class TelaCliente extends javax.swing.JFrame {
             this.listaCliente = this.bancoCliente.listarTodos();
             DialogListaCliente tela = new DialogListaCliente(this, true);
             tela.atualizarTabela(listaCliente);
-            
+
             this.setVisible(false);
             tela.setVisible(true);
             this.setVisible(true);
@@ -259,33 +259,22 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoClienteAlterarActionPerformed
 
     private void botaoClienteExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoClienteExcluirActionPerformed
-        // A função não está completa na parte de Banco de Dados, pq poderá dar erro se já tiver vendas realizadas
-        if (this.getCodCli() > 0) {
-            Cliente c = null;
-
-            try {
-                c = bancoCliente.pesquisar(this.getCodCli());
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
-            } catch (NotExistException ex) {
-                JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            if (c != null) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Produtos", JOptionPane.YES_NO_OPTION);
+        // Essa função exclui de forma lógica no Banco de Dados
+        try {
+            if (bancoCliente.existe(this.getCodCli())) {
+                // Se o cliente existir, pede confirmação da exclusão
+                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
-                    try {
-                        bancoCliente.excluir(this.getCodCli());
-                    } catch (SQLException ex) {
-                        System.out.println(ex.toString());
-                    } catch (NotExistException ex) {
-                        JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    // Exclui o Cliente do banco de dados
+                    bancoCliente.excluir(this.getCodCli());
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Informe um Código de Cliente.", "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
         }
+
     }//GEN-LAST:event_botaoClienteExcluirActionPerformed
 
     /**
@@ -324,7 +313,7 @@ public class TelaCliente extends javax.swing.JFrame {
         });
     }
 
-    private int getCodCli () {
+    private int getCodCli() {
         return Integer.parseInt(this.txtCodigoCliente.getText());
     }
 

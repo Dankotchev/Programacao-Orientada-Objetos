@@ -1,4 +1,4 @@
-package controle;
+package controle.DAO;
 
 import controle.excecoes.NotExistException;
 import java.sql.Connection;
@@ -34,11 +34,11 @@ public class ControleCompraBanco {
 
         List<Compra> listaVenda = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM compra";
+        String comandoSQL = "SELECT * FROM compra WHERE status = true";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        
+
         ResultSet resultadoConsulta = executarSQL.executeQuery();
-        
+
         Compra c;
         while (resultadoConsulta.next()) {
             c = new Compra();
@@ -52,10 +52,11 @@ public class ControleCompraBanco {
         return listaVenda;
     }
 
+    // Exclusão lógica das informações no Banco de Dados
     public void excluir(int codCompra) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "DELETE FROM compra WHERE nrCompra = ?";
+        String comandoSQL = "UPDATE compra SET status = false WHERE nrCompra = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         executarSQL.setInt(1, codCompra);
 
@@ -67,5 +68,28 @@ public class ControleCompraBanco {
         if (linhas == 0) {
             throw new NotExistException();
         }
+    }
+
+    public boolean existe(int codigo) throws SQLException, NotExistException {
+        
+        boolean existe = false;
+        Connection conexao = GerenteConect.getConexao();
+        String comandoSQL = "SELECT * FROM compra WHERE (nrCompra = ?) AND status = true";
+        PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
+
+        executarSQL.setInt(1, codigo);
+
+        ResultSet resultadoConsulta = executarSQL.executeQuery();
+        resultadoConsulta.next();
+        if (resultadoConsulta.getRow() > 0) {
+            existe = true;
+
+        } else {
+            throw new NotExistException();
+        }
+
+        executarSQL.close();
+        conexao.close();
+        return existe;
     }
 }

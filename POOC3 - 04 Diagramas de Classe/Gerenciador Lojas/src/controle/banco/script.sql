@@ -8,13 +8,15 @@ CREATE TABLE produto (
     quantidade          int             not null default 0,
     valorVenda          double,
     valorCusto          double,
+    status              boolean         not null default true,
     PRIMARY KEY (codigoProduto)
 );
 
 CREATE TABLE cliente (
-    codigoCliente   int             not null,
-    nome            varchar(100)    not null,
-    contato         varchar(80)     not null,
+    codigoCliente       int             not null,
+    nome                varchar(100)    not null,
+    contato             varchar(80)     not null,
+    status              boolean         not null default true,
     PRIMARY KEY (codigoCliente)
 );
 
@@ -23,6 +25,7 @@ CREATE TABLE venda (
     data                date            not null,
     formaPagto          varchar(30)     not null,
     codigoClienteVenda  int             not null,
+    status              boolean         not null default true,
     PRIMARY KEY (nrNF),
     FOREIGN KEY (codigoClienteVenda) REFERENCES cliente (codigoCliente)
 );
@@ -44,6 +47,7 @@ CREATE TABLE compra (
     valorCompra             double          not null,
     codigoProdutoCompra     int             not null,
     data                    date            not null,
+    status                  boolean         not null default true,
     PRIMARY KEY (nrCompra),
     FOREIGN KEY (codigoProdutoCompra) REFERENCES produto (codigoProduto)
 );

@@ -1,10 +1,10 @@
 package visao.vcaixa;
 
-import controle.ControleCompraBanco;
+import controle.DAO.ControleCompraBanco;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import controle.ControleItemVendidoBanco;
-import controle.ControleVendaBanco;
+import controle.DAO.ControleItemVendidoBanco;
+import controle.DAO.ControleVendaBanco;
 import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;

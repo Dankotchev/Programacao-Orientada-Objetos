@@ -1,4 +1,4 @@
-package controle;
+package controle.DAO;
 
 import controle.excecoes.NotExistException;
 import java.sql.Connection;
@@ -27,10 +27,11 @@ public class ControleClienteBanco {
         conexao.close();
     }
 
+    // Exclusão lógica das informações no banco de Dados
     public void excluir(int codigo) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "DELETE FROM cliente WHERE codigoCliente = ?";
+        String comandoSQL = "UPDATE cliente SET status = false WHERE codigoCliente = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
@@ -68,7 +69,7 @@ public class ControleClienteBanco {
 
         Cliente c = null;
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
+        String comandoSQL = "SELECT * FROM cliente WHERE (codigoCliente = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
@@ -94,7 +95,7 @@ public class ControleClienteBanco {
 
         List<Cliente> listaCliente = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM cliente";
+        String comandoSQL = "SELECT * FROM cliente WHERE status = true";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         
         ResultSet resultadoConsulta;
@@ -115,7 +116,7 @@ public class ControleClienteBanco {
         
         boolean existe = false;
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM cliente WHERE codigoCliente = ?";
+        String comandoSQL = "SELECT * FROM cliente WHERE (codigoCliente = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);

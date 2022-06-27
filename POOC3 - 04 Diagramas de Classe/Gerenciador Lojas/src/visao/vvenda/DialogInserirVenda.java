@@ -1,7 +1,7 @@
 package visao.vvenda;
 
-import controle.ControleClienteBanco;
-import controle.ControleProdutoBanco;
+import controle.DAO.ControleClienteBanco;
+import controle.DAO.ControleProdutoBanco;
 import controle.excecoes.NotExistException;
 import controle.excecoes.InsufficientStockException;
 import java.sql.SQLException;

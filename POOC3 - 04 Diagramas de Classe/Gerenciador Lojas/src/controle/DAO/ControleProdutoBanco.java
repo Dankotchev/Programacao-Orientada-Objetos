@@ -1,4 +1,4 @@
-package controle;
+package controle.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +28,11 @@ public class ControleProdutoBanco {
         conexao.close();
     }
 
+    // Exclusão lógica das informações no Banco de Dados
     public void excluir(int codigo) throws SQLException, NotExistException {
 
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "DELETE FROM produto WHERE codigoProduto = ?";
+        String comandoSQL = "UPDATE produto SET status = false WHERE codigoProduto = ?";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
@@ -92,7 +93,7 @@ public class ControleProdutoBanco {
 
         Produto p = null;
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM produto WHERE codigoProduto = ?";
+        String comandoSQL = "SELECT * FROM produto WHERE (codigoProduto = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
 
         executarSQL.setInt(1, codigo);
@@ -118,7 +119,7 @@ public class ControleProdutoBanco {
         List<Produto> listaProduto = new ArrayList<>();
         Connection conexao = GerenteConect.getConexao();
 
-        String comandoSQL = "SELECT * FROM produto";
+        String comandoSQL = "SELECT * FROM produto WHERE status = true";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
         ResultSet resultadoConsulta = executarSQL.executeQuery();
 
@@ -137,12 +138,12 @@ public class ControleProdutoBanco {
     }
 
     public boolean existe(int codigo) throws SQLException, NotExistException {
-        
+
         boolean existe = false;
         Connection conexao = GerenteConect.getConexao();
-        String comandoSQL = "SELECT * FROM produto WHERE codigoProduto = ?";
+        String comandoSQL = "SELECT * FROM produto WHERE (codigoProduto = ?) AND (status = true)";
         PreparedStatement executarSQL = conexao.prepareStatement(comandoSQL);
-        
+
         executarSQL.setInt(1, codigo);
         ResultSet resultadoConsulta;
         resultadoConsulta = executarSQL.executeQuery();

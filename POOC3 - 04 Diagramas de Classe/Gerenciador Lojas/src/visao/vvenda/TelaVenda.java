@@ -1,10 +1,14 @@
 package visao.vvenda;
 
-import controle.ControleItemVendidoBanco;
-import controle.ControleVendaBanco;
+import controle.DAO.ControleItemVendidoBanco;
+import controle.DAO.ControleVendaBanco;
+import controle.excecoes.NotExistException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.ItemVendido;
 import modelo.Venda;
 import visao.TelaInicial;
@@ -31,6 +35,9 @@ public class TelaVenda extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         botaoVendaListarUltimas = new javax.swing.JButton();
+        labelNrNF = new javax.swing.JLabel();
+        txtnrNFVenda = new javax.swing.JTextField();
+        botaoVendaExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vendas");
@@ -72,6 +79,21 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
 
+        labelNrNF.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelNrNF.setText("Informe um Nota Fiscal");
+        labelNrNF.setToolTipText("");
+        labelNrNF.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        txtnrNFVenda.setText("10");
+
+        botaoVendaExcluir.setBackground(new java.awt.Color(153, 255, 255));
+        botaoVendaExcluir.setText("Excluir");
+        botaoVendaExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVendaExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,20 +103,28 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoVendaListarTodos)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoVendaListarUltimas)
-                        .addGap(8, 8, 8))
+                        .addComponent(botaoVendaExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtnrNFVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(botaoVendaNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botaoVendaListarTodos)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(botaoVendaListarUltimas))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(44, 44, 44)
+                                        .addComponent(labelNrNF)))
+                                .addGap(0, 2, Short.MAX_VALUE)))
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,13 +137,19 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtnrNFVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoVendaExcluir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelNrNF)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVendaListarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoVendaListarUltimas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,6 +207,23 @@ public class TelaVenda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoVendaListarUltimasActionPerformed
 
+    private void botaoVendaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVendaExcluirActionPerformed
+        // Essa função exclui de forma lógica no Banco de Dados
+        try {
+            if (bancoVenda.existe(this.getNF())) {
+                // Se a venda existir, pede confirmação da exclusão, e logo depois exclui
+                int resposta = JOptionPane.showConfirmDialog(null, "Confimar", "Exclusão de Cliente", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    bancoVenda.excluir(this.getNF());
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } catch (NotExistException ex) {
+            JOptionPane.showMessageDialog(null, "Código " + ex.toString(), "Atenção!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_botaoVendaExcluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,14 +260,21 @@ public class TelaVenda extends javax.swing.JFrame {
         });
     }
 
+    private int getNF() {
+        return Integer.parseInt(this.txtnrNFVenda.getText());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botCancelar;
+    private javax.swing.JButton botaoVendaExcluir;
     private javax.swing.JButton botaoVendaListarTodos;
     private javax.swing.JButton botaoVendaListarUltimas;
     private javax.swing.JButton botaoVendaNovo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel labelNrNF;
+    private javax.swing.JTextField txtnrNFVenda;
     // End of variables declaration//GEN-END:variables
 
 }
